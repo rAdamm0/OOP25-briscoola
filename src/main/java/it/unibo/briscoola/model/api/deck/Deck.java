@@ -39,5 +39,5 @@ public interface Deck <T extends Card> {
      * restart the deck when the match is over,
      * if the player want to start a new match but also to save the winning streak 
      */
-    void refilDeck(List<T> newInitialSetOfCards);
+    void refillDeck(List<T> newInitialSetOfCards);
 }
