@@ -8,7 +8,7 @@ public interface Leaderboard {
      * Adds an entry to the instanced leaderboard
      * @param entry new entry to add into the leaderboard
      */
-    void addEntry(ScoreEntry entry);
+    boolean addEntry(ScoreEntry entry);
 
     /**
      * Retrieves every element inside the leaderboard

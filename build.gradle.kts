@@ -20,11 +20,13 @@ repositories { // Where to search for dependencies
 }
 
 dependencies {
+    // Customized Imports
+    /*-- Gson: Java to JSON conversion --*/
+    implementation("com.google.code.gson:gson:2.12.0")
     // Suppressions for SpotBugs
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.9.8")
 
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
-    implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
 
     /*
@@ -41,11 +43,13 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+
 }
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.sampleapp.RateAMovie")
+    mainClass.set("it.unibo.briscola.BriscOOla")
 }
 
 tasks.withType<Test>().configureEach {

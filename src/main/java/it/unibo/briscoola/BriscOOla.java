@@ -1,6 +1,5 @@
 package it.unibo.briscoola;
 
-import com.omertron.omdbapi.OMDBException;
 
 /**
  * Class that handles the launch of the game
