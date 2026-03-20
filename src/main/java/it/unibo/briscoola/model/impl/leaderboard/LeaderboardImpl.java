@@ -4,12 +4,34 @@ import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
 import it.unibo.briscoola.model.api.leaderboard.ScoreEntry;
 import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Collection;
+import java.util.Comparator;
 
+/**
+ * A standard implementation of the {@link Leaderboard} interface.
+ *
+ * <p>
+ * This class maintains an internal {@link List} of {@link ScoreEntry} objects.
+ * It provides functionality to add new entries and retrieves them sorted
+ * by their numerical score in ascending order.
+ */
 public class LeaderboardImpl implements Leaderboard {
 
     private final List<ScoreEntry> list;
 
+    /**
+     * Creates a new leaderboard and populates it with existing data.
+     *
+     * <p>
+     * This constructor uses the provided {@link ScoreFileManager} to load
+     * previously saved scores. If no saved data is found, an empty
+     * leaderboard is initialized.
+     *
+     * @param files the manager used to retrieve stored leaderboard data
+     */
     public LeaderboardImpl(final ScoreFileManager files) {
         this.list = new ArrayList<>(files.load());
     }
@@ -19,17 +41,18 @@ public class LeaderboardImpl implements Leaderboard {
      */
     @Override
     public boolean addEntry(final ScoreEntry entry) {
-        if(entry.getScore() == 0){
+        if (entry.getScore() == 0) {
             return false;
         }
-        return this.list.add(Objects.requireNonNull(entry, "The entry cannot be null"));
+        this.list.add(Objects.requireNonNull(entry, "The entry cannot be null"));
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean addEntries(Collection<? extends ScoreEntry> entryCollection) {
+    public boolean addEntries(final Collection<? extends ScoreEntry> entryCollection) {
         Objects.requireNonNull(entryCollection, "The entry collection cannot be null");
         return entryCollection.stream()
                 .map(this::addEntry)

@@ -1,8 +1,7 @@
 package it.unibo.briscoola;
 
-
 /**
- * Class that handles the launch of the game
+ * Class that handles the launch of the game.
  */
 public final class BriscOOla {
 

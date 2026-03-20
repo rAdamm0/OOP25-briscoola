@@ -14,36 +14,56 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ScoreFileManagerTest {
-    private ScoreFileManager manager = new ScoreFileManagerImpl();
+/**
+ * Tests persistence behavior of the leaderboard score file manager.
+ */
+class ScoreFileManagerTest {
+
+    private static final Integer LOW_SCORE = 100;
+    private static final Integer AVERAGE_SCORE = 150;
+    private static final Integer MEDIUM_SCORE = 200;
+    private static final Integer HIGH_SCORE = 300;
+    private static final List<ScoreEntry> TESTING_LIST = new ArrayList<>(List.of(
+            new ScoreEntryImpl("Adam", LOW_SCORE),
+            new ScoreEntryImpl("Giacomo", MEDIUM_SCORE),
+            new ScoreEntryImpl("Francesca", HIGH_SCORE),
+            new ScoreEntryImpl("Marta", AVERAGE_SCORE)
+    ));
+    private final ScoreFileManager manager = new ScoreFileManagerImpl();
     private Leaderboard board;
-    private List<ScoreEntry> testingList;
 
+    /**
+     * Creates a fresh leaderboard instance before each test.
+     */
     @BeforeEach
-    void init(){
+    void init() {
         this.board = new LeaderboardImpl(manager);
-        this.testingList = new ArrayList<>(List.of(
-                new ScoreEntryImpl("Adam", 300),
-                new ScoreEntryImpl("Giacomo", 400),
-                new ScoreEntryImpl("Francesca", 350),
-                new ScoreEntryImpl("Marta", 500)
-        ));
     }
 
-    @Test void saveTest(){
-        this.board.addEntries(testingList);
+    /**
+     * Verifies scores are saved and then loaded in score-sorted order.
+     */
+    @Test void saveTest() {
+        this.board.addEntries(TESTING_LIST);
         assertTrue(manager.save(board.getEntries()));
-        assertEquals(manager.load(), this.testingList.stream().sorted(Comparator.comparing(ScoreEntry::getScore)).toList());
+        assertEquals(manager.load(), TESTING_LIST.stream().sorted(Comparator.comparing(ScoreEntry::getScore)).toList());
     }
 
-    @Test void loadTest(){
+    /**
+     * Verifies loading without saved data returns an empty list.
+     */
+    @Test void loadTest() {
         assertEquals(manager.load(), List.of());
     }
 
+    /**
+     * Clears persisted leaderboard data after each test.
+     */
     @AfterEach
-    void clear(){
+    void clear() {
         this.manager.clearLeaderBoard();
     }
 }
