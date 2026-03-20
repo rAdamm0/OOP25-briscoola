@@ -4,10 +4,7 @@ import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
 import it.unibo.briscoola.model.api.leaderboard.ScoreEntry;
 import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class LeaderboardImpl implements Leaderboard {
 
@@ -26,6 +23,17 @@ public class LeaderboardImpl implements Leaderboard {
             return false;
         }
         return this.list.add(Objects.requireNonNull(entry, "The entry cannot be null"));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean addEntries(Collection<? extends ScoreEntry> entryCollection) {
+        Objects.requireNonNull(entryCollection, "The entry collection cannot be null");
+        return entryCollection.stream()
+                .map(this::addEntry)
+                .reduce(false, (a, b) -> a || b);
     }
 
     /**

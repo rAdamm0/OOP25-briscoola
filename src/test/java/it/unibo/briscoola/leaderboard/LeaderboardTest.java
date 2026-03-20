@@ -38,4 +38,10 @@ public class LeaderboardTest {
         assertThrows(NullPointerException.class,()-> this.board.addEntry(null));
         assertFalse(this.board.addEntry(new ScoreEntryImpl("Gino", 0)));
     }
+
+    @Test void leaderboardListTest(){
+        assertTrue(this.board.addEntries(testingList));
+        assertEquals(this.board.getEntries(),this.testingList.stream().sorted(Comparator.comparing(ScoreEntry::getScore)).toList());
+
+    }
 }
