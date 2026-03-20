@@ -9,7 +9,7 @@ import it.unibo.briscoola.model.api.player.Player;
 public class PlayerImpl implements Player {
 
     private final int id;
-    private final List<Card> hand;
+    protected final List<Card> hand;
     private int points;
 
     public PlayerImpl(int id) {
