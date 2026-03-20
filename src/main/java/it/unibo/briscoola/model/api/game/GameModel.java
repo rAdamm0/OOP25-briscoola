@@ -44,4 +44,11 @@ public interface GameModel {
      * @param loser the player who lost the trick
      */
     void drawAfterTrick(Player winner, Player loser);
+
+    /**
+     * Plays the card at the given index (from the human player's hand)
+     * @param index is the position of the card in hand (0, 1 or 2)
+     * @return the played card
+     */
+    Card playCard(int index);
 }
