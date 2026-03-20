@@ -31,11 +31,6 @@ public interface Deck <T extends Card> {
     int getActualSize();
 
     /**
-     * @return a boolean, to check if the deck is empty
-     */
-    boolean isEmpty();
-
-    /**
      * restart the deck when the match is over,
      * if the player want to start a new match but also to save the winning streak 
      */
