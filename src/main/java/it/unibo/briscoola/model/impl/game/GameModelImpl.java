@@ -1,4 +1,4 @@
-package it.unibo.briscoola.model.impl;
+package it.unibo.briscoola.model.impl.game;
 
 import java.util.Optional;
 
