@@ -8,7 +8,6 @@ import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
@@ -68,7 +67,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
             Files.writeString(leaderboardPath, toWrite);
             return true;
         } catch (final IOException e) {
-            logger.error("{}: Error during the Manager save method-> {}", Instant.now(), e.getMessage());
+            logger.error("Error during the Manager save method-> {}", e.getMessage(), e);
             return false;
         }
     }
@@ -88,7 +87,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
             return list.orElse(new ArrayList<>());
 
         } catch (final IOException e) {
-            logger.error("{}: Error during the Manager load method-> {}", Instant.now(), e.getMessage());
+            logger.error("Error during the Manager load method-> {}", e.getMessage(), e);
             return List.of();
         }
     }

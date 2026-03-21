@@ -12,3 +12,6 @@ bin/
 .project
 .settings/
 .classpath
+
+# Ignores the SLF4J logs
+/logs/

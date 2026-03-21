@@ -9,10 +9,14 @@ import it.unibo.briscoola.model.impl.leaderboard.ScoreFileManagerImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,6 +38,7 @@ class ScoreFileManagerTest {
     ));
     private final ScoreFileManager manager = new ScoreFileManagerImpl();
     private Leaderboard board;
+    private Logger logger = LoggerFactory.getLogger(ScoreFileManagerTest.class);
 
     /**
      * Creates a fresh leaderboard instance before each test.
@@ -65,5 +70,14 @@ class ScoreFileManagerTest {
     @AfterEach
     void clear() {
         this.manager.clearLeaderBoard();
+    }
+
+    @Test void loggerTest(){
+        logger.error("TEST: This should appear in BOTH the CONSOLE and the FILE!", new IOException());
+        logger.info("TEST: This should appear only on the console");
+        for (int i = 0; i < 100 ; i++) {
+            logger.error("TEST: This is number: {}",i, new IOException());
+
+        }
     }
 }
