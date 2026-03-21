@@ -1,4 +1,4 @@
-package it.unibo.briscoola.model.impl;
+package it.unibo.briscoola.model.impl.game;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ public class GameFactoryImpl implements GameFactory {
     /**
      * {@inheritDoc}
      */
-    
     @Override
     public GameModel createStandardGame(List<Player> players) {
         Deck<Card> deck= new DeckImpl();

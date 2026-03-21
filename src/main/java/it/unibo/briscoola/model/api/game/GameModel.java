@@ -13,11 +13,9 @@ public interface GameModel {
     void startMatch();
     
     /**
-     * I dont have now access to the class Player but is how i think that:
-     * Player winnerOfHand(Map<Player, Card> table);
+     * @return th Card defined as Briscola, to choose se Seed 
      */
-
-     Optional<Card> getBriscolaSeed();
+    Optional<Card> getBriscolaSeed();
 
      /**
       * checks if the game is ended, 
@@ -25,7 +23,7 @@ public interface GameModel {
       * all the players used all they cards.
       * When players have the Hand empty.
       */
-     boolean isGameOver();
+    boolean isGameOver();
 
     /**
      * Picks the first card from the deck -> that will be the briscola
