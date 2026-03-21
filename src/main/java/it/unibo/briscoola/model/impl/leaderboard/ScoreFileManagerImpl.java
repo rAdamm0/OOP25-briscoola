@@ -81,10 +81,10 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
         if (Files.notExists(leaderboardPath)) {
             return List.of();
         }
-        try (Reader reader = new FileReader(leaderboardPath.toString(), StandardCharsets.UTF_8)) {
+        try (Reader reader = Files.newBufferedReader(leaderboardPath, StandardCharsets.UTF_8)) {
             final TypeToken<List<ScoreEntryImpl>> listType = new TypeToken<>() {
             };
-            final Optional<List<ScoreEntry>> list = Optional.of(gson.fromJson(reader, listType.getType()));
+            final Optional<List<ScoreEntry>> list = Optional.ofNullable(gson.fromJson(reader, listType.getType()));
             return list.orElse(new ArrayList<>());
 
         } catch (final IOException e) {
