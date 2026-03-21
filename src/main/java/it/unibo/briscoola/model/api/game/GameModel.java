@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.player.Player;
+
 public interface GameModel {
 
     /**
