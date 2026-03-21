@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +37,8 @@ class ScoreFileManagerTest {
     ));
     private final ScoreFileManager manager = new ScoreFileManagerImpl();
     private Leaderboard board;
-    private Logger logger = LoggerFactory.getLogger(ScoreFileManagerTest.class);
+    private final Logger logger = LoggerFactory.getLogger(ScoreFileManagerTest.class);
+    private final Integer LOGGING_TEST_LOOP = 100;
 
     /**
      * Creates a fresh leaderboard instance before each test.
@@ -72,12 +72,11 @@ class ScoreFileManagerTest {
         this.manager.clearLeaderBoard();
     }
 
-    @Test void loggerTest(){
+    @Test void loggerTest() {
         logger.error("TEST: This should appear in BOTH the CONSOLE and the FILE!", new IOException());
         logger.info("TEST: This should appear only on the console");
-        for (int i = 0; i < 100 ; i++) {
-            logger.error("TEST: This is number: {}",i, new IOException());
-
+        for (int i = 0; i < LOGGING_TEST_LOOP; i++) {
+            logger.error("TEST: This is number: {}", i, new IOException());
         }
     }
 }
