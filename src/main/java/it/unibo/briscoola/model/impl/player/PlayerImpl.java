@@ -25,6 +25,11 @@ public class PlayerImpl implements Player {
     }
 
     @Override
+    public Card playCard(int index){
+        return this.hand.remove(index);
+    }
+
+    @Override
     public void receiveCard(Card card) {
         this.hand.add(card);
     }
