@@ -9,11 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -95,7 +97,12 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
      * {@inheritDoc}
      */
     @Override
-    public void clearLeaderBoard() {
-        this.save(List.of());
+    public boolean clearLeaderBoard() {
+        try(InputStream _ = Files.newInputStream(leaderboardPath, StandardOpenOption.TRUNCATE_EXISTING)) {
+            return true;
+        } catch (final IOException e) {
+            logger.error("Error during the Manager clear method-> {}", e.getMessage(), e);
+            return false;
+        }
     }
 }

@@ -6,7 +6,6 @@ import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 import it.unibo.briscoola.model.impl.leaderboard.LeaderboardImpl;
 import it.unibo.briscoola.model.impl.leaderboard.ScoreEntryImpl;
 import it.unibo.briscoola.model.impl.leaderboard.ScoreFileManagerImpl;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -38,7 +37,6 @@ class ScoreFileManagerTest {
     private final ScoreFileManager manager = new ScoreFileManagerImpl();
     private Leaderboard board;
     private final Logger logger = LoggerFactory.getLogger(ScoreFileManagerTest.class);
-    private final Integer LOGGING_TEST_LOOP = 100;
 
     /**
      * Creates a fresh leaderboard instance before each test.
@@ -67,14 +65,17 @@ class ScoreFileManagerTest {
     /**
      * Clears persisted leaderboard data after each test.
      */
-    @AfterEach
+    @Test
     void clear() {
-        this.manager.clearLeaderBoard();
+        assertTrue(this.manager.save(TESTING_LIST));
+        assertEquals(TESTING_LIST, this.manager.load());
+        assertTrue(this.manager.clearLeaderBoard());
     }
 
     @Test void loggerTest() {
         logger.error("TEST: This should appear in BOTH the CONSOLE and the FILE!", new IOException());
         logger.info("TEST: This should appear only on the console");
+        final int LOGGING_TEST_LOOP = 100;
         for (int i = 0; i < LOGGING_TEST_LOOP; i++) {
             logger.error("TEST: This is number: {}", i, new IOException());
         }

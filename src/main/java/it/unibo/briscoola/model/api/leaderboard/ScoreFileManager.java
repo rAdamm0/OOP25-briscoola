@@ -27,6 +27,8 @@ public interface ScoreFileManager {
 
     /**
      * Clears every data present inside the leaderboard file.
+     *
+     * @return true if the leaderboard was cleared successfully, false otherwise
      */
-    void clearLeaderBoard();
+    boolean clearLeaderBoard();
 }
