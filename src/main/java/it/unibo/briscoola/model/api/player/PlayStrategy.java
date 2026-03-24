@@ -4,12 +4,17 @@ import it.unibo.briscoola.model.api.card.Card;
 
 import java.util.List;
 
+/**
+ * Interface to handle the different CPU difficulties strategies.
+ */
+@FunctionalInterface
 public interface PlayStrategy {
 
     /**
-     * Returns the card to be played by the CPU
+     * Returns the card to be played by the CPU.
+     *
      * @param hand cards in hand of the CPU
      * @return the card to be played
      */
-    int playCard(List<Card> hand);
+    int cardIndex(List<Card> hand);
 }

@@ -9,18 +9,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Strategy of the CPU for choosing the card to be played in Easy Difficulty
+ */
 public class EasyStrategy implements PlayStrategy {
 
-    Logger logger = LoggerFactory.getLogger(EasyStrategy.class);
+    private final Logger logger = LoggerFactory.getLogger(EasyStrategy.class);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int playCard(List<Card> hand) {
+    public int cardIndex(final List<Card> hand) {
         try {
             return hand.indexOf(hand.stream().max(Comparator.comparingInt(Card::getCardPower)).orElseThrow());
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
             logger.error("Error during the CPU playCard method -> {}", e.getMessage(), e);
             return -1;
         }

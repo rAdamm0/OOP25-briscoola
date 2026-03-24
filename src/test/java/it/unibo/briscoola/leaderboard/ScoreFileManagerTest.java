@@ -6,6 +6,7 @@ import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 import it.unibo.briscoola.model.impl.leaderboard.LeaderboardImpl;
 import it.unibo.briscoola.model.impl.leaderboard.ScoreEntryImpl;
 import it.unibo.briscoola.model.impl.leaderboard.ScoreFileManagerImpl;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class ScoreFileManagerTest {
 
+    private static final String TESTING_FILE = "testing.json";
     private static final Integer LOW_SCORE = 100;
     private static final Integer AVERAGE_SCORE = 150;
     private static final Integer MEDIUM_SCORE = 200;
@@ -34,7 +36,7 @@ class ScoreFileManagerTest {
             new ScoreEntryImpl("Francesca", HIGH_SCORE),
             new ScoreEntryImpl("Marta", AVERAGE_SCORE)
     ));
-    private final ScoreFileManager manager = new ScoreFileManagerImpl();
+    private final ScoreFileManager manager = new ScoreFileManagerImpl(TESTING_FILE);
     private Leaderboard board;
     private final Logger logger = LoggerFactory.getLogger(ScoreFileManagerTest.class);
 
@@ -44,6 +46,11 @@ class ScoreFileManagerTest {
     @BeforeEach
     void init() {
         this.board = new LeaderboardImpl(manager);
+    }
+
+    @AfterEach
+    void clearLeaderboard() {
+        this.manager.clearLeaderBoard();
     }
 
     /**
@@ -75,8 +82,8 @@ class ScoreFileManagerTest {
     @Test void loggerTest() {
         logger.error("TEST: This should appear in BOTH the CONSOLE and the FILE!", new IOException());
         logger.info("TEST: This should appear only on the console");
-        final int LOGGING_TEST_LOOP = 100;
-        for (int i = 0; i < LOGGING_TEST_LOOP; i++) {
+        final int loggingTestLoop = 100;
+        for (int i = 0; i < loggingTestLoop; i++) {
             logger.error("TEST: This is number: {}", i, new IOException());
         }
     }

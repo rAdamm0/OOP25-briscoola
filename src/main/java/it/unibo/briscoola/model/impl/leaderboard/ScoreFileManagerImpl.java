@@ -31,22 +31,37 @@ import java.util.Optional;
 public class ScoreFileManagerImpl implements ScoreFileManager {
 
     /**
-     * The name of the hidden directory for game configuration.
-     */
-    private static final String FOLDER_NAME = ".briscoola";
-
-    /**
-     * The name of the file for game leaderboard.
-     */
-    private static final String FILE_NAME = "leaderboard.json";
-
-    /**
      * The path to the JSON file where the leaderboard is stored.
      */
-    private final Path leaderboardPath = Paths.get(System.getProperty("user.home"), FOLDER_NAME, FILE_NAME);
-
+    private final Path path;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final Logger logger = LoggerFactory.getLogger(ScoreFileManagerImpl.class);
+
+    /**
+     * Sets up the manager and creates the path and the file if it doesn't exist.
+     *
+     * @param fileName the name of the file handled by the manager
+     */
+    public ScoreFileManagerImpl(final String fileName) {
+        final String folderName = ".briscoola";
+        this.path = Paths.get(System.getProperty("user.home"), folderName, fileName);
+        this.prepFiles();
+    }
+    
+    private void prepFiles() {
+        try {
+            final Path parentDir = path.getParent();
+            if (parentDir != null && Files.notExists(parentDir)) {
+                Files.createDirectories(parentDir);
+            }
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+            }
+            Files.writeString(path, "");
+        } catch (final IOException e) {
+            logger.error("Error during the Manager prep method-> {}", e.getMessage(), e);
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -57,15 +72,15 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
             return false;
         }
         try {
-            final Path parentDir = leaderboardPath.getParent();
+            final Path parentDir = path.getParent();
             if (parentDir != null && Files.notExists(parentDir)) {
                 Files.createDirectories(parentDir);
             }
-            if (Files.notExists(leaderboardPath)) {
-                Files.createFile(leaderboardPath);
+            if (Files.notExists(path)) {
+                Files.createFile(path);
             }
             final String toWrite = gson.toJson(list);
-            Files.writeString(leaderboardPath, toWrite);
+            Files.writeString(path, toWrite);
             return true;
         } catch (final IOException e) {
             logger.error("Error during the Manager save method-> {}", e.getMessage(), e);
@@ -78,10 +93,10 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
      */
     @Override
     public List<ScoreEntry> load() {
-        if (Files.notExists(leaderboardPath)) {
+        if (Files.notExists(path)) {
             return List.of();
         }
-        try (Reader reader = Files.newBufferedReader(leaderboardPath, StandardCharsets.UTF_8)) {
+        try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             final TypeToken<List<ScoreEntryImpl>> listType = new TypeToken<>() {
             };
             final Optional<List<ScoreEntry>> list = Optional.ofNullable(gson.fromJson(reader, listType.getType()));
@@ -98,7 +113,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
      */
     @Override
     public boolean clearLeaderBoard() {
-        try(InputStream _ = Files.newInputStream(leaderboardPath, StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (InputStream _ = Files.newInputStream(path, StandardOpenOption.TRUNCATE_EXISTING)) {
             return true;
         } catch (final IOException e) {
             logger.error("Error during the Manager clear method-> {}", e.getMessage(), e);
