@@ -1,8 +1,8 @@
 package it.unibo.briscoola.model.impl.player.cpu;
 
 import it.unibo.briscoola.model.api.card.Card;
-import it.unibo.briscoola.model.api.game.RoundState;
 import it.unibo.briscoola.model.api.player.PlayStrategy;
+import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 import it.unibo.briscoola.model.impl.player.PlayerImpl;
 
 import java.util.function.Consumer;
@@ -27,7 +27,7 @@ public final class CpuPlayer extends PlayerImpl {
     }
 
     @Override
-    public Card playCard(RoundState state, Consumer<Card> callback) {
+    public Card playCard(RoundStateImpl state, Consumer<Card> callback) {
         final int index = strategy.cardIndex(this.getHand(), state);
         return super.playCard(index);
     }

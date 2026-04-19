@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import it.unibo.briscoola.model.api.card.Card;
-import it.unibo.briscoola.model.api.game.RoundState;
 import it.unibo.briscoola.model.api.player.Player;
+import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 
 public class PlayerImpl implements Player {
 
@@ -22,7 +22,7 @@ public class PlayerImpl implements Player {
     
 
     @Override
-    public Card playCard(RoundState state, Consumer<Card> callback) {
+    public Card playCard(RoundStateImpl state, Consumer<Card> callback) {
         return this.hand.remove(0);
     }
 

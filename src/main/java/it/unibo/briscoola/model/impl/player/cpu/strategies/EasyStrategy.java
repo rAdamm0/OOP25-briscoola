@@ -1,8 +1,8 @@
 package it.unibo.briscoola.model.impl.player.cpu.strategies;
 
 import it.unibo.briscoola.model.api.card.Card;
-import it.unibo.briscoola.model.api.game.RoundState;
 import it.unibo.briscoola.model.api.player.PlayStrategy;
+import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class EasyStrategy implements PlayStrategy {
      * {@inheritDoc}
      */
     @Override
-    public int cardIndex(final List<Card> hand, RoundState state) {
+    public int cardIndex(final List<Card> hand, RoundStateImpl state) {
         try {
             return hand.indexOf(hand.stream().min(Comparator.comparingInt(Card::getCardPower)).orElseThrow());
         } catch (final NoSuchElementException e) {
