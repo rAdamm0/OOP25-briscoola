@@ -62,7 +62,7 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public RoundWinner determineWinner() {
-        if(this.table.isEmpty() || this.leadSeed != null){
+        if(this.table.isEmpty() || this.leadSeed == null){
             throw new IllegalStateException();
         }
         final RoundPlay winningEntry;
