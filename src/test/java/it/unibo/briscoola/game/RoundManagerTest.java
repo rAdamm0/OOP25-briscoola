@@ -34,13 +34,14 @@ public class RoundManagerTest {
         this.playerList.add(new CpuPlayer(1, StrategyFactory.create(Difficulty.EASY)));
 
         playerList.getFirst().receiveCard(new StandardCardImpl(CardValue.ACE,CardSeed.CUP));
-        playerList.getFirst().receiveCard(new StandardCardImpl(CardValue.TWO,CardSeed.SWORD));
+        playerList.getFirst().receiveCard(new StandardCardImpl(CardValue.JACK,CardSeed.SWORD));
 
         playerList.getLast().receiveCard(new StandardCardImpl(CardValue.FIVE,CardSeed.CUP));
         playerList.getLast().receiveCard(new StandardCardImpl(CardValue.SEVEN,CardSeed.CUP));
 
 
-        this.manager = new RoundManagerImpl(CardSeed.CUP, List.copyOf(playerList));
+        this.manager = new RoundManagerImpl(CardSeed.SWORD);
+        this.manager.startRound(List.copyOf(playerList));
     }
 
     @Test
@@ -51,6 +52,6 @@ public class RoundManagerTest {
     @Test
     void winnerCheck(){
         this.manager.nextPlayerSwitch();
-        assertEquals(this.manager.determineWinner(), new RoundWinner(this.playerList.getFirst(), 11));
+        assertEquals(this.manager.determineWinner(), new RoundWinner(this.playerList.getFirst(), 2));
     }
 }

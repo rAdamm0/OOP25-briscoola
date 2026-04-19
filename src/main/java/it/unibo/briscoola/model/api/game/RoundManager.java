@@ -4,9 +4,17 @@ import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.RoundPlay;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
 
+import java.util.List;
 import java.util.Map;
 
 public interface RoundManager {
+
+    /**
+     * Handles the setting up of the round.
+     *
+     * @param turnOrder the list of players sorted in the
+     */
+    void startRound(List<Player> turnOrder);
 
     /**
      * Rotates between the players in game.

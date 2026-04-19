@@ -12,25 +12,28 @@ public class RoundManagerImpl implements RoundManager {
 
     private final List<RoundPlay> table;
     private final CardSeed briscola;
-    private final List<Player> playersList;
+    private List<Player> playersList;
     private CardSeed leadSeed;
     private int currentPlayerIndex = 0;
     private final Logger logger = LoggerFactory.getLogger(RoundManagerImpl.class);
 
-    public RoundManagerImpl(CardSeed briscola, List<Player> playersList){
-        this.playersList = playersList;
+    public RoundManagerImpl(CardSeed briscola){
         this.table = new ArrayList<>();
         this.briscola = briscola;
+    }
+
+    @Override
+    public void startRound(List<Player> turnOrder){
+        this.playersList = List.copyOf(turnOrder);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @return
      */
     @Override
     public Boolean nextPlayerSwitch(){
-        while(currentPlayerIndex < playersList.size()){
+        if(currentPlayerIndex < playersList.size()){
             requestCard(playersList.get(currentPlayerIndex));
             currentPlayerIndex++;
         }
@@ -59,14 +62,31 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public RoundWinner determineWinner() {
-        if(this.table.isEmpty()){
+        if(this.table.isEmpty() || this.leadSeed != null){
             throw new IllegalStateException();
         }
-        final RoundPlay winningEntry = this.table.stream()
-                .max(Comparator.comparingInt(e -> e.card().getCardPower() ))
-                .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
-        return new RoundWinner(winningEntry.player(), this.table.stream().map(a-> a.card().getCardPoints()).reduce(Integer::sum)
-                .orElseThrow(()->new IllegalStateException("No possible points calculated")));
+        final RoundPlay winningEntry;
+        final int points;
+        if(this.table.stream().anyMatch(a->a.card().getCardSeed().equals(this.briscola))){
+            winningEntry = this.table.stream()
+                    .filter(a->a.card().getCardSeed().equals(this.briscola))
+                    .max(Comparator.comparingInt(e -> e.card().getCardPower() ))
+                    .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
+        }else{
+            winningEntry = this.table.stream()
+                    .filter(a->a.card().getCardSeed().equals(this.leadSeed))
+                    .max(Comparator.comparingInt(e -> e.card().getCardPower() ))
+                    .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
+        }
+            points = this.table.stream().mapToInt(a-> a.card().getCardPoints()).sum();
+        this.roundClear();
+        return new RoundWinner(winningEntry.player(), points);
+    }
+
+    private void roundClear(){
+        this.table.clear();
+        this.leadSeed = null;
+        this.currentPlayerIndex = 0;
     }
 }
 
