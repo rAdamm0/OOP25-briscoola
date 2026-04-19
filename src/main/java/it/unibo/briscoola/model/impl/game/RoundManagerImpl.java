@@ -14,6 +14,7 @@ public class RoundManagerImpl implements RoundManager {
     private final CardSeed briscola;
     private final List<Player> playersList;
     private CardSeed leadSeed;
+    private int currentPlayerIndex = 0;
     private final Logger logger = LoggerFactory.getLogger(RoundManagerImpl.class);
 
     public RoundManagerImpl(CardSeed briscola, List<Player> playersList){
@@ -29,8 +30,9 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public Boolean nextPlayerSwitch(){
-        if(!playersList.isEmpty()){
-            requestCard(playersList.getFirst());
+        while(currentPlayerIndex < playersList.size()){
+            requestCard(playersList.get(currentPlayerIndex));
+            currentPlayerIndex++;
         }
         return true;
     }
@@ -47,11 +49,7 @@ public class RoundManagerImpl implements RoundManager {
             }
             table.add(new RoundPlay(player, card));
         });
-        if(playersList.getFirst()!=player){
-            throw new RuntimeException();
-        }
-        playersList.removeFirst();
-        nextPlayerSwitch();
+
     }
 
     /**
