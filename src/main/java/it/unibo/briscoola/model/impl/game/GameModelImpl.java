@@ -58,13 +58,18 @@ public class GameModelImpl implements GameModel{
         }
     }
 
-    /** 
-     * {@inheritDoc}
-     */
+
     @Override
-    public void drawAfterTrick(Player winner, Player loser) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawAfterTrick'");
+    public void drawAfterTrick(Player winner, Player loser){
+        Optional<Card> firstCard = this.deck.draw();
+        if(firstCard.isPresent()){
+            winner.receiveCard(firstCard.get());
+        }
+
+        Optional<Card> secondCard = this.deck.draw();
+        if(secondCard.isPresent()){
+            loser.receiveCard(secondCard.get());
+        }
     }
 
     /** 
