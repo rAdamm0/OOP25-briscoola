@@ -77,8 +77,7 @@ public class GameModelImpl implements GameModel{
      */
     @Override
     public Card playCard(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'playCard'");
+        return this.players.get(0).playCard(index);
     }
 
     /** 
@@ -86,7 +85,11 @@ public class GameModelImpl implements GameModel{
      */
     @Override
     public boolean isGameOver() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isGameOver'");
+        for (Player p : this.players) {
+            if (!p.getHand().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
