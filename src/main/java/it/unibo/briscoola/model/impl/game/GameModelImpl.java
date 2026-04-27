@@ -51,8 +51,11 @@ public class GameModelImpl implements GameModel{
      */
     @Override
     public void dealInitialCards() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dealInitialCards'");
+        for(int i = 0; i < 3; i++){
+            for(Player p : players){
+                p.receiveCard(deck.draw().orElseThrow());
+            }
+        }
     }
 
     /** 
