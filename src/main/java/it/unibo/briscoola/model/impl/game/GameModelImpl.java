@@ -52,21 +52,23 @@ public class GameModelImpl implements GameModel{
     @Override
     public void dealInitialCards() {
         for(int i = 0; i < 3; i++){
-            for(Player p : players){
+            for(final Player p : players){
                 p.receiveCard(deck.draw().orElseThrow());
             }
         }
     }
 
-
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void drawAfterTrick(Player winner, Player loser){
-        Optional<Card> firstCard = this.deck.draw();
+    public void drawAfterTrick(final Player winner, final Player loser){
+        final Optional<Card> firstCard = this.deck.draw();
         if(firstCard.isPresent()){
             winner.receiveCard(firstCard.get());
         }
 
-        Optional<Card> secondCard = this.deck.draw();
+        final Optional<Card> secondCard = this.deck.draw();
         if(secondCard.isPresent()){
             loser.receiveCard(secondCard.get());
         }
@@ -76,7 +78,7 @@ public class GameModelImpl implements GameModel{
      * {@inheritDoc}
      */
     @Override
-    public Card playCard(int index) {
+    public Card playCard(final int index) {
         return this.players.get(0).playCard(index);
     }
 
@@ -85,7 +87,7 @@ public class GameModelImpl implements GameModel{
      */
     @Override
     public boolean isGameOver() {
-        for (Player p : this.players) {
+        for (final Player p : this.players) {
             if (!p.getHand().isEmpty()) {
                 return false;
             }
