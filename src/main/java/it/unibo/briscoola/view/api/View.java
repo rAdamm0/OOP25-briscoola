@@ -24,4 +24,9 @@ public interface View {
      * @param message
      */
     void displayMessage(String message);
+
+    /*
+     * Close the app
+     */
+    void quit();
 }

@@ -10,7 +10,7 @@ public class StartScreen extends JPanel{
         setBackground(new Color(30,100,30));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); /* this define empty space around the components / buttons */
+        gbc.insets = new Insets(15, 15, 15, 15); /* this define empty space around the components / buttons */
         gbc.gridx = 0; /*all in one central column */
 
         /**
@@ -22,25 +22,25 @@ public class StartScreen extends JPanel{
 
         
         JLabel title = new JLabel("BRISCOOLA");
-        title.setFont(new Font("Serif", Font.BOLD, 60));
+        title.setFont(new Font("Serif", Font.BOLD, 70));
         title.setForeground(Color.YELLOW);
         gbc.gridy = 0;
+        add(title, gbc);
 
 
 
-        JButton btnPlay = new JButton("Playy");
+        JButton btnPlay = new JButton("Play");
         btnPlay.setPreferredSize(new Dimension(200, 50));
         btnPlay.addActionListener(onStart);
         gbc.gridy = 1;
+        add(btnPlay, gbc);
+
 
 
         JButton btnQuit = new JButton("Exit");
         btnQuit.setPreferredSize(new Dimension(200, 50));
         btnQuit.addActionListener(onQuit);
         gbc.gridy = 2;
-
-        add(title, gbc);
-        add(btnPlay, gbc);
         add(btnQuit, gbc);
     }
     

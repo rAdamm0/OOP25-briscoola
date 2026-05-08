@@ -19,7 +19,7 @@ public class PileView extends JPanel {
      */
     public PileView(String ownerName) {
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createTitledBorder("Mazzetto " + ownerName));
+        setBorder(BorderFactory.createTitledBorder(ownerName + "Pile "));
         setPreferredSize(new Dimension(150, 100));
 
         /**
@@ -28,7 +28,7 @@ public class PileView extends JPanel {
         JPanel cardBack = new JPanel();
         cardBack.setBackground(new Color(60, 60, 150));
         cardBack.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        cardBack.add(new JLabel("<html><font color='white'>🂠</font></html>"));
+        cardBack.add(new JLabel());
 
         labelForCount.setHorizontalAlignment(SwingConstants.CENTER);
         labelForCount.setFont(new Font("Arial", Font.BOLD, 20));
