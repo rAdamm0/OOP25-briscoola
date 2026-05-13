@@ -51,7 +51,7 @@ public class RoundManagerTest {
 
     @Test
     void winnerCheck(){
-        for(Player player : playerList){
+        for(Player _ : playerList){
             this.manager.nextPlayerSwitch();
         }
         assertEquals(this.manager.determineWinner(), new RoundWinner(this.playerList.getFirst(), 13));
