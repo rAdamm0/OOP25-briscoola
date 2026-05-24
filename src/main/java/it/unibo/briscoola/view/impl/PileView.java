@@ -19,7 +19,7 @@ public class PileView extends JPanel {
      */
     public PileView(String ownerName) {
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createTitledBorder(ownerName + "Pile "));
+        setBorder(BorderFactory.createTitledBorder(ownerName + " Pile "));
         setPreferredSize(new Dimension(150, 100));
 
         /**
@@ -31,7 +31,6 @@ public class PileView extends JPanel {
         cardBack.add(new JLabel());
 
         labelForCount.setHorizontalAlignment(SwingConstants.CENTER);
-        labelForCount.setFont(new Font("Arial", Font.BOLD, 20));
 
         add(cardBack, BorderLayout.CENTER);
         add(labelForCount, BorderLayout.SOUTH);
@@ -43,7 +42,7 @@ public class PileView extends JPanel {
      * transform the entire "count" into a string and set it in the label
      * @param count hte new number of the cards won to show
      */
-    public void updateCount(int count) {
-        labelForCount.setText(String.valueOf(count));
+    public void updateCount(final int count) {
+        this.labelForCount.setText(String.valueOf(count));
     }
 }
