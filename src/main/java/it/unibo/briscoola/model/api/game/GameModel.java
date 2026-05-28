@@ -38,10 +38,10 @@ public interface GameModel {
     void dealInitialCards();
 
     /**
-     * After a trick, the winner draws first, then the loser. 
-     * If the deck is empty, nobody will draw.
-     * @param winner the player who won the trick
-     * @param loser the player who lost the trick
+     * After a trick, players draw cards following the given order.
+     * If the deck becomes empty, remaining players will not draw.
+     * 
+     * @param orderedPlayers refers to the order of players
      */
     void drawAfterTrick(List<Player> orderedPlayers);
 
