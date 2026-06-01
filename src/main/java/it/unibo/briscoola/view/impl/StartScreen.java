@@ -2,46 +2,42 @@ package it.unibo.briscoola.view.impl;
 
 import javax.swing.*;
 import java.awt.*;
+
+import it.unibo.briscoola.view.impl.menu.MainMenu;
+import it.unibo.briscoola.view.impl.menu.PlayerSelectionsPanel;
+
 import java.awt.event.ActionListener;
+import java.util.function.Consumer;
 
 public class StartScreen extends JPanel{
-    public StartScreen(ActionListener onStart, ActionListener onQuit){
-        setLayout(new GridBagLayout());
-        setBackground(new Color(30,100,30));
+    /**
+     * it simply includes the two sub-panels 
+     * and manages the exchange via CardLayout
+     */
+    private static final String MAIN_MENU = "MAIN";
+    private static final String PLAYER_SELECTION = "SELECTION";
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15); /* this define empty space around the components / buttons */
-        gbc.gridx = 0; /*all in one central column */
+    private final CardLayout cardLayout;
 
-        /**
-         * to be sure.
-         * "gbc.gridy" defines the row (Y) of the grid in which to place the component.
-         * By increasing "gridy", components are stacked vertically. 
-         * "gridy" = 0 -> "title" , "gridy" = 1 -> "Button : Play" , "gridy" = 2 -> "Button : Exit"
-         */
+    public StartScreen(final Consumer<Integer> onStart,final ActionListener onQuit){
+        this.cardLayout = new CardLayout();
+        this.setLayout(this.cardLayout);
+        this.setBackground(new Color(30,100,30));
 
-        
-        JLabel title = new JLabel("BRISCOOLA");
-        title.setFont(new Font("Serif", Font.BOLD, 70));
-        title.setForeground(Color.YELLOW);
-        gbc.gridy = 0;
-        add(title, gbc);
+        // Istanziamo i sotto-pannelli specialisti (ora visibili grazie alle import)
+        final JPanel mainMenu = new MainMenu(
+            e -> cardLayout.show(this, PLAYER_SELECTION), 
+            onQuit
+        );
 
+        final JPanel playerSelection = new PlayerSelectionsPanel(
+            onStart, 
+            e -> cardLayout.show(this, MAIN_MENU)
+        );
 
+        this.add(mainMenu, MAIN_MENU);
+        this.add(playerSelection, PLAYER_SELECTION);
 
-        JButton btnPlay = new JButton("Play");
-        btnPlay.setPreferredSize(new Dimension(200, 50));
-        btnPlay.addActionListener(onStart);
-        gbc.gridy = 1;
-        add(btnPlay, gbc);
-
-
-
-        JButton btnQuit = new JButton("Exit");
-        btnQuit.setPreferredSize(new Dimension(200, 50));
-        btnQuit.addActionListener(onQuit);
-        gbc.gridy = 2;
-        add(btnQuit, gbc);
     }
     
 }

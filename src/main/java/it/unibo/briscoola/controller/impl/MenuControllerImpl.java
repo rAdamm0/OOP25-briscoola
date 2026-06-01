@@ -3,8 +3,7 @@ package it.unibo.briscoola.controller.impl;
 import java.util.List;
 import java.util.ArrayList;
 
-import javax.swing.text.View;
-
+import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.player.Player;
@@ -34,7 +33,7 @@ public class MenuControllerImpl implements MenuController {
         * Creation of players
         */
         final List<Player> players = new ArrayList<>();
-        for(int i=1;i < numPlayers; i++){
+        for(int i=1;i <= numPlayers; i++){
             players.add(new PlayerImpl(i));
         }
 
