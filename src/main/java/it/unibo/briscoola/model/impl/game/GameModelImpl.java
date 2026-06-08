@@ -67,9 +67,7 @@ public class GameModelImpl implements GameModel{
     public void drawAfterTrick(final List<Player> orderedPlayers){
         for(final Player player: orderedPlayers){
             final Optional<Card> card = this.deck.draw();
-            if(card.isPresent()){
-                player.receiveCard(card.get());
-            }
+            card.ifPresent(player::receiveCard);
         }
     }
 

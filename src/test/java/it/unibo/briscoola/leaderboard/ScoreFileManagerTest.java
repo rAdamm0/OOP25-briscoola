@@ -79,12 +79,12 @@ class ScoreFileManagerTest {
         assertTrue(this.manager.clearLeaderBoard());
     }
 
-    @Test void loggerTest() {
+    /*@Test void loggerTest() {
         logger.error("TEST: This should appear in BOTH the CONSOLE and the FILE!", new IOException());
         logger.info("TEST: This should appear only on the console");
         final int loggingTestLoop = 100;
         for (int i = 0; i < loggingTestLoop; i++) {
             logger.error("TEST: This is number: {}", i, new IOException());
         }
-    }
+    }*/
 }

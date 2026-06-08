@@ -8,17 +8,13 @@ import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.card.StandardCardImpl;
 import it.unibo.briscoola.model.impl.game.RoundManagerImpl;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
-import it.unibo.briscoola.model.impl.player.PlayerImpl;
 import it.unibo.briscoola.model.impl.player.cpu.CpuPlayer;
 import it.unibo.briscoola.model.impl.player.cpu.StrategyFactory;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

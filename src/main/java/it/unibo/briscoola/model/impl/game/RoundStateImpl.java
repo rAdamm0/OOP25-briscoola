@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public record RoundStateImpl(List<RoundPlay> playedCards, CardSeed briscola, Optional<CardSeed> leadSeed) {
 
+
     /**
      * {@inheritDoc}
      */
