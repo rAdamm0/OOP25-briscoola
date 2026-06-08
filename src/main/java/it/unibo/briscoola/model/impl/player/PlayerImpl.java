@@ -23,7 +23,7 @@ public class PlayerImpl implements Player {
 
     @Override
     public Card playCard(RoundStateImpl state, Consumer<Card> callback) {
-        return this.hand.remove(0);
+        return this.hand.removeFirst();
     }
 
     @Override

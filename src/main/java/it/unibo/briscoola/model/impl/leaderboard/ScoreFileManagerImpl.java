@@ -113,7 +113,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
      */
     @Override
     public boolean clearLeaderBoard() {
-        try (InputStream _ = Files.newInputStream(path, StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (InputStream ignored = Files.newInputStream(path, StandardOpenOption.TRUNCATE_EXISTING)) {
             return true;
         } catch (final IOException e) {
             logger.error("Error during the Manager clear method-> {}", e.getMessage(), e);

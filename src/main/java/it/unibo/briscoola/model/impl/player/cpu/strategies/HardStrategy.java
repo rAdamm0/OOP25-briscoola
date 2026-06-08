@@ -12,6 +12,7 @@ import java.util.Optional;
 
 /**
  * Strategy of the CPU for choosing the card to be played in Hard Difficulty
+ * Points to use the best suited card based on the cards present on the table.
  */
 public class HardStrategy implements PlayStrategy {
 

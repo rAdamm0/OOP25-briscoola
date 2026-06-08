@@ -16,10 +16,10 @@ public final class CpuPlayer extends PlayerImpl {
     private final PlayStrategy strategy;
 
     /**
-     * Constructor of a CPU player with 2 parameters
+     * Constructor of a CPU player with its id and the strategy to follow.
      *
      * @param id id of the player
-     * @param strategy Strategy to adapt based on the @link{StrategyFactory}
+     * @param strategy Strategy to adapt based on the {@link StrategyFactory}
      */
     public CpuPlayer(final int id, final PlayStrategy strategy) {
         super(id);

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * Strategy of the CPU for choosing the card to be played in Medium Difficulty.
- * Points to use the best fit for the card present on the table.
+ * Points to use the best fit for the card present on the table regarding the power.
  */
 public class MediumStrategy implements PlayStrategy {
 
