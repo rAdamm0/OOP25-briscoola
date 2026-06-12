@@ -40,7 +40,7 @@ public final class CpuPlayer extends PlayerImpl {
     @Override
     public Card playCard(RoundStateImpl state) {
         final int index = strategy.cardIndex(this.getHand(), state);
-        return this.playCard(index);
+        return this.getHand().get(index);
     }
 
 }

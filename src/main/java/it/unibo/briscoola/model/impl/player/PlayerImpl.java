@@ -42,6 +42,14 @@ public class PlayerImpl implements Player {
         this.hand.add(card);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeCard(Card card) {
+        this.hand.remove(card);
+    }
+
     @Override
     public List<Card> getHand() {
         return List.copyOf(this.hand);

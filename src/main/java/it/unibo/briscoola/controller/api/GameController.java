@@ -23,11 +23,6 @@ public interface GameController {
      */
     void handleHumanCardSelection(Card selectedCard);
 
-    /**
-     * Sends to the model the index of the chosen card
-     * @param index of the card in the player hand
-     */
-    void handleCardPlayed(int index);
 
 
 }

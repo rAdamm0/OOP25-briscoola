@@ -16,7 +16,6 @@ import it.unibo.briscoola.model.impl.player.cpu.StrategyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class GameBuilderImpl implements GameBuilder {
@@ -24,11 +23,11 @@ public class GameBuilderImpl implements GameBuilder {
 
     private final List<Player> players = new ArrayList<>();
     private PlayStrategy playStrategy;
-    private final Random rand = new Random();
+    private int id = 0;
 
 
     public GameBuilderImpl(){
-        players.add(new PlayerImpl(rand.nextInt()));
+        players.add(new PlayerImpl(id++));
     }
 
     /**
@@ -45,7 +44,7 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilderImpl addPlayer(){
-        this.players.add(new CpuPlayer(rand.nextInt(), playStrategy));
+        this.players.add(new CpuPlayer(id++, playStrategy));
         return this;
     }
 
@@ -56,8 +55,6 @@ public class GameBuilderImpl implements GameBuilder {
     @Override
     public GameModel build() {
         Deck<Card> deck= new DeckImpl();
-
-
         return new GameModelImpl(players,deck);
     }
 }
