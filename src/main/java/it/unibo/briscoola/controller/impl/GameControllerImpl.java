@@ -4,6 +4,7 @@ import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.game.RoundManager;
+import it.unibo.briscoola.model.impl.game.GameModelImpl;
 import it.unibo.briscoola.model.impl.game.RoundManagerImpl;
 import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.impl.GameViewImpl;
@@ -11,7 +12,6 @@ import it.unibo.briscoola.view.impl.GameViewImpl;
 public class GameControllerImpl implements GameController {
 
     private final GameModel model;
-    private final RoundManager roundModel = new RoundManagerImpl();
     private final View view;
 
     public GameControllerImpl(GameModel model, View view) {

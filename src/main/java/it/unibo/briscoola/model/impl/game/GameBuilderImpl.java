@@ -31,13 +31,19 @@ public class GameBuilderImpl implements GameBuilder {
         players.add(new PlayerImpl(rand.nextInt()));
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameBuilderImpl setDifficulty(Difficulty difficulty){
         this.playStrategy = StrategyFactory.create(difficulty);
         return this;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameBuilderImpl addPlayer(){
         this.players.add(new CpuPlayer(rand.nextInt(), playStrategy));
         return this;
