@@ -11,13 +11,15 @@ import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 public class PlayerImpl implements Player {
 
     private final int id;
-    protected final List<Card> hand;
+    private final List<Card> hand;
+    private final List<Card> pile;
     private int points;
 
     public PlayerImpl(int id) {
         this.id = id;
         this.points = 0;
         this.hand = new ArrayList<>();
+        this.pile = new ArrayList<>();
     }
 
     public PlayerImpl(int id, int points, List<Card> hand){
@@ -54,6 +56,25 @@ public class PlayerImpl implements Player {
     public List<Card> getHand() {
         return List.copyOf(this.hand);
     }
+
+    
+    @Override
+    public void addtoPile(Card card) {
+        this.pile.add(card);
+    }
+
+
+    @Override
+    public List<Card> getPile() {
+        return this.pile;
+    }
+
+
+    @Override
+    public void clearPile() {
+        this.pile.clear();
+    }
+
     
     @Override
     public void addPoints(int points) {
