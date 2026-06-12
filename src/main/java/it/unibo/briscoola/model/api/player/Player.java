@@ -33,6 +33,22 @@ public interface Player {
     List<Card> getHand();
 
     /**
+     * adds a taken card to the players pile
+     * @param card the card taken in the round
+     */
+    void addtoPile(Card card);
+
+    /**
+     * @return the pile 
+     */
+    List<Card> getPile();
+
+    /**
+     * empties the players pile
+     */
+    void clearPile();
+
+    /**
      * Adds to the player's total points at the end of each round
      * @param points points to add
      */
