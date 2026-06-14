@@ -50,12 +50,12 @@ public class PlayerSelectionsPanel extends JPanel {
 
         /**
          * button for 4 players 
+         * final JButton btn4Players = new JButton("4 Players");
+         * btn4Players.setPreferredSize(new Dimension(200, 50));
+         * btn4Players.addActionListener(e -> chosePlayer.accept(4)); 
+         * gbc.gridy = 2;
+         * add(btn4Players, gbc);
          */
-        final JButton btn4Players = new JButton("4 Players");
-        btn4Players.setPreferredSize(new Dimension(200, 50));
-        btn4Players.addActionListener(e -> chosePlayer.accept(4)); 
-        gbc.gridy = 2;
-        add(btn4Players, gbc);
 
 
         /**

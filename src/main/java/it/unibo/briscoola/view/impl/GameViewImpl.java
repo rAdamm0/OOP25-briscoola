@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.model.impl.card.StandardCardImpl;
 import it.unibo.briscoola.view.api.View;
 
 public class GameViewImpl extends JFrame implements View {
@@ -164,12 +167,49 @@ public class GameViewImpl extends JFrame implements View {
 
     
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
-    public void updateHand() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateHand'");
+    public void updateHand(final int playerID,final List<Card> handCards) {
+        /*
+         *ID = 0: Human Player (shows his real cards face up)
+         */
+        if (playerID == 0) {
+            for (int i = 0; i < 3; i++) {
+                if (i < handCards.size()) {
+                    /*
+                     * We cast to StandardCardImpl to make it compatible with your unchanged CardView
+                     */
+                    final StandardCardImpl concreteCard = 
+                        (StandardCardImpl) handCards.get(i);
+                    
+                    this.playerHandCards[i].renderCard(concreteCard);
+                    this.playerHandCards[i].setVisible(true);
+                } else {
+                    /*
+                     * Hides the slot if the player has less than 3 cards at the end of the deck
+                     */
+                    this.playerHandCards[i].setVisible(false);
+                }
+            }
+        }
+        /*
+         * ID = 2, 3, 4: Avversari o Compagni della CPU (vedono i dorsi delle carte coperti) 
+         */
+        else {
+            for (int i = 0; i < 3; i++) {
+                if (i < handCards.size()) {
+
+                    this.cpuHandCards[i].renderCard(null);
+                    this.cpuHandCards[i].setVisible(true);
+                } else {
+                    this.cpuHandCards[i].setVisible(false);
+                }
+            }
+        }
+        
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
 
     
@@ -178,8 +218,14 @@ public class GameViewImpl extends JFrame implements View {
      */
     @Override
     public void updatePile(int cardsCount, boolean player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePile'");
+        if (player) {
+            /*
+             *Take advantage of the updateCount(int count) method 
+             */
+            this.playerPile.updateCount(cardsCount);
+        } else {
+            this.cpuPile.updateCount(cardsCount);
+        }
     }
 
 

@@ -70,7 +70,9 @@ public class PileView extends JPanel {
      * @param count hte new number of the cards won to show
      */
     public void updateCount(final int count) {
-        // Se il giocatore o la CPU hanno preso almeno una carta, mostriamo il dorso sul tavolo
+        /**
+         * If the player or the CPU has taken at least one card, we show the back on the table
+         */
         if (count > 0) {
             this.imageLabel.setVisible(true);
         } else {
