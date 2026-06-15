@@ -21,7 +21,7 @@ public class StartScreen extends JPanel{
     private static final String DIFFICULTY_SELECTION = "DIFFICULTY";
 
     private final CardLayout cardLayout;
-    private int temporarySelectedPlayers = 2; // Memoria temporanea della View
+    private int temporarySelectedPlayers = 2;
 
     public StartScreen(final BiConsumer<Integer,Difficulty> onSetupComplete, final ActionListener onQuit){
         this.cardLayout = new CardLayout();
@@ -42,7 +42,10 @@ public class StartScreen extends JPanel{
         final JPanel playerSelection = new PlayerSelectionsPanel(
 num -> {
                 this.temporarySelectedPlayers = num; 
-                cardLayout.show(this, DIFFICULTY_SELECTION); /*move to the selection of difficulty */
+                cardLayout.show(this, DIFFICULTY_SELECTION); 
+                /*
+                move to the selection of difficulty 
+                */
             }, 
             e -> cardLayout.show(this, MAIN_MENU)
         );

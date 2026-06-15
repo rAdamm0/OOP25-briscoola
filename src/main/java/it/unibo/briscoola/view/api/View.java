@@ -1,10 +1,25 @@
 package it.unibo.briscoola.view.api;
 
 import java.util.List;
+
+import it.unibo.briscoola.controller.api.GameController;
+import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
 
 public interface View {
-    
+        
+    /**
+     * Set the menuController fopr handling initial configuration
+     * @param menuController istance 
+     */
+    void setMenuController(MenuController menuController);
+
+    /**
+     * Set the gameController for handling the round mechanics and turns
+     * @param gameController istance 
+     */
+    void setGameController(GameController gameController);
+
     /**
      * Shows the inital screen
      */
@@ -35,8 +50,9 @@ public interface View {
      */
     void displayMessage(String message);
 
-    /*
+    /**
      * Close the app
      */
     void quit();
+
 }

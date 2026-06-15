@@ -47,9 +47,15 @@ public class GameViewImpl extends JFrame implements View {
         super("BriscOOla");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(1250, 850));
+        
+        this.menuController = menuController;
 
         StartScreen startScreen = new StartScreen(
-            (players, diff) -> this.menuController.startGame(players, diff), 
+            (players, diff) -> {
+                if(this.menuController!=null){
+                this.menuController.startGame(players, diff);
+                }
+            }, 
             e -> quit()
         ); 
 
@@ -61,12 +67,28 @@ public class GameViewImpl extends JFrame implements View {
         this.add(container);
         this.pack();
         
-        /*Place the window in the center of the screen when it starts */
+        /*
+        Place the window in the center of the screen when it starts 
+        */
         this.setLocationRelativeTo(null); 
     }
 
+    /**
+     * {@InheritDoc}
+     */
+    public void setMenuController(MenuController menuController){
+        this.menuController=menuController;
+    }
 
-    /** Creation of the board.
+    /**
+     * {@InheritDoc}
+     */
+    public void setGameController(GameController gameController){
+        this.gameController=gameController;
+    }
+
+    /** 
+     * Creation of the board.
      * @return gamePanel 
      */
     private JPanel createGamePanel() {
@@ -74,7 +96,9 @@ public class GameViewImpl extends JFrame implements View {
         
         mainPanel.setBackground(new Color(20, 80, 25)); 
 
-        /*CPU on North*/
+        /*
+        CPU on North
+        */
         JPanel northArea = new JPanel(new BorderLayout());
         northArea.setOpaque(false); 
         northArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -91,7 +115,9 @@ public class GameViewImpl extends JFrame implements View {
         northArea.add(cpuPile, BorderLayout.EAST); 
         mainPanel.add(northArea, BorderLayout.NORTH);
         
-        /*Player Guest on South*/
+        /*
+        Player Guest on South
+        */
         JPanel southArea = new JPanel(new BorderLayout());
         southArea.setOpaque(false); 
         southArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -108,7 +134,9 @@ public class GameViewImpl extends JFrame implements View {
         southArea.add(playerPile, BorderLayout.EAST); 
         mainPanel.add(southArea, BorderLayout.SOUTH);
 
-        /*Deck and Briscola on West*/
+        /*
+        Deck and Briscola on West
+        */
         JPanel westArea = new JPanel(new GridBagLayout());
         westArea.setOpaque(false);
         westArea.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
@@ -125,7 +153,9 @@ public class GameViewImpl extends JFrame implements View {
             Image img = deckIcon.getImage().getScaledInstance(120, 170, Image.SCALE_SMOOTH);
             deckLabel.setIcon(new ImageIcon(img));
         } else {
-            /*Fallback*/
+            /*
+            Fallback
+            */
             deckLabel.setText("Mazzo");
             deckLabel.setPreferredSize(new Dimension(120, 170));
             deckLabel.setOpaque(true);
@@ -143,7 +173,9 @@ public class GameViewImpl extends JFrame implements View {
         westArea.add(deckBriscolaPanel);
         mainPanel.add(westArea, BorderLayout.WEST);
 
-        /*Game Board in the middle*/
+        /*
+        Game Board in the middle
+        */
         JPanel tableCenter = new JPanel(new GridBagLayout());
         tableCenter.setOpaque(false);
         
@@ -177,7 +209,7 @@ public class GameViewImpl extends JFrame implements View {
     @Override
     public void updateHand(final int playerID,final List<Card> handCards) {
         /*
-         *ID = 0: Human Player (shows his real cards face up)
+         *ID = 0: Human Player
          */
         if (playerID == 0) {
             for (int i = 0; i < 3; i++) {
@@ -216,7 +248,7 @@ public class GameViewImpl extends JFrame implements View {
             }
         }
         /*
-         * ID = 2, 3, 4: Avversari o Compagni della CPU (vedono i dorsi delle carte coperti) 
+         * ID = 2, 3, 4: for CPU players
          */
         else {
             for (int i = 0; i < 3; i++) {
@@ -242,7 +274,7 @@ public class GameViewImpl extends JFrame implements View {
     public void updatePile(int cardsCount, boolean player) {
         if (player) {
             /*
-             *Take advantage of the updateCount(int count) method 
+             *Uses the updateCount(int count) method 
              */
             this.playerPile.updateCount(cardsCount);
         } else {
