@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import it.unibo.briscoola.controller.api.GameController;
+import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.impl.card.StandardCardImpl;
 import it.unibo.briscoola.view.api.View;
@@ -38,15 +40,18 @@ public class GameViewImpl extends JFrame implements View {
     private final CardView[] playerHandCards = new CardView[3];
     private final CardView[] cpuHandCards = new CardView[3];
 
-    public GameViewImpl() {
+    private  MenuController menuController;
+    private GameController gameController;
+
+    public GameViewImpl(final MenuController menuController) {
         super("BriscOOla");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(1250, 850));
 
         StartScreen startScreen = new StartScreen(
-            e -> initGame(), 
+            (players, diff) -> this.menuController.startGame(players, diff), 
             e -> quit()
-        );  
+        ); 
 
         JPanel gamePanel = createGamePanel();
 
@@ -56,12 +61,12 @@ public class GameViewImpl extends JFrame implements View {
         this.add(container);
         this.pack();
         
-        // Posiziona la finestra al centro dello schermo quando si avvia
+        /*Place the window in the center of the screen when it starts */
         this.setLocationRelativeTo(null); 
     }
 
 
-    /** * Crea il tavolo da gioco.
+    /** Creation of the board.
      * @return gamePanel 
      */
     private JPanel createGamePanel() {
@@ -69,7 +74,7 @@ public class GameViewImpl extends JFrame implements View {
         
         mainPanel.setBackground(new Color(20, 80, 25)); 
 
-        /* --- CPU on North --- */
+        /*CPU on North*/
         JPanel northArea = new JPanel(new BorderLayout());
         northArea.setOpaque(false); 
         northArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -78,7 +83,7 @@ public class GameViewImpl extends JFrame implements View {
         cpuHandPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
             cpuHandCards[i] = new CardView();
-            cpuHandCards[i].renderCard(null); // Mostra il dorso
+            cpuHandCards[i].renderCard(null);
             cpuHandPanel.add(cpuHandCards[i]);
         }
         
@@ -86,7 +91,7 @@ public class GameViewImpl extends JFrame implements View {
         northArea.add(cpuPile, BorderLayout.EAST); 
         mainPanel.add(northArea, BorderLayout.NORTH);
         
-        /* --- Player Guest on South --- */
+        /*Player Guest on South*/
         JPanel southArea = new JPanel(new BorderLayout());
         southArea.setOpaque(false); 
         southArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -95,7 +100,7 @@ public class GameViewImpl extends JFrame implements View {
         playerHandPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
             playerHandCards[i] = new CardView();
-            playerHandCards[i].renderCard(null); // Mostra il retro della carta
+            playerHandCards[i].renderCard(null);
             playerHandPanel.add(playerHandCards[i]);
         }
 
@@ -103,10 +108,10 @@ public class GameViewImpl extends JFrame implements View {
         southArea.add(playerPile, BorderLayout.EAST); 
         mainPanel.add(southArea, BorderLayout.SOUTH);
 
-        /* --- Deck and Briscola on West --- */
+        /*Deck and Briscola on West*/
         JPanel westArea = new JPanel(new GridBagLayout());
         westArea.setOpaque(false);
-        westArea.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0)); // Margini dal bordo sinistro
+        westArea.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
         
         JPanel deckBriscolaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         deckBriscolaPanel.setOpaque(false);
@@ -120,7 +125,7 @@ public class GameViewImpl extends JFrame implements View {
             Image img = deckIcon.getImage().getScaledInstance(120, 170, Image.SCALE_SMOOTH);
             deckLabel.setIcon(new ImageIcon(img));
         } else {
-            // Fallback
+            /*Fallback*/
             deckLabel.setText("Mazzo");
             deckLabel.setPreferredSize(new Dimension(120, 170));
             deckLabel.setOpaque(true);
@@ -138,7 +143,7 @@ public class GameViewImpl extends JFrame implements View {
         westArea.add(deckBriscolaPanel);
         mainPanel.add(westArea, BorderLayout.WEST);
 
-        /* --- Game Board in the middle --- */
+        /*Game Board in the middle*/
         JPanel tableCenter = new JPanel(new GridBagLayout());
         tableCenter.setOpaque(false);
         
@@ -149,7 +154,7 @@ public class GameViewImpl extends JFrame implements View {
 
 
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void start() {
@@ -158,7 +163,7 @@ public class GameViewImpl extends JFrame implements View {
 
     
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void initGame() {
@@ -214,7 +219,7 @@ public class GameViewImpl extends JFrame implements View {
 
     
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void updatePile(int cardsCount, boolean player) {
@@ -230,7 +235,7 @@ public class GameViewImpl extends JFrame implements View {
 
 
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void displayMessage(String message) {
@@ -239,7 +244,7 @@ public class GameViewImpl extends JFrame implements View {
 
 
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void quit() {
