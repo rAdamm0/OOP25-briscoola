@@ -1,26 +1,19 @@
 package it.unibo.briscoola.controller.impl;
 
 import it.unibo.briscoola.controller.api.GameController;
-import it.unibo.briscoola.model.api.attributes.CardSeed;
-import it.unibo.briscoola.model.api.attributes.CardValue;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.game.GameModel;
-import it.unibo.briscoola.model.api.game.RoundManager;
 import it.unibo.briscoola.model.api.player.Player;
-import it.unibo.briscoola.model.impl.card.StandardCardImpl;
-import it.unibo.briscoola.model.impl.game.GameModelImpl;
-import it.unibo.briscoola.model.impl.game.RoundManagerImpl;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
 import it.unibo.briscoola.model.impl.player.cpu.CpuPlayer;
 import it.unibo.briscoola.view.api.View;
-import it.unibo.briscoola.view.impl.GameViewImpl;
 
 public class GameControllerImpl implements GameController {
 
     private final GameModel model;
     private final View view;
 
-    public GameControllerImpl(GameModel model, View view) {
+    public GameControllerImpl(final GameModel model,final View view) {
         this.model = model;
         this.view = view;
     }
@@ -66,11 +59,10 @@ public class GameControllerImpl implements GameController {
      * {@inheritDoc}
      */
     @Override
-    public void handleHumanCardSelection(String value, String seed) {
-        // TODO: View disables the human card selection
-        Player human = model.getCurrentPlayer();
-        Card selectedCard = new StandardCardImpl(CardValue.valueOf(value), CardSeed.valueOf(seed));
-        model.makeMove(human, selectedCard);
+    public void handlesHumanCardSelection(final int selectedIndex) {
+        final Player human = model.getCurrentPlayer();
+        final Card card = human.getHand().get(selectedIndex);
+        model.makeMove(human, card);
         manageTurn();
     }
 

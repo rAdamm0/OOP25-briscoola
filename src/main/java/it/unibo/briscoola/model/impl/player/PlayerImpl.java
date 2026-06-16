@@ -2,7 +2,6 @@ package it.unibo.briscoola.model.impl.player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.player.Player;
@@ -62,6 +61,7 @@ public class PlayerImpl implements Player {
     @Override
     public void addtoPile(Card card) {
         this.pile.add(card);
+        this.points = this.points + card.getCardPoints();
     }
 
 
@@ -74,12 +74,6 @@ public class PlayerImpl implements Player {
     @Override
     public void clearPile() {
         this.pile.clear();
-    }
-
-    
-    @Override
-    public void addPoints(int points) {
-        this.points = this.points + points;
     }
 
     @Override

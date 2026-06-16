@@ -1,6 +1,8 @@
 package it.unibo.briscoola;
 
-import it.unibo.briscoola.view.api.View;
+import it.unibo.briscoola.controller.api.MenuController;
+import it.unibo.briscoola.controller.impl.MenuControllerImpl;
+import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 
 /**
@@ -12,13 +14,19 @@ public final class BriscOOla {
 
     /**
      * Launches the application.
-     *
      * @param args a string with the movie/series name.
      */
     public static void main(final String[] args) {
-            
-             View gameView = new GameViewImpl();
-             gameView.start(); 
+        
+            final GameModel initialMode = null;
+
+            GameViewImpl gameView = new GameViewImpl(null);
+
+            final MenuController menuController = new MenuControllerImpl(initialMode, gameView);
+
+            gameView.setMenuController(menuController);
+
+            gameView.start(); 
              
     }
 }

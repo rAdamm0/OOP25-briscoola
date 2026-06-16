@@ -1,7 +1,6 @@
 package it.unibo.briscoola.model.api.player;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
@@ -54,12 +53,6 @@ public interface Player {
      * empties the players pile
      */
     void clearPile();
-
-    /**
-     * Adds to the player's total points at the end of each round
-     * @param points points to add
-     */
-    void addPoints(int points);
 
     /**
      * @return player's identifier

@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,6 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import it.unibo.briscoola.controller.api.GameController;
+import it.unibo.briscoola.controller.api.MenuController;
+import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.view.api.CardView;
 import it.unibo.briscoola.view.api.View;
 
 public class GameViewImpl extends JFrame implements View {
@@ -29,21 +34,30 @@ public class GameViewImpl extends JFrame implements View {
     private final PileView playerPile = new PileView("Player");
     private final PileView cpuPile = new PileView("CPU");
 
-    private CardView briscolaCardView;
+    private CardViewImpl briscolaCardView;
     private JLabel deckLabel;
 
-    private final CardView[] playerHandCards = new CardView[3];
-    private final CardView[] cpuHandCards = new CardView[3];
+    private final CardViewImpl[] playerHandCards = new CardViewImpl[3];
+    private final CardViewImpl[] cpuHandCards = new CardViewImpl[3];
 
-    public GameViewImpl() {
+    private  MenuController menuController;
+    private GameController gameController;
+
+    public GameViewImpl(final MenuController menuController) {
         super("BriscOOla");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(1250, 850));
+        
+        this.menuController = menuController;
 
         StartScreen startScreen = new StartScreen(
-            e -> initGame(), 
+            (players, diff) -> {
+                if(this.menuController!=null){
+                this.menuController.startGame(players, diff);
+                }
+            }, 
             e -> quit()
-        );  
+        ); 
 
         JPanel gamePanel = createGamePanel();
 
@@ -53,12 +67,28 @@ public class GameViewImpl extends JFrame implements View {
         this.add(container);
         this.pack();
         
-        // Posiziona la finestra al centro dello schermo quando si avvia
+        /**
+         * Place the window in the center of the screen when it starts 
+         */
         this.setLocationRelativeTo(null); 
     }
 
+    /**
+     * {@InheritDoc}
+     */
+    public void setMenuController(MenuController menuController){
+        this.menuController=menuController;
+    }
 
-    /** * Crea il tavolo da gioco.
+    /**
+     * {@InheritDoc}
+     */
+    public void setGameController(GameController gameController){
+        this.gameController=gameController;
+    }
+
+    /** 
+     * Creation of the board.
      * @return gamePanel 
      */
     private JPanel createGamePanel() {
@@ -66,7 +96,9 @@ public class GameViewImpl extends JFrame implements View {
         
         mainPanel.setBackground(new Color(20, 80, 25)); 
 
-        /* --- CPU on North --- */
+        /*
+        CPU on North
+        */
         JPanel northArea = new JPanel(new BorderLayout());
         northArea.setOpaque(false); 
         northArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -74,8 +106,8 @@ public class GameViewImpl extends JFrame implements View {
         JPanel cpuHandPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         cpuHandPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
-            cpuHandCards[i] = new CardView();
-            cpuHandCards[i].renderCard(null); // Mostra il dorso
+            cpuHandCards[i] = new CardViewImpl();
+            cpuHandCards[i].renderCard(null, null); 
             cpuHandPanel.add(cpuHandCards[i]);
         }
         
@@ -83,7 +115,9 @@ public class GameViewImpl extends JFrame implements View {
         northArea.add(cpuPile, BorderLayout.EAST); 
         mainPanel.add(northArea, BorderLayout.NORTH);
         
-        /* --- Player Guest on South --- */
+        /**
+         * Player Guest on South
+         */
         JPanel southArea = new JPanel(new BorderLayout());
         southArea.setOpaque(false); 
         southArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -91,8 +125,8 @@ public class GameViewImpl extends JFrame implements View {
         JPanel playerHandPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         playerHandPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
-            playerHandCards[i] = new CardView();
-            playerHandCards[i].renderCard(null); // Mostra il retro della carta
+            playerHandCards[i] = new CardViewImpl();
+            playerHandCards[i].renderCard(null, null);
             playerHandPanel.add(playerHandCards[i]);
         }
 
@@ -100,10 +134,12 @@ public class GameViewImpl extends JFrame implements View {
         southArea.add(playerPile, BorderLayout.EAST); 
         mainPanel.add(southArea, BorderLayout.SOUTH);
 
-        /* --- Deck and Briscola on West --- */
+        /**
+         * Deck and Briscola on West
+         */
         JPanel westArea = new JPanel(new GridBagLayout());
         westArea.setOpaque(false);
-        westArea.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0)); // Margini dal bordo sinistro
+        westArea.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
         
         JPanel deckBriscolaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         deckBriscolaPanel.setOpaque(false);
@@ -117,7 +153,9 @@ public class GameViewImpl extends JFrame implements View {
             Image img = deckIcon.getImage().getScaledInstance(120, 170, Image.SCALE_SMOOTH);
             deckLabel.setIcon(new ImageIcon(img));
         } else {
-            // Fallback
+            /**
+             * Fallback
+             */
             deckLabel.setText("Mazzo");
             deckLabel.setPreferredSize(new Dimension(120, 170));
             deckLabel.setOpaque(true);
@@ -126,8 +164,8 @@ public class GameViewImpl extends JFrame implements View {
             deckLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         }
 
-        briscolaCardView = new CardView();
-        briscolaCardView.renderCard(null);
+        briscolaCardView = new CardViewImpl();
+        briscolaCardView.renderCard(null, null);
 
         deckBriscolaPanel.add(deckLabel);
         deckBriscolaPanel.add(briscolaCardView);
@@ -135,7 +173,9 @@ public class GameViewImpl extends JFrame implements View {
         westArea.add(deckBriscolaPanel);
         mainPanel.add(westArea, BorderLayout.WEST);
 
-        /* --- Game Board in the middle --- */
+        /**
+         * Game Board in the middle
+         */
         JPanel tableCenter = new JPanel(new GridBagLayout());
         tableCenter.setOpaque(false);
         
@@ -146,7 +186,7 @@ public class GameViewImpl extends JFrame implements View {
 
 
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void start() {
@@ -155,7 +195,7 @@ public class GameViewImpl extends JFrame implements View {
 
     
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void initGame() {
@@ -164,27 +204,70 @@ public class GameViewImpl extends JFrame implements View {
 
     
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
-    public void updateHand() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateHand'");
+    public void updateHand(final int playerID,final List<Card> handCards) {
+        /*
+         *ID = 0: Human Player
+         */
+        if (playerID == 0) {
+            for (int i = 0; i < 3; i++) {
+                if (i < handCards.size()) {
+                    final Card card= handCards.get(i);
+                    final CardView cardComponent = this.playerHandCards[i];
+                    final String seedStr = card.getCardSeed().name();
+                    final String valueStr = card.getCardValue().name();
+                    cardComponent.renderCard(seedStr, valueStr);
+
+                    this.playerHandCards[i].setVisible(true);
+                } else {
+                    /**
+                     * Hides the slot if the player has less 
+                     * than 3 cards at the end of the deck
+                     */
+                    this.playerHandCards[i].setVisible(false);
+                }
+            }
+        }
+        /**
+         * ID = 2, 3, 4: for CPU players
+         */
+        else {
+            for (int i = 0; i < 3; i++) {
+                if (i < handCards.size()) {
+                    final CardView cardComponent = this.cpuHandCards[i];
+                    cardComponent.renderCard(null,null);
+                    this.cpuHandCards[i].setVisible(true);
+                } else {
+                    this.cpuHandCards[i].setVisible(false);
+                }
+            }
+        }
+        
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
 
     
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void updatePile(int cardsCount, boolean player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePile'");
+        if (player) {
+            /*+
+             * Uses the updateCount(int count) method 
+             */
+            this.playerPile.updateCount(cardsCount);
+        } else {
+            this.cpuPile.updateCount(cardsCount);
+        }
     }
 
 
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void displayMessage(String message) {
@@ -193,10 +276,30 @@ public class GameViewImpl extends JFrame implements View {
 
 
     /**
-     * @InheritDoc
+     * {@InheritDoc}
      */
     @Override
     public void quit() {
         System.exit(0);
     }
+
+    /**
+     * return the cards that the human player has in his hand, 
+     * using .clone() to protect the application from bugs
+     */
+    public CardViewImpl[] getPlayerHandCards() {
+        return this.playerHandCards.clone();
+    }
+
+    /**
+     * {@InheritDoc}
+     */
+    @Override
+    public void updateBriscola(final String seed, final String value) {
+        this.briscolaCardView.renderCard(seed, value);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+
+
 }
