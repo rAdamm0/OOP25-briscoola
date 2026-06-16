@@ -21,7 +21,8 @@ public interface Leaderboard {
     boolean addEntry(ScoreEntry entry);
 
     /**
-     * Adds all the eligible entries in the list to the leaderboard (with a score >0).
+     * Adds all the eligible entries in the list to the leaderboard (with a score >0)
+     * and limits the list to a maximum of 10 after sorting it.
      *
      * @param entryCollection a Collection of ScoreEntry
      * @return if at least one entry was added successfully, false otherwise
@@ -35,4 +36,9 @@ public interface Leaderboard {
      * @return a list of every entry present inside the leaderboard
      */
     List<ScoreEntry> getEntries();
+
+    /**
+     * Saves to file the current leaderboard through the {@link ScoreFileManager}.
+     */
+    void saveScores();
 }

@@ -4,11 +4,7 @@ import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
 import it.unibo.briscoola.model.api.leaderboard.ScoreEntry;
 import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * A standard implementation of the {@link Leaderboard} interface.
@@ -20,7 +16,9 @@ import java.util.Comparator;
  */
 public class LeaderboardImpl implements Leaderboard {
 
-    private final List<ScoreEntry> list;
+    private List<ScoreEntry> list;
+    private final ScoreFileManager manager;
+    private final int MAXIMUM_LEADERBOARD = 10;
 
     /**
      * Creates a new leaderboard and populates it with existing data.
@@ -30,10 +28,11 @@ public class LeaderboardImpl implements Leaderboard {
      * previously saved scores. If no saved data is found, an empty
      * leaderboard is initialized.
      *
-     * @param files the manager used to retrieve stored leaderboard data
+     * @param manager the manager used to retrieve stored leaderboard data
      */
-    public LeaderboardImpl(final ScoreFileManager files) {
-        this.list = new ArrayList<>(files.load());
+    public LeaderboardImpl(final ScoreFileManager manager) {
+        this.list = new ArrayList<>(manager.load());
+        this.manager = manager;
     }
 
     /**
@@ -45,6 +44,9 @@ public class LeaderboardImpl implements Leaderboard {
             return false;
         }
         this.list.add(Objects.requireNonNull(entry, "The entry cannot be null"));
+        this.list = new ArrayList<>(this.list.stream()
+                .sorted(Comparator.comparing(ScoreEntry::getScore).reversed())
+                .limit(MAXIMUM_LEADERBOARD).toList());
         return true;
     }
 
@@ -65,5 +67,13 @@ public class LeaderboardImpl implements Leaderboard {
     @Override
     public List<ScoreEntry> getEntries() {
         return this.list.stream().sorted(Comparator.comparing(ScoreEntry::getScore)).toList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void saveScores(){
+        this.manager.save(this.list);
     }
 }
