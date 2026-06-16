@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.function.BiConsumer;
 
 public class StartScreen extends JPanel{
+
     /**
      * it simply includes the two sub-panels 
      * and manages the exchange via CardLayout
@@ -23,6 +24,11 @@ public class StartScreen extends JPanel{
     private final CardLayout cardLayout;
     private int temporarySelectedPlayers = 2;
 
+    /**
+     * creates a new StartScreen
+     * @param onSetupComplete callback triggered when both players count and difficulty are choosen
+     * @param onQuit callback triggered when the user wants to exit the application
+     */
     public StartScreen(final BiConsumer<Integer,Difficulty> onSetupComplete, final ActionListener onQuit){
         this.cardLayout = new CardLayout();
         this.setLayout(this.cardLayout);
@@ -40,12 +46,13 @@ public class StartScreen extends JPanel{
          * selection number of players
          */
         final JPanel playerSelection = new PlayerSelectionsPanel(
-num -> {
+            num -> {
+                /**
+                 * move to the selection of difficulty
+                 */
                 this.temporarySelectedPlayers = num; 
                 cardLayout.show(this, DIFFICULTY_SELECTION); 
-                /*
-                move to the selection of difficulty 
-                */
+
             }, 
             e -> cardLayout.show(this, MAIN_MENU)
         );
