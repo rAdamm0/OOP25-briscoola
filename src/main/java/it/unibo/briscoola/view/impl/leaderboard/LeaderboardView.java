@@ -10,14 +10,13 @@ import java.util.List;
 public class LeaderboardView extends JPanel implements Leaderboard {
 
     public LeaderboardView(List<Pair<String,String>> scoreboard){
-        List<Pair<String, String>> scoreboard1 = List.copyOf(scoreboard);
         this.setLayout(new GridLayout(0,1));
         this.setBackground(Color.GRAY);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int SCREEN_RATIO = 5;
         this.setSize(toolkit.getScreenSize().width/ SCREEN_RATIO, toolkit.getScreenSize().height/ SCREEN_RATIO);
         scoreboard.forEach(pair->
-                this.add(new JLabel(pair.x() + " - " + pair.y()), SwingConstants.CENTER)
+                this.add(new JLabel(scoreboard.indexOf(pair) + "°: " + pair.x() + " - " + pair.y()), SwingConstants.CENTER)
         );
     }
 
