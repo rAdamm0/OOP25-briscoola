@@ -1,10 +1,13 @@
 package it.unibo.briscoola.controller.impl;
 
 import it.unibo.briscoola.controller.api.GameController;
+import it.unibo.briscoola.model.api.attributes.CardSeed;
+import it.unibo.briscoola.model.api.attributes.CardValue;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.game.RoundManager;
 import it.unibo.briscoola.model.api.player.Player;
+import it.unibo.briscoola.model.impl.card.StandardCardImpl;
 import it.unibo.briscoola.model.impl.game.GameModelImpl;
 import it.unibo.briscoola.model.impl.game.RoundManagerImpl;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
@@ -63,9 +66,10 @@ public class GameControllerImpl implements GameController {
      * {@inheritDoc}
      */
     @Override
-    public void handleHumanCardSelection(Card selectedCard) {
+    public void handleHumanCardSelection(String value, String seed) {
         // TODO: View disables the human card selection
         Player human = model.getCurrentPlayer();
+        Card selectedCard = new StandardCardImpl(CardValue.valueOf(value), CardSeed.valueOf(seed));
         model.makeMove(human, selectedCard);
         manageTurn();
     }

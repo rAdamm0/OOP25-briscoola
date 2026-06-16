@@ -7,7 +7,7 @@ import it.unibo.briscoola.view.api.View;
 public interface GameController {
 
     /**
-     * Function that initiates the game
+     * Function that initiates the game.
      */
     void startGame();
 
@@ -17,11 +17,12 @@ public interface GameController {
     void manageTurn();
 
     /**
-     * Handles the Human {@link Player} selected card
+     * Handles the Human {@link Player} selected card.
      *
-     * @param selectedCard {@link Card} selected by the player in the {@link View}
+     * @param value of the {@link Card} selected
+     * @param seed of the {@link Card} selected
      */
-    void handleHumanCardSelection(Card selectedCard);
+    void handleHumanCardSelection(String value, String seed);
 
 
 
