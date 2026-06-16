@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
-import it.unibo.briscoola.model.impl.card.StandardCardImpl;
+import it.unibo.briscoola.view.api.CardView;
 import it.unibo.briscoola.view.api.View;
 
 public class GameViewImpl extends JFrame implements View {
@@ -67,9 +67,9 @@ public class GameViewImpl extends JFrame implements View {
         this.add(container);
         this.pack();
         
-        /*
-        Place the window in the center of the screen when it starts 
-        */
+        /**
+         * Place the window in the center of the screen when it starts 
+         */
         this.setLocationRelativeTo(null); 
     }
 
@@ -115,9 +115,9 @@ public class GameViewImpl extends JFrame implements View {
         northArea.add(cpuPile, BorderLayout.EAST); 
         mainPanel.add(northArea, BorderLayout.NORTH);
         
-        /*
-        Player Guest on South
-        */
+        /**
+         * Player Guest on South
+         */
         JPanel southArea = new JPanel(new BorderLayout());
         southArea.setOpaque(false); 
         southArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -134,9 +134,9 @@ public class GameViewImpl extends JFrame implements View {
         southArea.add(playerPile, BorderLayout.EAST); 
         mainPanel.add(southArea, BorderLayout.SOUTH);
 
-        /*
-        Deck and Briscola on West
-        */
+        /**
+         * Deck and Briscola on West
+         */
         JPanel westArea = new JPanel(new GridBagLayout());
         westArea.setOpaque(false);
         westArea.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
@@ -153,9 +153,9 @@ public class GameViewImpl extends JFrame implements View {
             Image img = deckIcon.getImage().getScaledInstance(120, 170, Image.SCALE_SMOOTH);
             deckLabel.setIcon(new ImageIcon(img));
         } else {
-            /*
-            Fallback
-            */
+            /**
+             * Fallback
+             */
             deckLabel.setText("Mazzo");
             deckLabel.setPreferredSize(new Dimension(120, 170));
             deckLabel.setOpaque(true);
@@ -173,9 +173,9 @@ public class GameViewImpl extends JFrame implements View {
         westArea.add(deckBriscolaPanel);
         mainPanel.add(westArea, BorderLayout.WEST);
 
-        /*
-        Game Board in the middle
-        */
+        /**
+         * Game Board in the middle
+         */
         JPanel tableCenter = new JPanel(new GridBagLayout());
         tableCenter.setOpaque(false);
         
@@ -214,47 +214,30 @@ public class GameViewImpl extends JFrame implements View {
         if (playerID == 0) {
             for (int i = 0; i < 3; i++) {
                 if (i < handCards.size()) {
-
                     final Card card= handCards.get(i);
+                    final CardView cardComponent = this.playerHandCards[i];
+                    final String seedStr = card.getCardSeed().name();
+                    final String valueStr = card.getCardValue().name();
+                    cardComponent.renderCard(seedStr, valueStr);
 
-                    String seedStr = switch (card.getCardSeed()) {
-                        case STAFF -> "bastoni";
-                        case CUP -> "coppe";
-                        case COIN -> "denari";
-                        case SWORD -> "spade";
-                    };
-
-                    String valueStr = String.valueOf(switch (card.getCardValue()) {
-                        case ACE -> 1;
-                        case TWO -> 2;
-                        case THREE -> 3;
-                        case FOUR -> 4;
-                        case FIVE -> 5;
-                        case SIX -> 6;
-                        case SEVEN -> 7;
-                        case JACK -> 8;
-                        case HORSE -> 9;
-                        case KING -> 10;
-                    });
-                    
-                    this.playerHandCards[i].renderCard(seedStr,valueStr);
                     this.playerHandCards[i].setVisible(true);
                 } else {
-                    /*
-                     * Hides the slot if the player has less than 3 cards at the end of the deck
+                    /**
+                     * Hides the slot if the player has less 
+                     * than 3 cards at the end of the deck
                      */
                     this.playerHandCards[i].setVisible(false);
                 }
             }
         }
-        /*
+        /**
          * ID = 2, 3, 4: for CPU players
          */
         else {
             for (int i = 0; i < 3; i++) {
                 if (i < handCards.size()) {
-
-                    this.cpuHandCards[i].renderCard(null,null);
+                    final CardView cardComponent = this.cpuHandCards[i];
+                    cardComponent.renderCard(null,null);
                     this.cpuHandCards[i].setVisible(true);
                 } else {
                     this.cpuHandCards[i].setVisible(false);
@@ -273,8 +256,8 @@ public class GameViewImpl extends JFrame implements View {
     @Override
     public void updatePile(int cardsCount, boolean player) {
         if (player) {
-            /*
-             *Uses the updateCount(int count) method 
+            /*+
+             * Uses the updateCount(int count) method 
              */
             this.playerPile.updateCount(cardsCount);
         } else {
@@ -299,4 +282,24 @@ public class GameViewImpl extends JFrame implements View {
     public void quit() {
         System.exit(0);
     }
+
+    /**
+     * return the cards that the human player has in his hand, 
+     * using .clone() to protect the application from bugs
+     */
+    public CardViewImpl[] getPlayerHandCards() {
+        return this.playerHandCards.clone();
+    }
+
+    /**
+     * {@InheritDoc}
+     */
+    @Override
+    public void updateBriscola(final String seed, final String value) {
+        this.briscolaCardView.renderCard(seed, value);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+
+
 }

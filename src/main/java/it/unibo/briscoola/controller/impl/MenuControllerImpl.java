@@ -1,16 +1,16 @@
 package it.unibo.briscoola.controller.impl;
 
-import java.util.List;
-import java.util.ArrayList;
 
 import it.unibo.briscoola.view.api.View;
+import it.unibo.briscoola.view.impl.GameViewImpl;
+import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
+import it.unibo.briscoola.model.api.attributes.CardValue;
 import it.unibo.briscoola.model.api.attributes.Difficulty;
-import it.unibo.briscoola.model.api.game.GameBuilder;
+
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
-import it.unibo.briscoola.model.impl.player.PlayerImpl;
 
 public class MenuControllerImpl implements MenuController {
 
@@ -44,21 +44,36 @@ public class MenuControllerImpl implements MenuController {
         for(int i=1 ; i< numPlayers; i++){
             builder.addPlayer();
         }
-        this.model=builder.build();
 
+        this.model=builder.build();
 
         /**
          * Configure the game model
-         * to remove the comment
-         * this.model.setPlayers(players);
          */
         this.model.startMatch();
 
-        /**
-         * to remove the comment
-         * this.view.initGameLayout(numPlayers); 
-         */
         this.view.initGame(); 
+
+        final Player human = this.model.getCurrentPlayer(); 
+        this.view.updateHand(0, human.getHand());
+
+
+        if (this.model.getBriscolaSeed().isPresent()) { 
+            final String briscolaSeedStr = this.model.getBriscolaSeed().get().name();
+
+            final CardValue[] values = CardValue.values();
+            final int randomIndex = new java.util.Random().nextInt(values.length);
+            final String briscolaValueStr = values[randomIndex].name();
+
+            if (this.view instanceof GameViewImpl gameView) {
+                gameView.updateBriscola(briscolaSeedStr, briscolaValueStr);
+            }
+        }
+
+        final GameController gameController = new GameControllerImpl(this.model, this.view);
+        this.view.setGameController(gameController);
+        
+        gameController.startGame();
     }
     
 }

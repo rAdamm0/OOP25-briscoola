@@ -51,6 +51,13 @@ public interface View {
     void displayMessage(String message);
 
     /**
+     * Updates the graphical representation of the card
+     * @param seed
+     * @param value
+     */
+    void updateBriscola(String seed, String value);
+
+    /**
      * Close the app
      */
     void quit();
