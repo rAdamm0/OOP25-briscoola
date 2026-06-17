@@ -134,9 +134,19 @@ public class GameModelImpl implements GameModel{
     @Override
     public RoundWinner endRound(){
         RoundWinner winner = this.roundManager.determineWinner();
-        // winner.player().addPoints(winner.points());
-        computeNextTurnOrder(winner.player());
+        
+        Player actualWinner = this.players.stream()
+                .filter(p -> p.getId() == winner.player().getId())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
+
+        for (Card wonCard : winner.wonCards()) {
+            actualWinner.addtoPile(wonCard);
+        }
+        
+        computeNextTurnOrder(actualWinner);
         this.drawAfterTrick(this.players);
+        
         if(!this.isGameOver()){
             this.roundManager.startRound(this.players);
         }

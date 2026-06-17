@@ -1,13 +1,17 @@
 package it.unibo.briscoola.model.impl.game;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.unibo.briscoola.model.api.attributes.CardSeed;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.game.RoundManager;
 import it.unibo.briscoola.model.api.player.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 public class RoundManagerImpl implements RoundManager {
 
@@ -81,7 +85,7 @@ public class RoundManagerImpl implements RoundManager {
             throw new IllegalStateException();
         }
         final RoundPlay winningEntry;
-        final int points;
+        
         if(this.table.stream().anyMatch(a->a.card().getCardSeed().equals(this.briscola))){
             winningEntry = this.table.stream()
                     .filter(a->a.card().getCardSeed().equals(this.briscola))
@@ -93,9 +97,11 @@ public class RoundManagerImpl implements RoundManager {
                     .max(Comparator.comparingInt(e -> e.card().getCardPower() ))
                     .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
         }
-            points = this.table.stream().mapToInt(a-> a.card().getCardPoints()).sum();
+        
+        List<Card> wonCards = this.table.stream().map(RoundPlay::card).toList();
         this.roundClear();
-        return new RoundWinner(winningEntry.player(), points);
+
+        return new RoundWinner(winningEntry.player(), wonCards);
     }
 
     private void roundClear(){
