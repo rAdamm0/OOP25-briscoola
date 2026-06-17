@@ -6,9 +6,9 @@ import it.unibo.briscoola.model.impl.leaderboard.ScoreEntryImpl;
 
 import java.util.Objects;
 
-public record RoundPlay(Player player, Card card){
+public record RoundPlay(Player player, Card card) {
 
-    public RoundPlay(Player player, Card card) {
+    public RoundPlay(final Player player, final Card card) {
         this.player = player.copy();
         this.card = card;
     }

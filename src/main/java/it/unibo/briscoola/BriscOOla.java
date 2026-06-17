@@ -14,19 +14,20 @@ public final class BriscOOla {
 
     /**
      * Launches the application.
+     * 
      * @param args a string with the movie/series name.
      */
     public static void main(final String[] args) {
-        
+
             final GameModel initialMode = null;
 
-            GameViewImpl gameView = new GameViewImpl(null);
+            final GameViewImpl gameView = new GameViewImpl(null);
 
             final MenuController menuController = new MenuControllerImpl(initialMode, gameView);
 
             gameView.setMenuController(menuController);
 
             gameView.start(); 
-             
+
     }
 }

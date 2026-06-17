@@ -7,14 +7,14 @@ import it.unibo.briscoola.model.impl.player.cpu.strategies.HardStrategy;
 import it.unibo.briscoola.model.impl.player.cpu.strategies.MediumStrategy;
 
 /**
- * Allows a method to create simply a new strategy based on the difficulty requested
+ * Allows a method to create simply a new strategy based on the difficulty requested.
  */
 public final class StrategyFactory {
 
     private StrategyFactory() { }
 
     /**
-     * Creates and return a {@link PlayStrategy} of the requested difficulty
+     * Creates and return a {@link PlayStrategy} of the requested difficulty.
      *
      * @param difficulty the requested difficulty
      * @return a PlayStrategy of the requested difficulty
