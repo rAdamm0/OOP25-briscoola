@@ -32,6 +32,7 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public void startRound(List<Player> turnOrder){
+        if(turnOrder == null || turnOrder.isEmpty()) throw new IllegalArgumentException("List of players cannot be null");
         this.playersList = List.copyOf(turnOrder);
     }
 
@@ -41,6 +42,8 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public void playTurn(Player player, Card card) {
+        if(this.getCurrentPlayer()!=player) throw new IllegalArgumentException("It's not this player's turn");
+        if(!player.getHand().contains(card)) throw new IllegalArgumentException("Card is not in the hand of this player");
         if(this.table.isEmpty()){
             this.leadSeed = card.getCardSeed();
         }

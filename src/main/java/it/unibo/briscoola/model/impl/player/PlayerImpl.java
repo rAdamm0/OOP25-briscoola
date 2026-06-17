@@ -2,10 +2,12 @@ package it.unibo.briscoola.model.impl.player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
+import it.unibo.briscoola.model.impl.leaderboard.ScoreEntryImpl;
 
 public class PlayerImpl implements Player {
 
@@ -91,4 +93,18 @@ public class PlayerImpl implements Player {
         return new PlayerImpl(this.id, this.points, this.hand, this.pile);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Player that = (Player) o;
+        return this.id == that.getId() && Objects.equals(this.hand, that.getHand()) && Objects.equals(this.points, that.getPoints());
+    }
 }
