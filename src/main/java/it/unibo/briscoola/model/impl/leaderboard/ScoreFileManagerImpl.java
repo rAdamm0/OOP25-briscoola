@@ -1,13 +1,5 @@
 package it.unibo.briscoola.model.impl.leaderboard;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import it.unibo.briscoola.model.api.leaderboard.ScoreEntry;
-import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -19,6 +11,16 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import it.unibo.briscoola.model.api.leaderboard.ScoreEntry;
+import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
 
 /**
  * A JSON-based implementation of the {@link ScoreFileManager} interface.
@@ -47,7 +49,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
         this.path = Paths.get(System.getProperty("user.home"), folderName, fileName);
         this.prepFiles();
     }
-    
+
     private void prepFiles() {
         try {
             final Path parentDir = path.getParent();

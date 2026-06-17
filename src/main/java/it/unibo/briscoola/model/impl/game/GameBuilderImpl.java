@@ -1,5 +1,7 @@
 package it.unibo.briscoola.model.impl.game;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.card.Card;
@@ -13,20 +15,13 @@ import it.unibo.briscoola.model.impl.player.PlayerImpl;
 import it.unibo.briscoola.model.impl.player.cpu.CpuPlayer;
 import it.unibo.briscoola.model.impl.player.cpu.StrategyFactory;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class GameBuilderImpl implements GameBuilder {
-
 
     private final List<Player> players = new ArrayList<>();
     private PlayStrategy playStrategy;
-    private int id = 0;
+    private int id;
 
-
-    public GameBuilderImpl(){
+    public GameBuilderImpl() {
         players.add(new PlayerImpl(id++));
     }
 
@@ -34,7 +29,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilderImpl setDifficulty(Difficulty difficulty){
+    public GameBuilderImpl setDifficulty(final Difficulty difficulty) {
         this.playStrategy = StrategyFactory.create(difficulty);
         return this;
     }
@@ -43,7 +38,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilderImpl addPlayer(){
+    public GameBuilderImpl addPlayer() {
         this.players.add(new CpuPlayer(id++, playStrategy));
         return this;
     }
@@ -54,7 +49,7 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameModel build() {
-        Deck<Card> deck= new DeckImpl();
-        return new GameModelImpl(players,deck);
+        final Deck<Card> deck = new DeckImpl();
+        return new GameModelImpl(players, deck);
     }
 }

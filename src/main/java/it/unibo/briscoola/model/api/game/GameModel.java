@@ -9,24 +9,28 @@ import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
 
+/**
+ * Interface, representing the model of the Briscola game, that manages the game state, the deck, the players and the rounds.
+ */
 public interface GameModel {
 
     /**
      * Starts the match, giving 3 cards to each player.
      */
     void startMatch();
-    
+
     /**
      * @return the CardSeed defined as Briscola, used to determine the dominant seed.
      */
     Optional<CardSeed> getBriscolaSeed();
 
-     /**
-      * Checks if the game is over.
-      * The game ends when all players have used all their cards
-      * and their hands are empty.
-      * @return true if the game is over, false otherwise.
-      */
+    /**
+     * Checks if the game is over.
+     * The game ends when all players have used all their cards
+     * and their hands are empty.
+     * 
+     * @return true if the game is over, false otherwise.
+     */
     boolean isGameOver();
 
     /**
@@ -50,6 +54,7 @@ public interface GameModel {
 
     /**
      * Plays the card at the given index from the given player's hand.
+     * 
      * @param player refers to the player who is playing the card
      * @param index is the position of the card in hand
      * @return the played card
@@ -58,6 +63,7 @@ public interface GameModel {
 
     /**
      * Method to get the player in charge of the turn.
+     * 
      * @return the {@link Player} in charge of the turn
      */
     Player getCurrentPlayer();

@@ -2,18 +2,24 @@ package it.unibo.briscoola.view.api;
 
 import java.awt.event.ActionListener;
 
+/**
+ * Interface representing the graphical representation of a card.
+ */
 public interface CardView {
 
     /**
-     * Mostra la carta a schermo, se uno dei parametri è null mostra il retro.
-     * @param seed  Il seme della carta.
-     * @param value Il valore della carta.
+     * Renders the card on the screen. 
+     * If one of the parameters is null, it displays the back of the card.
+     * 
+     * @param seed the card seed
+     * @param value the card value
      */
     void renderCard(String seed, String value);
 
     /**
-     * Per la gestione del click sulla carta
-     * @param listener l'azione da eseguire al click
+     * Adds a listener for managing card clicks.
+     * 
+     * @param listener the action to be executed upon clicking
      */
     void addCardClickListener(ActionListener listener);
 }

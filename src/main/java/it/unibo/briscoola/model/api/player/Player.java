@@ -5,23 +5,30 @@ import java.util.List;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 
+/**
+ * Interface representing a player in the Briscola game.
+ */
 public interface Player {
 
     /**
-     * Plays a card from players hand
+     * Plays a card from player's hand based on the current round state.
+     * 
+     * @param state the current state of the round
      * @return played card
      */
     Card playCard(RoundStateImpl state);
 
     /**
-     * Plays the card at the given index from the human player's hand
+     * Plays the card at the given index from the human player's hand.
+     * 
      * @param index is the position of the card in hand (0,1 or 2)
      * @return the played card
      */
     Card playCard(int index);
 
     /**
-     * Picks a card from the deck
+     * Picks a card from the deck.
+     * 
      * @param card card picked up from the deck
      */
     void receiveCard(Card card);
@@ -34,12 +41,13 @@ public interface Player {
     void removeCard(Card card);
 
     /**
-     * @return list of cards in player's hand
+     * @return list of cards in player's hand.
      */
     List<Card> getHand();
 
     /**
-     * adds a taken card to the players pile
+     * Adds a taken card to the player's pile.
+     * 
      * @param card the card taken in the round
      */
     void addtoPile(Card card);
@@ -50,7 +58,7 @@ public interface Player {
     List<Card> getPile();
 
     /**
-     * empties the players pile
+     * Empties the player's pile.
      */
     void clearPile();
 
@@ -65,7 +73,6 @@ public interface Player {
     int getPoints();
 
     /**
-     *
      * @return a copy of the instanced {@link Player}
      */
     Player copy();

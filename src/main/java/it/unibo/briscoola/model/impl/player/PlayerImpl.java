@@ -14,14 +14,14 @@ public class PlayerImpl implements Player {
     private final List<Card> pile;
     private int points;
 
-    public PlayerImpl(int id) {
+    public PlayerImpl(final int id) {
         this.id = id;
         this.points = 0;
         this.hand = new ArrayList<>();
         this.pile = new ArrayList<>();
     }
 
-    public PlayerImpl(int id, int points, List<Card> hand, List<Card> pile){
+    public PlayerImpl(final int id, final int points, final List<Card> hand, final List<Card> pile){
         this.id = id;
         this.points = points;
         this.hand = new ArrayList<>(hand);
@@ -30,17 +30,17 @@ public class PlayerImpl implements Player {
     
 
     @Override
-    public Card playCard(RoundStateImpl state) {
+    public Card playCard(final RoundStateImpl state) {
         return this.hand.removeFirst();
     }
 
     @Override
-    public Card playCard(int index){
+    public Card playCard(final int index){
         return this.hand.remove(index);
     }
 
     @Override
-    public void receiveCard(Card card) {
+    public void receiveCard(final Card card) {
         this.hand.add(card);
     }
 
@@ -48,7 +48,7 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void removeCard(Card card) {
+    public void removeCard(final Card card) {
         this.hand.remove(card);
     }
 
@@ -59,7 +59,7 @@ public class PlayerImpl implements Player {
 
     
     @Override
-    public void addtoPile(Card card) {
+    public void addtoPile(final Card card) {
         this.pile.add(card);
         this.points = this.points + card.getCardPoints();
     }

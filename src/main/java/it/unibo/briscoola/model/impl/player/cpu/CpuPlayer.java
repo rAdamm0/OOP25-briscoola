@@ -1,13 +1,11 @@
 package it.unibo.briscoola.model.impl.player.cpu;
 
+import java.util.List;
+
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.player.PlayStrategy;
-import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 import it.unibo.briscoola.model.impl.player.PlayerImpl;
-
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Unextendable class that represent a singular CpuPlayer.
@@ -28,17 +26,17 @@ public final class CpuPlayer extends PlayerImpl {
         this.strategy = strategy;
     }
 
-    public CpuPlayer(final int id, final int points, final List<Card> hand, final List<Card> pile,final PlayStrategy strategy){
+    public CpuPlayer(final int id, final int points, final List<Card> hand, final List<Card> pile, final PlayStrategy strategy) {
         super(id, points, hand, pile);
         this.strategy = strategy;
     }
 
-    public CpuPlayer copy(){
+    public CpuPlayer copy() {
         return new CpuPlayer(this.getId(), this.getPoints(), this.getHand(), this.getPile(), this.strategy);
     }
 
     @Override
-    public Card playCard(RoundStateImpl state) {
+    public Card playCard(final RoundStateImpl state) {
         final int index = strategy.cardIndex(this.getHand(), state);
         return this.getHand().get(index);
     }

@@ -19,10 +19,10 @@ public class RoundManagerImpl implements RoundManager {
     private final CardSeed briscola;
     private List<Player> playersList;
     private CardSeed leadSeed;
-    private int currentPlayerIndex = 0;
+    private int currentPlayerIndex;
     private final Logger logger = LoggerFactory.getLogger(RoundManagerImpl.class);
 
-    public RoundManagerImpl(CardSeed briscola){
+    public RoundManagerImpl(final CardSeed briscola) {
         this.table = new ArrayList<>();
         this.briscola = briscola;
     }
@@ -31,7 +31,7 @@ public class RoundManagerImpl implements RoundManager {
      * {@inheritDoc}
      */
     @Override
-    public void startRound(List<Player> turnOrder){
+    public void startRound(final List<Player> turnOrder) {
         this.playersList = List.copyOf(turnOrder);
     }
 
@@ -40,8 +40,8 @@ public class RoundManagerImpl implements RoundManager {
      * {@inheritDoc}
      */
     @Override
-    public void playTurn(Player player, Card card) {
-        if(this.table.isEmpty()){
+    public void playTurn(final Player player, final Card card) {
+        if (this.table.isEmpty()) {
             this.leadSeed = card.getCardSeed();
         }
         this.table.add(new RoundPlay(player, card));
@@ -54,7 +54,7 @@ public class RoundManagerImpl implements RoundManager {
      * {@inheritDoc}
      */
     @Override
-    public Player getCurrentPlayer(){
+    public Player getCurrentPlayer() {
         return this.playersList.get(currentPlayerIndex);
     }
 
@@ -62,7 +62,7 @@ public class RoundManagerImpl implements RoundManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean isRoundOver(){
+    public boolean isRoundOver() {
         return currentPlayerIndex >= playersList.size();
     }
 
@@ -70,7 +70,7 @@ public class RoundManagerImpl implements RoundManager {
      * {@inheritDoc}
      */
     @Override
-    public RoundStateImpl getRoundState(){
+    public RoundStateImpl getRoundState() {
         return new RoundStateImpl(this.table, this.briscola, Optional.ofNullable(this.leadSeed));
     }
 
@@ -81,30 +81,30 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public RoundWinner determineWinner() {
-        if(this.table.isEmpty() || this.leadSeed == null){
+        if (this.table.isEmpty() || this.leadSeed == null) {
             throw new IllegalStateException();
         }
         final RoundPlay winningEntry;
-        
-        if(this.table.stream().anyMatch(a->a.card().getCardSeed().equals(this.briscola))){
+
+        if (this.table.stream().anyMatch(a -> a.card().getCardSeed().equals(this.briscola))) {
             winningEntry = this.table.stream()
-                    .filter(a->a.card().getCardSeed().equals(this.briscola))
-                    .max(Comparator.comparingInt(e -> e.card().getCardPower() ))
+                    .filter(a -> a.card().getCardSeed().equals(this.briscola))
+                    .max(Comparator.comparingInt(e -> e.card().getCardPower()))
                     .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
-        }else{
+        } else {
             winningEntry = this.table.stream()
-                    .filter(a->a.card().getCardSeed().equals(this.leadSeed))
-                    .max(Comparator.comparingInt(e -> e.card().getCardPower() ))
+                    .filter(a -> a.card().getCardSeed().equals(this.leadSeed))
+                    .max(Comparator.comparingInt(e -> e.card().getCardPower()))
                     .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
         }
-        
-        List<Card> wonCards = this.table.stream().map(RoundPlay::card).toList();
+
+        final List<Card> wonCards = this.table.stream().map(RoundPlay::card).toList();
         this.roundClear();
 
         return new RoundWinner(winningEntry.player(), wonCards);
     }
 
-    private void roundClear(){
+    private void roundClear() {
         this.table.clear();
         this.leadSeed = null;
         this.currentPlayerIndex = 0;
