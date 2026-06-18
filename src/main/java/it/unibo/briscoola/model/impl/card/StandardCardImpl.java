@@ -58,8 +58,6 @@ public class StandardCardImpl implements Card {
         return this.value.getPowerCard();
     }
 
-<<<<<<< HEAD
-=======
     /**
      * {@inheritDoc}
      */
@@ -74,6 +72,4 @@ public class StandardCardImpl implements Card {
         final Card that = (Card) o;
         return Objects.equals(this.seed, that.getCardSeed()) && Objects.equals(this.value, that.getCardValue());
     }
-    
->>>>>>> 7624f18840a5bc0afd9dfb609c79db98fdb52eb2
 }
