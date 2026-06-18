@@ -1,11 +1,18 @@
 package it.unibo.briscoola.view.api.popup;
 
-import javax.swing.*;
+import javax.swing.Popup;
+import javax.swing.JRootPane;
 
+/**
+ * Class to use to get a personalized {@link Popup} based on the passed
+ * element of enum {@link Popups}.
+ *
+ * @author Adam Paolo Razzino
+ */
 public interface PopupFactory {
 
     /**
-     * Based on the enum element of type {@link Popups} deploys the correct JPanel.
+     * Based on the enum element of type {@link Popups} deploys the correct {@link Popup}.
      *
      * @param root owner of the popup componed
      * @param popup of enum {@link Popups}

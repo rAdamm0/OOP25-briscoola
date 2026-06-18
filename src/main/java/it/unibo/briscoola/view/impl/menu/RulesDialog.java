@@ -1,6 +1,5 @@
 package it.unibo.briscoola.view.impl.menu;
 
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -16,6 +15,8 @@ import java.awt.BorderLayout;
 /**
  * Component that extends {@link JDialog}.
  * It's used to show to the user the rules of the game on screen.
+ *
+ * @author Adam Paolo Razzino
  */
 public class RulesDialog extends JDialog {
 
@@ -25,49 +26,49 @@ public class RulesDialog extends JDialog {
      *
      * @param parentFrame {@link JFrame} owner of the {@link JDialog}
      */
-    public RulesDialog(JFrame parentFrame) {
+    public RulesDialog(final JFrame parentFrame) {
         super(parentFrame, "Rules of the Game", true);
-        final int WIDTH = 550;
-        final int HEIGHT = 600;
-        final int BG_R = 20;
-        final int BG_G = 80;
-        final int BG_B = 25;
-        final int BORDER_RADIUS = 20;
-        final int TEXT_FONT_SIZE = 14;
-        final int BUTTON_TEXT_SIZE = 16;
-        final int BUTTON_BORDER_THICKNESS = 1;
-        final int BUTTON_VERTICAL_BORDER = 10;
-        final int BUTTON_HORIZONTAL_BORDER = 30;
-        final int HGAP = 0;
-        final int VGAP = 15;
+        final int width = 550;
+        final int height = 600;
+        final int bgR = 20;
+        final int bgG = 80;
+        final int bgB = 25;
+        final int borderRadius = 20;
+        final int textFontSize = 14;
+        final int buttonTextSize = 16;
+        final int buttonBorderThickness = 1;
+        final int buttonVerticalBorder = 10;
+        final int buttonHorizontalBorder = 30;
+        final int hgap = 0;
+        final int vgap = 15;
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setSize(WIDTH, HEIGHT);
+        setSize(width, height);
         setLocationRelativeTo(parentFrame);
-        final Color greenBg = new Color(BG_R, BG_G, BG_B);
-        JTextArea textArea = new JTextArea(getRulesText());
+        final Color greenBg = new Color(bgR, bgG, bgB);
+        final JTextArea textArea = new JTextArea(getRulesText());
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setFont(new Font("Arial", Font.BOLD, TEXT_FONT_SIZE));
+        textArea.setFont(new Font("Arial", Font.BOLD, textFontSize));
         textArea.setBackground(greenBg);
         textArea.setForeground(Color.BLACK);
-        textArea.setBorder(BorderFactory.createEmptyBorder(BORDER_RADIUS, BORDER_RADIUS, BORDER_RADIUS, BORDER_RADIUS));
+        textArea.setBorder(BorderFactory.createEmptyBorder(borderRadius, borderRadius, borderRadius, borderRadius));
         final JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(null);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         final JButton closeButton = new JButton("CLOSE");
-        closeButton.setFont(new Font("Arial", Font.BOLD, BUTTON_TEXT_SIZE));
+        closeButton.setFont(new Font("Arial", Font.BOLD, buttonTextSize));
         closeButton.setFocusPainted(false);
         closeButton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, BUTTON_BORDER_THICKNESS),
-                BorderFactory.createEmptyBorder(BUTTON_VERTICAL_BORDER,
-                        BUTTON_HORIZONTAL_BORDER,
-                        BUTTON_VERTICAL_BORDER,
-                        BUTTON_HORIZONTAL_BORDER)
+                BorderFactory.createLineBorder(Color.GRAY, buttonBorderThickness),
+                BorderFactory.createEmptyBorder(buttonVerticalBorder,
+                        buttonHorizontalBorder,
+                        buttonVerticalBorder,
+                        buttonHorizontalBorder)
         ));
         closeButton.addActionListener(e -> dispose());
-        final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, HGAP, VGAP));
+        final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, hgap, vgap));
         buttonPanel.setBackground(greenBg);
         buttonPanel.add(closeButton);
         setLayout(new BorderLayout());
@@ -78,13 +79,13 @@ public class RulesDialog extends JDialog {
     private String getRulesText() {
         return """
                 BRISCOLA GAME RULES
-                
+
                 1. SETUP
                 • The player enters an optional name.
                 • The player is required to choose the game Difficulty.
                 • Each player is given 3 cards.
                 • The Briscola card gets chosen and put on the table face up.
-                
+
                 2. CARD EXPLANATION:
                 The Cards follow a power logic following the order of the sequent list
                 In which there will be listed the points of each card as well
@@ -100,11 +101,11 @@ public class RulesDialog extends JDialog {
                 ONE/ACE -> 11
                 3. YOUR TURN
                 Select the card to be played based on:
-                
+
                  - Cards on the table:
                        Remember that the briscola seed rules over every other
                        If there is no briscola on the table the leadSeed rules
-                
+
                 4. CPU TURN
                 The CPU elaborates what is on the table and makes its move
                 based on the chosen difficulty\
