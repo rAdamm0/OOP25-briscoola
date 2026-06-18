@@ -16,6 +16,7 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl(final GameModel model,final View view) {
         this.model = model;
         this.view = view;
+        this.view.setGameController(this);
     }
 
     /**
@@ -33,25 +34,29 @@ public class GameControllerImpl implements GameController {
     @Override
     public void manageTurn() {
         if(model.isGameOver()){
-            // TODO: View shows the end of the game screen
+            view.displayMessage("The game is finished.");
             return;
         }
-        if(model.isRoundOver()){
+
+        if (model.isRoundOver()){
             RoundWinner winner = model.endRound();
-            // TODO: View shows to screen the RoundWinner and the points
+            view.displayMessage("Round won by: " + winner.player().getId() + ", with " + winner.player().getPoints() + " points!");
+            // TODO: update pile
             manageTurn();
             return;
         }
 
         Player currentPlayer = model.getCurrentPlayer();
         // TODO: View gets updated with model.getRoundState() the change of player
+        view.displayMessage("It's " + ((currentPlayer.getId() == 0) ? "Player" : "CPU"));
 
         if(currentPlayer instanceof CpuPlayer cpu){
             Card chosenCard = cpu.playCard(model.getCurrentRoundState());
             model.makeMove(cpu, chosenCard);
+            // TODO : update Table
             manageTurn();
         }else{
-            //TODO: View handles the player's need of an input
+            // TODO: View handles the player's need of an input (human player do nothing here)
         }
     }
 
@@ -62,7 +67,10 @@ public class GameControllerImpl implements GameController {
     public void handlesHumanCardSelection(final int selectedIndex) {
         final Player human = model.getCurrentPlayer();
         final Card card = human.getHand().get(selectedIndex);
+        
         model.makeMove(human, card);
+        view.updateHand(0, human.getHand()); 
+        
         manageTurn();
     }
 
