@@ -4,6 +4,7 @@ import it.unibo.briscoola.view.api.popup.PopupFactory;
 import it.unibo.briscoola.view.api.popup.Popups;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class PopupFactoryImpl implements PopupFactory {
 
@@ -24,15 +25,23 @@ public class PopupFactoryImpl implements PopupFactory {
     }
 
     private Popup roundWinnerPopup(final JRootPane root, final String message){
+        String trophy = new String(Character.toChars(1096));
+        JComponent component = new JPanel(new GridLayout(0,1));
+        component.add(new JLabel(trophy));
+        component.add(new JLabel(message));
         return javax.swing.PopupFactory.getSharedInstance().getPopup(
                 root,
-                null,
+                component,
                 0,
                 0
         );
     }
 
     private Popup endGamePopup(final JRootPane root, final String message){
+        String trophy = new String(Character.toChars(1098));
+        JComponent component = new JPanel(new GridLayout(0,1));
+        component.add(new JLabel(trophy));
+        component.add(new JLabel(message));
         return javax.swing.PopupFactory.getSharedInstance().getPopup(
                 root,
                 null,
