@@ -7,7 +7,7 @@ public interface PopupFactory {
     /**
      * Based on the enum element of type {@link Popups} deploys the correct JPanel.
      *
-     * @param root main panel on which the Popup is based
+     * @param root owner of the popup componed
      * @param popup of enum {@link Popups}
      * @param message is a {@link String} to show on the popup
      * @return a {@link Popup} element

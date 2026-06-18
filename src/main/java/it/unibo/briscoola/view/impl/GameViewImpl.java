@@ -271,7 +271,10 @@ public class GameViewImpl extends JFrame implements View {
      */
     @Override
     public void displayMessage(String message) {
-        System.out.println(message);    
+        // I'd add an input of type Popups popup to specify the type of popup to show
+        System.out.println(message);
+        /*PopupFactory factory = new PopupFactoryImpl();
+        factory.create(this.rootPane,popup, message).show();*/
     }
 
 
