@@ -3,6 +3,9 @@ package it.unibo.briscoola.model.impl.card;
 import it.unibo.briscoola.model.api.attributes.CardSeed;
 import it.unibo.briscoola.model.api.attributes.CardValue;
 import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.model.impl.game.RoundPlay;
+
+import java.util.Objects;
 
 /**
  * Implementation of {@link Card} interface.
@@ -55,4 +58,22 @@ public class StandardCardImpl implements Card {
         return this.value.getPowerCard();
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Card that = (Card) o;
+        return Objects.equals(this.seed, that.getCardSeed()) && Objects.equals(this.value, that.getCardValue());
+    }
+    
+>>>>>>> 7624f18840a5bc0afd9dfb609c79db98fdb52eb2
 }
