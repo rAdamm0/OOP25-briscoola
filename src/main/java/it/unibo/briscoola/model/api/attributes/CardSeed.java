@@ -1,24 +1,27 @@
 package it.unibo.briscoola.model.api.attributes;
 
+/**
+ * Represents the four seeds of the cards.
+ */
 public enum CardSeed {
-    
-    /**  
-     * THE SYMBOL SWORD 
+
+    /**
+     * THE SYMBOL SWORD.
      */
-    SWORD,
+    SWORD, 
 
     /**
-     * THE SYMBOL COIN 
+     * THE SYMBOL COIN.
      */ 
-    COIN,
+    COIN, 
 
     /**
-     * THE SYMBOL STAFF 
+     * THE SYMBOL STAFF.
      */
     STAFF, 
-    
+
     /**
-     * THE SYMBOL CUP 
+     * THE SYMBOL CUP.
      */
-    CUP;
+    CUP
 }

@@ -4,28 +4,42 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.deck.Deck;
 
-public abstract class AbstractDeckImpl<T extends Card> implements Deck<T>{
+/**
+ * Abstract implementation of the {@link Deck} interface.
+ * Provides the basic logic for drawing, shuffling,
+ * and querying the deck of cards.
+ *
+ * @param <T> the type of {@link Card} handled by the deck
+ */
+public abstract class AbstractDeckImpl<T extends Card> implements Deck<T> {
 
     private final List<T> deckOfCards;
 
-    public AbstractDeckImpl(){
-        this.deckOfCards=new ArrayList<>();
+    /**
+     * Constructs an empty abstract deck initialized with an ArrayList.
+     */
+    public AbstractDeckImpl() {
+        this.deckOfCards = new ArrayList<>();
     }
 
-    public AbstractDeckImpl(final List<T> initialSetOfCards){
-        this.deckOfCards=new ArrayList<>(initialSetOfCards);
+    /**
+     * Constructs an abstract deck populated with an initial set of cards.
+     *
+     * @param initialSetOfCards the list of cards
+     */
+    public AbstractDeckImpl(final List<T> initialSetOfCards) {
+        this.deckOfCards = new ArrayList<>(initialSetOfCards);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void shuffle(){
-        if(!deckOfCards.isEmpty()){
+    public final void shuffle() {
+        if (!deckOfCards.isEmpty()) {
             Collections.shuffle(deckOfCards);
         }
     }
@@ -34,17 +48,11 @@ public abstract class AbstractDeckImpl<T extends Card> implements Deck<T>{
      * {@inheritDoc}
      */
     @Override
-    public final Optional<T> draw(){
-        if(deckOfCards.isEmpty()){
+    public final Optional<T> draw() {
+        if (deckOfCards.isEmpty()) {
            return Optional.empty(); 
-        }else{
-            /**
-             * Draw the last element of the list, that is on the top
-             */
+        } else {
             return Optional.of(deckOfCards.remove(0));
-            /**
-             * each iteraction is obv reducing the Deck
-             */
         }
     }
 
@@ -52,20 +60,20 @@ public abstract class AbstractDeckImpl<T extends Card> implements Deck<T>{
      * {@inheritDoc}
      */
     @Override
-    public final Optional<T> getBriscolaSeed(){
-        if(deckOfCards.isEmpty()){
+    public final Optional<T> getBriscolaSeed() {
+        if (deckOfCards.isEmpty()) {
             return Optional.empty();
-        }else{
-            return Optional.of(deckOfCards.get((deckOfCards.size())-1));
+        } else {
+            return Optional.of(this.deckOfCards.get(deckOfCards.size() - 1));
 
         }
     }
 
     /**
-    * {@inheritDoc }
-    */
+     * {@inheritDoc}
+     */
     @Override
-    public final int getActualSize(){
+    public final int getActualSize() {
         return deckOfCards.size();
     }
 
@@ -73,17 +81,19 @@ public abstract class AbstractDeckImpl<T extends Card> implements Deck<T>{
      * {@inheritDoc} 
      */
     @Override
-    public final void refillDeck(final List<T> newInitialSetOfCards){
-        if(newInitialSetOfCards!=null && !newInitialSetOfCards.isEmpty()){
+    public final void refillDeck(final List<T> newInitialSetOfCards) {
+        if (newInitialSetOfCards != null && !newInitialSetOfCards.isEmpty()) {
             this.deckOfCards.addAll(newInitialSetOfCards);
         }
     }
-    
-    /*
+
+    /**
      * Allows DeckImpl to add cards to the deck, 
-     * during the creation of the deck it self
+     * during the creation of the deck it self.
+     * 
+     * @param card the card
      */
-    protected final void addCard(final T card){
+    protected final void addCard(final T card) {
         this.deckOfCards.add(card);
     }
 }

@@ -3,25 +3,36 @@ package it.unibo.briscoola.model.api.card;
 import it.unibo.briscoola.model.api.attributes.CardSeed;
 import it.unibo.briscoola.model.api.attributes.CardValue;
 
+/**
+ * Represents the interface of the generic card of the game.
+ */
 public interface Card {
-        
+
     /**
-    * @return the seed of the card 
-    */
+     * Get the seed of the card.
+     * 
+     * @return the seed of the card
+     */
     CardSeed getCardSeed();
 
     /**
-    * @return the value of the card 
-    */
+     * Get the value of the card.
+     * 
+     * @return the value of the card
+     */
     CardValue getCardValue();
 
     /**
-     * @return the points of the card 
+     * Get the point of the card.
+     * 
+     * @return the points of the card
      */
     int getCardPoints();
 
     /**
-     * @return the Strength of the card 
+     * Get the strenght of the card.
+     * 
+     * @return the Strength of the card
      */
     int getCardPower();
 }
