@@ -1,55 +1,56 @@
 package it.unibo.briscoola.view.impl;
 
-import javax.swing.*;
-import java.awt.*;
-
+import javax.swing.JPanel;
+import java.awt.CardLayout;
+import java.awt.Color;
 import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.view.impl.menu.DifficultySelectionPanel;
 import it.unibo.briscoola.view.impl.menu.MainMenu;
 import it.unibo.briscoola.view.impl.menu.PlayerSelectionsPanel;
-
 import java.awt.event.ActionListener;
 import java.util.function.BiConsumer;
 
-public class StartScreen extends JPanel{
+/**
+ * Screen is the component that manages the configuration before starting the game.
+ * Uses a {@link CardLayout} to change between the main menu, the player count selection,
+ * and the difficulty selection panels.
+ */
+public class StartScreen extends JPanel {
 
     /**
      * it simply includes the two sub-panels 
-     * and manages the exchange via CardLayout
+     * and manages the exchange via CardLayout.
      */
     private static final String MAIN_MENU = "MAIN";
     private static final String PLAYER_SELECTION = "SELECTION";
     private static final String DIFFICULTY_SELECTION = "DIFFICULTY";
 
+    private static final int DEFAULT_PLAYERS = 2;
+    private static final int BG_R = 30;
+    private static final int BG_G = 100;
+    private static final int BG_B = 72;
+
     private final CardLayout cardLayout;
-    private int temporarySelectedPlayers = 2;
+    private int temporarySelectedPlayers = DEFAULT_PLAYERS;
 
     /**
-     * creates a new StartScreen
+     * creates a new StartScreen.
+     * 
      * @param onSetupComplete callback triggered when both players count and difficulty are choosen
      * @param onQuit callback triggered when the user wants to exit the application
      */
-    public StartScreen(final BiConsumer<Integer,Difficulty> onSetupComplete, final ActionListener onQuit){
+    public StartScreen(final BiConsumer<Integer, Difficulty> onSetupComplete, final ActionListener onQuit) {
         this.cardLayout = new CardLayout();
         this.setLayout(this.cardLayout);
-        this.setBackground(new Color(30,100, 72));
+        this.setBackground(new Color(BG_R, BG_G, BG_B));
 
-        /**
-         * main menu
-         */
         final JPanel mainMenu = new MainMenu(
             e -> cardLayout.show(this, PLAYER_SELECTION), 
             onQuit
         );
 
-        /**
-         * selection number of players
-         */
         final JPanel playerSelection = new PlayerSelectionsPanel(
             num -> {
-                /**
-                 * move to the selection of difficulty
-                 */
                 this.temporarySelectedPlayers = num; 
                 cardLayout.show(this, DIFFICULTY_SELECTION); 
 
@@ -65,7 +66,5 @@ public class StartScreen extends JPanel{
         this.add(mainMenu, MAIN_MENU);
         this.add(playerSelection, PLAYER_SELECTION);
         this.add(difficultySelection, DIFFICULTY_SELECTION);
-
     }
-    
 }

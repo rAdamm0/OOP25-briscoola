@@ -6,13 +6,11 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.net.URL;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import it.unibo.briscoola.view.api.CardView;
 
 public class CardViewImpl extends JPanel implements CardView {

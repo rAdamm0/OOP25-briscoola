@@ -1,25 +1,34 @@
 package it.unibo.briscoola.controller.impl;
 
-
 import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.attributes.CardValue;
 import it.unibo.briscoola.model.api.attributes.Difficulty;
-
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
 
+/**
+ * implementation of the MenuConroller
+ * This class has the role to handle the initial setUp
+ * and starts the match.
+ */
 public class MenuControllerImpl implements MenuController {
 
     private GameModel model;
-    private View view;
+    private final View view;
 
-    public MenuControllerImpl( final GameModel model, final View view){
-        this.model=model;
-        this.view=view;
+    /**
+     * Constructs a new MenuControllerImpl.
+     * 
+     * @param model the game model istance
+     * @param view the application view
+     */
+    public MenuControllerImpl(final GameModel model, final View view) {
+        this.model = model;
+        this.view = view;
     }
 
 
@@ -27,36 +36,34 @@ public class MenuControllerImpl implements MenuController {
      * {@inheritDoc}
      */
     @Override
-    public void startGame(final int numPlayers,final Difficulty difficulty) {
-        if(numPlayers !=2 && numPlayers != 4){
+    public void startGame(final int numPlayers, final Difficulty difficulty) {
+        if (numPlayers != 2 && numPlayers != 4) {
             throw new IllegalArgumentException("Il gioco supporta solo modalità a 2 o 4 giocatori");
         }
-        if(difficulty == null){
+        if (difficulty == null) {
             throw new IllegalArgumentException("La difficolta non puo essere nulla");
         }
 
         final GameBuilderImpl builder = new GameBuilderImpl();
         builder.setDifficulty(difficulty);
 
-        /**
+        /*
          * Id cof CPU starts from 1, because 0 is reserved for Human player
          */
-        for(int i=1 ; i< numPlayers; i++){
+        for (int i = 1; i < numPlayers; i++) {
             builder.addPlayer();
         }
 
-        this.model=builder.build();
+        this.model = builder.build();
 
-        /**
+        /*
          * Configure the game model
          */
         this.model.startMatch();
-
         this.view.initGame(); 
 
         final Player human = this.model.getCurrentPlayer(); 
         this.view.updateHand(0, human.getHand());
-
 
         if (this.model.getBriscolaSeed().isPresent()) { 
             final String briscolaSeedStr = this.model.getBriscolaSeed().get().name();
@@ -72,8 +79,6 @@ public class MenuControllerImpl implements MenuController {
 
         final GameController gameController = new GameControllerImpl(this.model, this.view);
         this.view.setGameController(gameController);
-        
         gameController.startGame();
     }
-    
 }

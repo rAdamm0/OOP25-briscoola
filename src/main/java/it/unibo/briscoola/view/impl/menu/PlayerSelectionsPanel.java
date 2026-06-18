@@ -1,71 +1,67 @@
 package it.unibo.briscoola.view.impl.menu;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-
+/**
+ * Panel inside the startup sequence that allows the user to select
+ * the number of players for the match.
+ */
 public class PlayerSelectionsPanel extends JPanel {
+
+    private static final int INSET_PADDING = 15;
+    private static final int FONT_SIZE = 70;
+    private static final int BUTTON_WIDTH = 200;
+    private static final int BUTTON_HEIGHT = 50;
+    private static final int TWO_PLAYERS_MODE = 2;
+
+    private static final int GRIDX0 = 0;
+    private static final int GRIDY0 = 0;
+    private static final int GRIDY1 = 1;
+    private static final int GRIDY2 = 2;
+
     /**
      * is only showing the options for the number of players.
-     * letting choose the type of match : 
-     * 2 or 4 players 
+     * letting choose the type of match: 
+     * 2 players.
+     * 
+     * @param chosePlayer selection of the number of players
+     * @param backClicked selection of the difficulty of the other players
      */
-    public PlayerSelectionsPanel(final Consumer<Integer> chosePlayer, final ActionListener backClicked){
+    public PlayerSelectionsPanel(final Consumer<Integer> chosePlayer, final ActionListener backClicked) {
 
         this.setLayout(new GridBagLayout());
         this.setOpaque(false);
 
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15); /* this define empty space around the components / buttons */
-        gbc.gridx = 0; /*all in one central column */
-
-        /**
-         * to be sure.
-         * "gbc.gridy" defines the row (Y) of the grid in which to place the component.
-         * By increasing "gridy", components are stacked vertically. 
-         * "gridy" = 0 -> "title" , "gridy" = 1 -> "Button : Play" , "gridy" = 2 -> "Button : Exit"
-         */
+        gbc.insets = new Insets(INSET_PADDING, INSET_PADDING, INSET_PADDING, INSET_PADDING);
+        gbc.gridx = GRIDX0;
 
         final JLabel title = new JLabel("Select Number of Players");
-        title.setFont(new Font("Serif", Font.BOLD, 70));
+        title.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
         title.setForeground(Color.WHITE);
-        gbc.gridy = 0;
+        gbc.gridy = GRIDY0;
         this.add(title, gbc);
 
-
-        /**
-         * button for 2 players 
-         */
         final JButton btn2Players = new JButton("2 Players");
-        btn2Players.setPreferredSize(new Dimension(200, 50));
-        btn2Players.addActionListener(e -> chosePlayer.accept(2)); 
-        /**
-         * the 2 is the exactly number to give to the consumer, 
-         * that will move that value out in the view 
-         */
-        gbc.gridy = 1;
+        btn2Players.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        btn2Players.addActionListener(e -> chosePlayer.accept(TWO_PLAYERS_MODE)); 
+        gbc.gridy = GRIDY1;
         add(btn2Players, gbc);
 
-        /**
-         * button for 4 players 
-         * final JButton btn4Players = new JButton("4 Players");
-         * btn4Players.setPreferredSize(new Dimension(200, 50));
-         * btn4Players.addActionListener(e -> chosePlayer.accept(4)); 
-         * gbc.gridy = 2;
-         * add(btn4Players, gbc);
-         */
-
-
-        /**
-         * button of exit
-         */
-        JButton btnQuit = new JButton("Back");
-        btnQuit.setPreferredSize(new Dimension(200, 50));
+        final JButton btnQuit = new JButton("Back");
+        btnQuit.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         btnQuit.addActionListener(backClicked);
-        gbc.gridy = 3;
+        gbc.gridy = GRIDY2;
         add(btnQuit, gbc);
     }
-    
 }

@@ -1,4 +1,4 @@
-package it.unibo.briscoola.controller.impl.utilis;
+package it.unibo.briscoola.controller.impl.utils;
 
 import java.io.Serializable;
 
