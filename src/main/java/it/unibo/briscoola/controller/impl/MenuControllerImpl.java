@@ -31,7 +31,6 @@ public class MenuControllerImpl implements MenuController {
         this.view = view;
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -47,18 +46,11 @@ public class MenuControllerImpl implements MenuController {
         final GameBuilderImpl builder = new GameBuilderImpl();
         builder.setDifficulty(difficulty);
 
-        /*
-         * Id cof CPU starts from 1, because 0 is reserved for Human player
-         */
         for (int i = 1; i < numPlayers; i++) {
             builder.addPlayer();
         }
 
         this.model = builder.build();
-
-        /*
-         * Configure the game model
-         */
         this.model.startMatch();
         this.view.initGame(); 
 
