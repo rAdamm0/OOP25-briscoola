@@ -154,6 +154,14 @@ public class GameViewImpl extends JFrame implements View {
         for (int i = 0; i < NUMBER_OF_CARDS; i++) {
             playerHandCards[i] = new CardViewImpl();
             playerHandCards[i].renderCard(null, null);
+
+            final int cardIndex = i;
+
+            playerHandCards[i].addCardClickListener(e -> {
+                if (this.gameController != null) {
+                    this.gameController.handlesHumanCardSelection(cardIndex);
+                }
+            });
             playerHandPanel.add(playerHandCards[i]);
         }
 

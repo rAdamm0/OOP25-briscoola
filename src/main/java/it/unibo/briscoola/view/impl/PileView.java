@@ -42,7 +42,7 @@ public final class PileView extends JPanel {
         super();
         this.initializeLayout(ownerName);
     }
-    
+
     /**
      * private to configure components securely.
      * 
@@ -68,7 +68,7 @@ public final class PileView extends JPanel {
         }
 
         labelForCount.setHorizontalAlignment(SwingConstants.CENTER);
-        labelForCount.setForeground(Color.WHITE);
+        labelForCount.setForeground(Color.BLACK);
 
         add(imageLabel, BorderLayout.CENTER); 
         add(labelForCount, BorderLayout.SOUTH);
