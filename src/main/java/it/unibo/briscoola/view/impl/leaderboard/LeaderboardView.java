@@ -1,7 +1,7 @@
 package it.unibo.briscoola.view.impl.leaderboard;
 
 import it.unibo.briscoola.controller.impl.utilis.Pair;
-import it.unibo.briscoola.view.api.Leaderboard;
+import it.unibo.briscoola.view.api.leaderboard.Leaderboard;
 
 import javax.swing.*;
 import java.awt.*;

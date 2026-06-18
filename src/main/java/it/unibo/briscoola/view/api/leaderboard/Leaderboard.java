@@ -1,6 +1,4 @@
-package it.unibo.briscoola.view.api;
-
-import javax.swing.*;
+package it.unibo.briscoola.view.api.leaderboard;
 
 public interface Leaderboard  {
 
