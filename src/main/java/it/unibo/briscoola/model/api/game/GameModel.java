@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.briscoola.model.api.attributes.CardSeed;
+import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
@@ -110,4 +111,11 @@ public interface GameModel {
      * @return the current {@link RoundStateImpl}
      */
     RoundStateImpl getCurrentRoundState();
+
+    /**
+     * Returns the {@link Difficulty} of the gamemodel
+     *
+     * @return the {@link Difficulty} of the game
+     */
+    Difficulty getDifficulty();
 }
