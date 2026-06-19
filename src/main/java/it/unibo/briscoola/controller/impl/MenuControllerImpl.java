@@ -4,14 +4,13 @@ import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
-import it.unibo.briscoola.model.api.attributes.CardValue;
 import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
 
 /**
- * implementation of the MenuConroller
+ * implementation of the MenuController
  * This class has the role to handle the initial setUp
  * and starts the match.
  */

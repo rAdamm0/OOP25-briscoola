@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Popup;
 import javax.swing.SwingConstants;
 
 import it.unibo.briscoola.controller.api.GameController;
@@ -22,6 +23,9 @@ import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.view.api.CardView;
 import it.unibo.briscoola.view.api.View;
+import it.unibo.briscoola.view.api.popup.Popups;
+import it.unibo.briscoola.view.impl.popup.PopupFactoryImpl;
+import it.unibo.briscoola.view.api.popup.PopupFactory;
 
 /**
  * Implementazion of {@link  View} interface.
@@ -41,9 +45,11 @@ public final class GameViewImpl extends JFrame implements View {
     private static final int WINDOW_HEIGHT = 850;
     private static final int CARD_WIDTH = 120;
     private static final int CARD_HEIGHT = 170;
+
     private static final int BG_R = 20;
     private static final int BG_G = 80;
     private static final int BG_B = 25;
+
     private static final int BORDER_PADDING = 10;
     private static final int WEST_PADDING = 30;
     private static final int FLOW_GAP_HAND = 20;
@@ -85,7 +91,12 @@ public final class GameViewImpl extends JFrame implements View {
     private void initLayoutConfiguration() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-                final StartScreen startScreen = new StartScreen(
+
+        /*
+         * initialization of StartScreen 
+         * with Play, Quit, Rules, Scores.
+         */
+        final StartScreen startScreen = new StartScreen(
             (players, diff) -> {
                 if (this.menuController != null) {
                 this.menuController.startGame(players, diff);
@@ -101,7 +112,6 @@ public final class GameViewImpl extends JFrame implements View {
 
         this.add(container);
         this.pack();
-
         this.setLocationRelativeTo(null); 
     }
 
@@ -350,5 +360,14 @@ public final class GameViewImpl extends JFrame implements View {
 
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
+    }
+
+    @Override
+    public void triggerPopup(final Popups type, final String message) {
+        final PopupFactory factory = new PopupFactoryImpl();
+        final Popup popup = factory.create(this.getRootPane(), type, message);
+        if (popup != null) {
+            popup.show();
+        }
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.view.api.popup.Popups;
 
 /**
  * Interface View for the graphic setting.
@@ -79,4 +80,12 @@ public interface View {
      * @param cpuValue the value of the card played by the CPU
      */
     void updateTable(String playerSeed, String playerValue, String cpuSeed, String cpuValue);
+
+    /**
+     * Prepares and displays the popup on the screen.
+     * 
+     * @param type
+     * @param message
+     */
+    void triggerPopup(Popups type, String message);
 }
