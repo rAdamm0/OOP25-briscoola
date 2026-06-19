@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.briscoola.model.api.attributes.CardSeed;
+import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.deck.Deck;
 import it.unibo.briscoola.model.api.game.GameModel;
@@ -22,6 +23,7 @@ public class GameModelImpl implements GameModel {
     private final List<Player> players;
     private Card briscolaCard;
     private final RoundManager roundManager;
+    private final Difficulty difficulty;
 
     /**
      * Constructs a new {@code GameModelImpl} with the specified players and deck.
@@ -29,11 +31,12 @@ public class GameModelImpl implements GameModel {
      * @param players the list of players partecipating in the match.
      * @param deck the game deck to be used for the match.
      */
-    public GameModelImpl(final List<Player> players, final Deck<Card> deck) {
+    public GameModelImpl(final List<Player> players, final Deck<Card> deck, final Difficulty difficulty) {
         this.players = new ArrayList<>(players);
         this.deck = deck;
         this.init();
         this.roundManager = new RoundManagerImpl(briscolaCard.getCardSeed());
+        this.difficulty = difficulty;
     }
 
     /**
@@ -195,5 +198,13 @@ public class GameModelImpl implements GameModel {
     @Override
     public RoundStateImpl getCurrentRoundState() {
         return this.roundManager.getRoundState();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Difficulty getDifficulty(){
+        return this.difficulty;
     }
 }

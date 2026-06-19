@@ -26,6 +26,7 @@ public class GameBuilderImpl implements GameBuilder {
     private final List<Player> players = new ArrayList<>();
     private PlayStrategy playStrategy;
     private int id;
+    private Difficulty difficulty;
 
     /**
      * Basic constructor in which it instantiates the human
@@ -40,6 +41,7 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilderImpl setDifficulty(final Difficulty difficulty) {
+        this.difficulty = difficulty;
         this.playStrategy = StrategyFactory.create(difficulty);
         return this;
     }
@@ -60,6 +62,6 @@ public class GameBuilderImpl implements GameBuilder {
     @Override
     public GameModel build() {
         final Deck<Card> deck = new DeckImpl();
-        return new GameModelImpl(players, deck);
+        return new GameModelImpl(players, deck, this.difficulty);
     }
 }
