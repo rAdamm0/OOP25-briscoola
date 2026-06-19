@@ -9,12 +9,14 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.net.URL;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
@@ -203,6 +205,9 @@ public final class GameViewImpl extends JFrame implements View {
         westArea.add(deckBriscolaPanel);
         mainPanel.add(westArea, BorderLayout.WEST);
 
+        final JPanel centerWrapper = new JPanel(new GridBagLayout());
+        centerWrapper.setOpaque(false);
+
         final JPanel tableCenter = new JPanel(new FlowLayout(FlowLayout.CENTER, FLOW_GAP_TABLE, 0));
         tableCenter.setOpaque(false);
 
@@ -215,7 +220,13 @@ public final class GameViewImpl extends JFrame implements View {
         tableCenter.add(this.playerPlayedCardView);
         tableCenter.add(this.cpuPlayedCardView);
 
-        mainPanel.add(tableCenter, BorderLayout.CENTER);
+        centerWrapper.add(tableCenter);
+        mainPanel.add(centerWrapper, BorderLayout.CENTER);
+        
+        final JPanel eastSpacer = new JPanel();
+        eastSpacer.setOpaque(false);
+        eastSpacer.setPreferredSize(new Dimension(380, 1));
+        mainPanel.add(eastSpacer, BorderLayout.EAST);
 
         return mainPanel;
     }
