@@ -105,6 +105,11 @@ public class GameModelImpl implements GameModel {
      */
     @Override
     public boolean isGameOver() {
+
+        if (!this.roundManager.getRoundState().playedCards().isEmpty()) {
+            return false;
+        }
+
         for (final Player p : this.players) {
             if (!p.getHand().isEmpty()) {
                 return false;
