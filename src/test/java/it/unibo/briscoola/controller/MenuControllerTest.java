@@ -70,22 +70,14 @@ class MenuControllerTest {
     @Test
     void testStartGameWithInvalidPlayers() {
         assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(1, Difficulty.EASY, this.testView);
-        });
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(3, Difficulty.MEDIUM, this.testView);
-        });
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(4, Difficulty.HARD, this.testView);
+            this.testMenuController.startGame(null, Difficulty.EASY, this.testView);
         });
     }
 
     @Test
     void testStartGameWithNullDifficulty() {
         assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(2, null, this.testView);
+            this.testMenuController.startGame("PIEROANGELO", null, this.testView);
         });
     }
 }

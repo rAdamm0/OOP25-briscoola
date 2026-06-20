@@ -17,7 +17,7 @@ import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
 import java.util.List;
 
 /**
- * implementation of the MenuController
+ * implementation of {@link MenuController}
  * This class has the role to handle the initial setUp
  * and starts the match.
  * 
@@ -42,9 +42,9 @@ public final class MenuControllerImpl implements MenuController {
      * {@inheritDoc}
      */
     @Override
-    public void startGame(final int numPlayers, final Difficulty difficulty, final View view) {
-        if (numPlayers != MAX_PLAYERS) {
-            throw new IllegalArgumentException("Il gioco supporta solo modalità a 2 giocatori");
+    public void startGame(final String namePlayer, final Difficulty difficulty, final View view) {
+        if (namePlayer == null) {
+            throw new IllegalArgumentException("Il nome non puo essere vuoto");
         }
         if (difficulty == null) {
             throw new IllegalArgumentException("La difficolta non puo essere nulla");
@@ -53,7 +53,7 @@ public final class MenuControllerImpl implements MenuController {
         final GameBuilderImpl builder = new GameBuilderImpl();
         builder.setDifficulty(difficulty);
 
-        for (int i = 1; i < numPlayers; i++) {
+        for (int i = 1; i < MAX_PLAYERS; i++) {
             builder.addPlayer();
         }
         final GameModel model = builder.build();
