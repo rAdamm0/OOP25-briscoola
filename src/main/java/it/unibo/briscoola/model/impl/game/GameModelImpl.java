@@ -15,6 +15,8 @@ import it.unibo.briscoola.model.api.player.Player;
 /**
  * Implementation of {@link GameModel} interface.
  * This class handles the game flow (including the deck management, the player interaction and the round state transitions).
+ * 
+ * @author Maisam Noumi
  */
 public class GameModelImpl implements GameModel {
 
@@ -40,7 +42,8 @@ public class GameModelImpl implements GameModel {
     }
 
     /**
-     * Initializes the table state.
+     * Initializes the table state by assigning the Briscola card
+     * and dealing the initial hand to the players.
      */
     private void init() {
         this.assignBriscola();

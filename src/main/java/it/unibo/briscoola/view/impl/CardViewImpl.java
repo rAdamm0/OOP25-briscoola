@@ -23,6 +23,8 @@ import it.unibo.briscoola.view.api.CardView;
  */
 public final class CardViewImpl extends JPanel implements CardView {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int CARD_WIDTH = 100;
     private static final int CARD_HEIGHT = 150;
 
