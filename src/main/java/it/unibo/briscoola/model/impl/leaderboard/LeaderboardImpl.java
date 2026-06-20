@@ -1,5 +1,6 @@
 package it.unibo.briscoola.model.impl.leaderboard;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
 import it.unibo.briscoola.model.api.leaderboard.ScoreEntry;
 import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
@@ -35,6 +36,7 @@ public class LeaderboardImpl implements Leaderboard {
      *
      * @param manager the manager used to retrieve stored leaderboard data
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "ScoreFileManager is a service dependency.")
     public LeaderboardImpl(final ScoreFileManager manager) {
         this.list = new ArrayList<>(manager.load());
         this.manager = manager;
@@ -45,10 +47,11 @@ public class LeaderboardImpl implements Leaderboard {
      */
     @Override
     public boolean addEntry(final ScoreEntry entry) {
+        Objects.requireNonNull(entry, "The entry cannot be null");
         if (entry.getScore() == 0) {
             return false;
         }
-        this.list.add(Objects.requireNonNull(entry, "The entry cannot be null"));
+        this.list.add(entry);
         final int maximumLeaderboard = 10;
         this.list = new ArrayList<>(this.list.stream()
                 .sorted(Comparator.comparing(ScoreEntry::getScore).reversed())
