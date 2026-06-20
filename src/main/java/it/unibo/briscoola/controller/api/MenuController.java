@@ -1,6 +1,10 @@
 package it.unibo.briscoola.controller.api;
 
+import it.unibo.briscoola.controller.impl.utils.Pair;
 import it.unibo.briscoola.model.api.attributes.Difficulty;
+
+import java.util.List;
+import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
 
 /**
  * Manages the initial menu and setup of the Briscola game.
@@ -15,4 +19,12 @@ public interface MenuController {
      * @param difficulty the selecred difficulty level
      */
     void startGame(int numPlayers, Difficulty difficulty);
+
+    /**
+     * Method that retrieves the leaderboard from the {@link Leaderboard} and
+     * manipulates it to return a {@link List} of {@link Pair} of {@link String}.
+     *
+     * @return a {@link List} of pairs of strings matching each player with the highscore
+     */
+    List<Pair<String, String>> getLeaderboardDate();
 }

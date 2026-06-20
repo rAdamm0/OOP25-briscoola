@@ -59,6 +59,8 @@ public final class GameViewImpl extends JFrame implements View {
 
     private final PileView playerPile = new PileView("Player");
     private final PileView cpuPile = new PileView("CPU");
+    private final PopupFactory popup = new PopupFactoryImpl(GameViewImpl.this.getRootPane(),
+            ()->this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
 
     private CardViewImpl briscolaCardView;
     private CardViewImpl playerPlayedCardView;
@@ -69,6 +71,7 @@ public final class GameViewImpl extends JFrame implements View {
 
     private MenuController menuController;
     private GameController gameController;
+    private StartScreen startScreen;
 
     /**
      * Constructs a new {@code GameViewImpl} with the specified Menu Controller.
@@ -84,7 +87,7 @@ public final class GameViewImpl extends JFrame implements View {
     private void initLayoutConfiguration() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-                final StartScreen startScreen = new StartScreen(
+                this.startScreen = new StartScreen(
             (players, diff) -> {
                 if (this.menuController != null) {
                 this.menuController.startGame(players, diff);
@@ -247,14 +250,16 @@ public final class GameViewImpl extends JFrame implements View {
         cardLayout.show(container, GAME_ID);
     }
 
-    private void setEscKeybind() {
+    private void setEscKeybind(){
         InputMap inputMap = this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = this.getRootPane().getActionMap();
         inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "escAction");
         actionMap.put("escAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameViewImpl.this.dispose();
+                if(!popup.isShowing()) {
+                    popup.create(Popups.PAUSE, "You Won!").show();
+                }
             }
         });
     }
@@ -295,6 +300,16 @@ public final class GameViewImpl extends JFrame implements View {
     }
 
     /**
+     * Changes the active layout state back to the Start/Menu screen.
+     */
+    public void showMainMenu() {
+        if (this.startScreen != null) {
+            this.startScreen.resetToMainMenu();
+        }
+        this.cardLayout.show(this.container, MENU_ID);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -310,8 +325,8 @@ public final class GameViewImpl extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void displayMessage(final String message) {
-        System.out.println(message);
+    public void displayMessage(final Popups type, final String message) {
+        popup.create(type, message).show();
     }
 
     /**

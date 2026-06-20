@@ -43,11 +43,8 @@ public class GameModelImpl implements GameModel {
      * Initializes the table state.
      */
     private void init() {
-        System.out.println("PRIMA ASSEGNAZIONE " + deck.getActualSize());
         this.assignBriscola();
-        System.out.println("DOPO ASSEGNAZIONE "+deck.getActualSize());
         this.dealInitialCards();
-        System.out.println("DOPO DEALING "+deck.getActualSize());
 
     }
 

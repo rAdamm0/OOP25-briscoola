@@ -17,6 +17,7 @@ import it.unibo.briscoola.model.impl.leaderboard.ScoreEntryImpl;
 import it.unibo.briscoola.model.impl.leaderboard.ScoreFileManagerImpl;
 import it.unibo.briscoola.model.impl.player.cpu.CpuPlayer;
 import it.unibo.briscoola.view.api.View;
+import it.unibo.briscoola.view.api.popup.Popups;
 
 /**
  * Implementation of the {@link GameController}.
@@ -24,8 +25,6 @@ import it.unibo.briscoola.view.api.View;
  * and the communication between the Model and the View.
  */
 public class GameControllerImpl implements GameController {
-
-    private final String LEADERBOARD_FILE = "leaderboard.json";
 
     private static final int ROUND_END_DELAY_MS = 1500;
     private static final int CPU_THINK_DELAY_MS = 800;
@@ -76,6 +75,7 @@ public class GameControllerImpl implements GameController {
 
             String finalMsg = "GAME OVER! ";
             if (humanPoints > cpuPoints) {
+                String LEADERBOARD_FILE = "leaderboard.json";
                 final ScoreFileManager manager = new ScoreFileManagerImpl(LEADERBOARD_FILE);
                 final Leaderboard leaderboard = new LeaderboardImpl(manager);
                 leaderboard.addEntry(new ScoreEntryImpl("Player", (int) (humanPoints * this.model.getDifficulty().value)));
@@ -90,7 +90,7 @@ public class GameControllerImpl implements GameController {
             final String message = finalMsg + " Score -> Player: " + humanPoints + " | CPU: " + cpuPoints;
 
             SwingUtilities.invokeLater(() -> {
-                view.displayMessage(message);
+                view.displayMessage(Popups.ENDGAME, message);
                 view.start();
             });
             return;
@@ -106,7 +106,7 @@ public class GameControllerImpl implements GameController {
 
                 SwingUtilities.invokeLater(() -> {
                     final RoundWinner winner = model.endRound();
-                    view.displayMessage("Round won by: " + (winner.player().getId() == 0 ? "Player" : "CPU"));
+                    view.displayMessage(Popups.WINNER, "Round won by: " + (winner.player().getId() == 0 ? "Player" : "CPU"));
 
                     if (this.humanPlayer != null) {
                         view.updatePile(this.humanPlayer.getPile().size(), true);

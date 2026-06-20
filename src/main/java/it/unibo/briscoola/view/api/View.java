@@ -4,6 +4,7 @@ import java.util.List;
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.view.api.popup.Popups;
 
 /**
  * Interface View for the graphic setting.
@@ -52,10 +53,11 @@ public interface View {
 
     /**
      * Shows amessage for the end of the game or the turn.
-     * 
+     *
+     * @param type type of message
      * @param message error message
      */
-    void displayMessage(String message);
+    void displayMessage(Popups type, String message);
 
     /**
      * Updates the graphical representation of the card.

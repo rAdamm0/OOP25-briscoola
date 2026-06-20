@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.beans.Transient;
 import java.util.List;
 
+import it.unibo.briscoola.view.api.popup.Popups;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,8 +49,11 @@ class MenuControllerTest {
             @Override
             public void updatePile(int cardsCountTest, boolean playerTest) {}
 
+
             @Override
-            public void displayMessage(String messageTest) {}
+            public void displayMessage(Popups type, String message) {
+
+            }
 
             @Override
             public void updateBriscola(String seedTest, String valueTest) {}
