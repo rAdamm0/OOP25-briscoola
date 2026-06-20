@@ -57,7 +57,7 @@ class MenuControllerTest {
 
             @Override
             public void updateTable(final String playerSeedTest, final String playerValuetest, 
-                                        final String cpuSeedTest, final String cpuValueTest) { }
+                                        final String cpuSeedTest, final String cpuValueTest, final int deckSize) { }
 
             @Override
             public List<CardView> getPlayerHandCards() {
