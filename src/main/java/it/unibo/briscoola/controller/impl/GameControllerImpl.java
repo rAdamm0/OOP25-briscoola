@@ -117,7 +117,7 @@ public class GameControllerImpl implements GameController {
                         view.updatePile(this.cpuPlayer.getPile().size(), false);
                     }
 
-                    view.updateTable(null, null, null, null, 0);
+                    view.updateTable(null, null, null, null, this.model.getDeckSize());
                     updateAllHands();
                     manageTurn();
                 });
@@ -204,7 +204,7 @@ public class GameControllerImpl implements GameController {
             cValue = card.getCardValue().name();
         }
 
-        view.updateTable(pSeed, pValue, cSeed, cValue, /*TODO*/0);
+        view.updateTable(pSeed, pValue, cSeed, cValue, this.model.getDeckSize());
     }
 
     private void updateAllHands() {
