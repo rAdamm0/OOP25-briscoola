@@ -9,6 +9,7 @@ import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.controller.impl.MenuControllerImpl;
 import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.view.api.CardView;
 import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.api.popup.Popups;
 
@@ -60,29 +61,34 @@ class MenuControllerTest {
 
             @Override
             public void triggerPopup(final Popups type, final String message) { }
+
+            @Override
+            public List<CardView> getPlayerHandCards() {
+                return List.of();
+            }
         };
-        this.testMenuController = new MenuControllerImpl(null, this.testView);
+        this.testMenuController = new MenuControllerImpl();
     }
 
     @Test
     void testStartGameWithInvalidPlayers() {
         assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(1, Difficulty.EASY);
+            this.testMenuController.startGame(1, Difficulty.EASY, this.testView);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(3, Difficulty.MEDIUM);
+            this.testMenuController.startGame(3, Difficulty.MEDIUM, this.testView);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(4, Difficulty.HARD);
+            this.testMenuController.startGame(4, Difficulty.HARD, this.testView);
         });
     }
 
     @Test
     void testStartGameWithNullDifficulty() {
         assertThrows(IllegalArgumentException.class, () -> {
-            this.testMenuController.startGame(2, null);
+            this.testMenuController.startGame(2, null, this.testView);
         });
     }
 }

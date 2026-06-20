@@ -56,10 +56,9 @@ public final class StartScreen extends JPanel {
 
         final JPanel playerSelection = new PlayerSelectionsPanel(
             num -> {
-                this.temporarySelectedPlayers = num; 
-                cardLayout.show(this, DIFFICULTY_SELECTION); 
-
-            }, 
+                this.temporarySelectedPlayers = num;
+                cardLayout.show(this, DIFFICULTY_SELECTION);
+            },
             e -> cardLayout.show(this, MAIN_MENU)
         );
 

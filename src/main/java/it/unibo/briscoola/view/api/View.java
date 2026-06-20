@@ -61,6 +61,13 @@ public interface View {
     void displayMessage(String message);
 
     /**
+     * Returns an unmodifiable list of the player hand component views.
+     * 
+     * @return the hand component views
+     */
+    List<CardView> getPlayerHandCards();
+
+    /**
      * Updates the graphical representation of the card.
      * 
      * @param seed the seed of the card

@@ -1,6 +1,7 @@
 package it.unibo.briscoola.controller.api;
 
 import it.unibo.briscoola.model.api.attributes.Difficulty;
+import it.unibo.briscoola.view.api.View;
 
 /**
  * Manages the initial menu and setup of the Briscola game.
@@ -15,6 +16,7 @@ public interface MenuController {
      * 
      * @param numPlayers the number of players (only accepts 2 or 4)
      * @param difficulty the selecred difficulty level
+     * @param view the view istance to interact with
      */
-    void startGame(int numPlayers, Difficulty difficulty);
+    void startGame(int numPlayers, Difficulty difficulty, View view);
 }

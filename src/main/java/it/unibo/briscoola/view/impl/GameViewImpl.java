@@ -76,8 +76,8 @@ public final class GameViewImpl extends JFrame implements View {
     private final CardViewImpl[] playerHandCards = new CardViewImpl[NUMBER_OF_CARDS];
     private final CardViewImpl[] cpuHandCards = new CardViewImpl[NUMBER_OF_CARDS];
 
-    private MenuController menuController;
-    private GameController gameController;
+    private transient MenuController menuController;
+    private transient GameController gameController;
 
     /**
      * Constructs a new {@code GameViewImpl} with the specified Menu Controller.
@@ -90,6 +90,9 @@ public final class GameViewImpl extends JFrame implements View {
         this.initLayoutConfiguration();
     }
 
+    /*
+     * Configures the main window parameters.
+     */
     private void initLayoutConfiguration() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -101,7 +104,7 @@ public final class GameViewImpl extends JFrame implements View {
         final StartScreen startScreen = new StartScreen(
             (players, diff) -> {
                 if (this.menuController != null) {
-                this.menuController.startGame(players, diff);
+                this.menuController.startGame(players, diff, this);
                 }
             }, 
             e -> quit()
@@ -143,6 +146,9 @@ public final class GameViewImpl extends JFrame implements View {
 
         mainPanel.setBackground(new Color(BG_R, BG_G, BG_B)); 
 
+        /*
+         * North Area, dedicated for the cpu.
+         */
         final JPanel northArea = new JPanel(new BorderLayout());
         northArea.setOpaque(false); 
         northArea.setBorder(BorderFactory.createEmptyBorder(BORDER_PADDING, BORDER_PADDING, BORDER_PADDING, BORDER_PADDING));
@@ -159,6 +165,9 @@ public final class GameViewImpl extends JFrame implements View {
         northArea.add(cpuPile, BorderLayout.EAST); 
         mainPanel.add(northArea, BorderLayout.NORTH);
 
+        /*
+         * South Area, dedicated for the player.
+         */
         final JPanel southArea = new JPanel(new BorderLayout());
         southArea.setOpaque(false); 
         southArea.setBorder(BorderFactory.createEmptyBorder(BORDER_PADDING, BORDER_PADDING, BORDER_PADDING, BORDER_PADDING));
@@ -169,8 +178,10 @@ public final class GameViewImpl extends JFrame implements View {
             playerHandCards[i] = new CardViewImpl();
             playerHandCards[i].renderCard(null, null);
 
+            /*
+             * final copy necessary for the usage with the lambda listener.
+             */
             final int cardIndex = i;
-
             playerHandCards[i].addCardClickListener(e -> {
                 if (this.gameController != null) {
                     this.gameController.handlesHumanCardSelection(cardIndex);
@@ -265,6 +276,10 @@ public final class GameViewImpl extends JFrame implements View {
     @Override
     public void updateHand(final int playerID, final List<Card> handCards) {
         if (playerID == 0) {
+
+            /*
+             * Update the cards showed to the player.
+             */
             for (int i = 0; i < NUMBER_OF_CARDS; i++) {
                 if (i < handCards.size()) {
                     final Card card = handCards.get(i);
@@ -279,6 +294,10 @@ public final class GameViewImpl extends JFrame implements View {
                 }
             }
         } else {
+
+            /*
+             * Update the cards showed to the cpu.
+             */
             for (int i = 0; i < NUMBER_OF_CARDS; i++) {
                 if (i < handCards.size()) {
                     final CardView cardComponent = this.cpuHandCards[i];
@@ -290,6 +309,9 @@ public final class GameViewImpl extends JFrame implements View {
             }
         }
 
+        /*
+         * update the elements.
+         */
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
@@ -319,7 +341,7 @@ public final class GameViewImpl extends JFrame implements View {
      */
     @Override
     public void quit() {
-        System.exit(0);
+        this.dispose();
     }
 
     /**
@@ -327,8 +349,9 @@ public final class GameViewImpl extends JFrame implements View {
      * 
      * @return an array containing the hand component views
      */
-    public CardViewImpl[] getPlayerHandCards() {
-        return this.playerHandCards.clone();
+    @Override
+    public List<CardView> getPlayerHandCards() {
+        return List.of(this.playerHandCards);
     }
 
     /**
@@ -346,6 +369,10 @@ public final class GameViewImpl extends JFrame implements View {
      */
     @Override
     public void updateTable(final String playerSeed, final String playerValue, final String cpuSeed, final String cpuValue) {
+
+        /*
+         * updates the graphic cards on the table of the player
+         */
         if (playerSeed != null && playerValue != null) {
             this.playerPlayedCardView.renderCard(playerSeed, playerValue);
             this.playerPlayedCardView.setVisible(true);
@@ -353,6 +380,9 @@ public final class GameViewImpl extends JFrame implements View {
             this.playerPlayedCardView.setVisible(false);
         }
 
+        /*
+         * updates the graphic cards on the table of the cpu
+         */
         if (cpuSeed != null && cpuValue != null) {
             this.cpuPlayedCardView.renderCard(cpuSeed, cpuValue);
             this.cpuPlayedCardView.setVisible(true);

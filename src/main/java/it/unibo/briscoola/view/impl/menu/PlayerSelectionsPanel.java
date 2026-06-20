@@ -60,12 +60,12 @@ public final class PlayerSelectionsPanel extends JPanel {
         btn2Players.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         btn2Players.addActionListener(e -> chosePlayer.accept(TWO_PLAYERS_MODE)); 
         gbc.gridy = GRIDY1;
-        add(btn2Players, gbc);
+        this.add(btn2Players, gbc);
 
         final JButton btnQuit = new JButton("Back");
         btnQuit.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         btnQuit.addActionListener(backClicked);
         gbc.gridy = GRIDY2;
-        add(btnQuit, gbc);
+        this.add(btnQuit, gbc);
     }
 }
