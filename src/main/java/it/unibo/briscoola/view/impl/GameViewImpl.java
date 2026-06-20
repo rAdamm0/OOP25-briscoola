@@ -23,9 +23,9 @@ import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.view.api.CardView;
 import it.unibo.briscoola.view.api.View;
-import it.unibo.briscoola.view.api.popup.PopupFactory;
 import it.unibo.briscoola.view.api.popup.Popups;
 import it.unibo.briscoola.view.impl.popup.PopupFactoryImpl;
+import it.unibo.briscoola.view.api.popup.PopupFactory;
 
 /**
  * Implementazion of {@link  View} interface.
@@ -34,7 +34,6 @@ import it.unibo.briscoola.view.impl.popup.PopupFactoryImpl;
  * the player cards and the center match arena.
  * 
  * @author Andrea Reggiani
- * @author Riem Boukhama
  */
 public final class GameViewImpl extends JFrame implements View {
 

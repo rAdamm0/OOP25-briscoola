@@ -18,5 +18,5 @@ public interface MenuController {
      * @param difficulty the selecred difficulty level
      * @param view the view istance to interact with
      */
-    void startGame(int numPlayers, Difficulty difficulty, View view);
+    void startGame(String namePlayer, Difficulty difficulty, View view);
 }
