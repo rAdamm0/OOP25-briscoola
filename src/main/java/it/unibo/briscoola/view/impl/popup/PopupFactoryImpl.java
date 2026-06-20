@@ -48,8 +48,8 @@ public class PopupFactoryImpl implements PopupFactory {
     private final int cols = 1;
     private final int hGap = 0;
     private final int vGap = 15;
-    private final int width = 300;
-    private final int height = 200;
+    private final int width = toolkit.getScreenSize().width/7;
+    private final int height = toolkit.getScreenSize().height/4;
     private final int medumFontSize = 24;
     private final String font = "Serif";
     private int x;
@@ -118,8 +118,8 @@ public class PopupFactoryImpl implements PopupFactory {
         contentPane.add(hideButton);
         if (root.isShowing()) {
             final java.awt.Point parentLocation = root.getLocationOnScreen();
-            x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / 2;
-            y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / 2;
+            x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / 20;
+            y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / 20;
         } else {
             final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - contentPane.getPreferredSize().width) / 2;
@@ -222,6 +222,13 @@ public class PopupFactoryImpl implements PopupFactory {
             }
         });
         contentPane.add(returnHome);
+        final JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(e -> {
+            if (localPopupReference[0] != null) {
+                localPopupReference[0].hide();
+            }
+        });
+        contentPane.add(closeButton);
         exit.addActionListener(e -> {
                     this.isShowing = false;
                     final Window frame = SwingUtilities.getWindowAncestor(root);
