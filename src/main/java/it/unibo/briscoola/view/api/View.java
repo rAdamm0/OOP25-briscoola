@@ -91,6 +91,6 @@ public interface View {
      * @param cpuValue the value of the card played by the CPU
      * @param deckSize the current number of cards in the deck
      */
-    void updateTable(String playerSeed, String playerValue, String cpuSeed, String cpuValue, final int deckSize);
+    void updateTable(String playerSeed, String playerValue, String cpuSeed, String cpuValue, int deckSize);
 
 }

@@ -7,7 +7,6 @@ import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.view.impl.menu.DifficultySelectionPanel;
 import it.unibo.briscoola.view.impl.menu.MainMenu;
 import it.unibo.briscoola.view.impl.menu.PlayerNamePanel;
-import it.unibo.briscoola.view.impl.menu.PlayerSelectionsPanel;
 import java.awt.event.ActionListener;
 import java.util.function.BiConsumer;
 

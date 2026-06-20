@@ -80,7 +80,8 @@ public class GameControllerImpl implements GameController {
                 final String leaderboardFile = "leaderboard.json";
                 final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
                 final Leaderboard leaderboard = new LeaderboardImpl(manager);
-                leaderboard.addEntry(new ScoreEntryImpl(humanPlayer.getName(), (int) (humanPoints * this.model.getDifficulty().getValue())));
+                leaderboard.addEntry(new ScoreEntryImpl(humanPlayer.getName(),
+                        (int) (humanPoints * this.model.getDifficulty().getValue())));
                 leaderboard.saveScores();
                 finalMsg += "You Won!";
             } else if (cpuPoints > humanPoints) {

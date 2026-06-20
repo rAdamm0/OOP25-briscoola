@@ -100,7 +100,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
         if (Files.notExists(path)) {
             return List.of();
         }
-        try (final Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+        try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             final TypeToken<List<ScoreEntryImpl>> listType = new TypeToken<>() {
             };
             final Optional<List<ScoreEntry>> list = Optional.ofNullable(gson.fromJson(reader, listType.getType()));
@@ -117,7 +117,7 @@ public class ScoreFileManagerImpl implements ScoreFileManager {
      */
     @Override
     public boolean clearLeaderBoard() {
-        try (final InputStream ignored = Files.newInputStream(path, StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (InputStream ignored = Files.newInputStream(path, StandardOpenOption.TRUNCATE_EXISTING)) {
             Files.writeString(path, "[]");
             return true;
         } catch (final IOException e) {

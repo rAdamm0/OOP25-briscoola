@@ -18,9 +18,9 @@ public interface MenuController {
      * Officially start game by configuring the model and view
      * based on the number of players selected.
      * 
-     * @param namePlayers the number of players (only accepts 2 or 4)
-     * @param difficulty the selecred difficulty level
-     * @param view the view istance to interact with
+     * @param namePlayer the name of the player
+     * @param difficulty the selected difficulty level
+     * @param view the view instance to interact with
      */
     void startGame(String namePlayer, Difficulty difficulty, View view);
 

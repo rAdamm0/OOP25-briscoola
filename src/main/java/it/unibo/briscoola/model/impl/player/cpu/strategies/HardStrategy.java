@@ -18,9 +18,9 @@ import java.util.Optional;
  */
 public class HardStrategy implements PlayStrategy {
 
-    private static final int briscolaPower = 2000;
-    private static final int leadPower = 1000;
-    private static final int firstIndex = 0;
+    private static final int BRISCOLA_POWER = 2000;
+    private static final int LEAD_POWER = 1000;
+    private static final int FIRST_INDEX = 0;
 
     /**
      * {@inheritDoc}
@@ -38,12 +38,12 @@ public class HardStrategy implements PlayStrategy {
         final java.util.function.Function<Card, Integer> rank = c -> {
             //Returns an over the top rank because the briscola beats all but the cards of the same seed
             if (c.getCardSeed() == briscola) {
-                return briscolaPower + c.getCardPower();
+                return BRISCOLA_POWER + c.getCardPower();
             }
             final Optional<CardSeed> lead = state.leadSeed();
             //The leadSeed if the briscola is not present, holds the highest rank
             if (lead.isPresent() && c.getCardSeed() == lead.get()) {
-                return leadPower + c.getCardPower();
+                return LEAD_POWER + c.getCardPower();
             }
             return c.getCardPower();
         };
@@ -55,7 +55,7 @@ public class HardStrategy implements PlayStrategy {
                     .max(Comparator.comparingInt(Card::getCardPower))
                     .or(() -> hand.stream().max(Comparator.comparingInt(Card::getCardPower)))
                     .map(hand::indexOf)
-                    .orElse(firstIndex);
+                    .orElse(FIRST_INDEX);
         }
         //If the table isn't empty
         //Selects the card that is currently winning on the table
@@ -82,7 +82,7 @@ public class HardStrategy implements PlayStrategy {
             return winningBr.map(hand::indexOf).orElseGet(() -> hand.stream()
                     .min(Comparator.comparingInt(Card::getCardPoints))
                     .map(hand::indexOf)
-                    .orElse(firstIndex));
+                    .orElse(FIRST_INDEX));
 
         } else {
             final Card current = currentWinner.orElseThrow();
@@ -107,7 +107,7 @@ public class HardStrategy implements PlayStrategy {
             return useTrump.map(hand::indexOf).orElseGet(() -> hand.stream()
                     .min(Comparator.comparingInt(Card::getCardPoints))
                     .map(hand::indexOf)
-                    .orElse(firstIndex));
+                    .orElse(FIRST_INDEX));
 
         }
     }

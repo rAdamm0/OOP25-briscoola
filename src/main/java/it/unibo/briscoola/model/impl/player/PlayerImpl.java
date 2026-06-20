@@ -25,6 +25,7 @@ public class PlayerImpl implements Player {
      * Constructor that creates a new Player.
      *
      * @param id Id assigned to the player
+     * @param name name of the player
      */
     public PlayerImpl(final int id, final String name) {
         this.id = id;

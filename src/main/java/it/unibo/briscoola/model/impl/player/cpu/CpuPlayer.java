@@ -60,18 +60,18 @@ public final class CpuPlayer extends PlayerImpl {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(final Object obj){
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
         if (!(obj instanceof final CpuPlayer other)) {
             return false;
         }
-        if(!super.equals(obj)) {
+        if (!super.equals(obj)) {
             return false;
         }
 
-        return Objects.equals(this.strategy,  other.strategy);
+        return Objects.equals(this.strategy, other.strategy);
     }
 
     /**

@@ -68,7 +68,7 @@ public final class GameViewImpl extends JFrame implements View {
     private static final int FALLBACK_G = 149;
     private static final int FALLBACK_B = 237;
 
-    final JLabel deckLabel = new JLabel();
+    private final JLabel deckLabel = new JLabel();
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel container = new JPanel(cardLayout);
 
@@ -402,7 +402,11 @@ public final class GameViewImpl extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void updateTable(final String playerSeed, final String playerValue, final String cpuSeed, final String cpuValue, final int deckSize) {
+    public void updateTable(final String playerSeed,
+                            final String playerValue,
+                            final String cpuSeed,
+                            final String cpuValue,
+                            final int deckSize) {
 
         /*
          * updates the graphic cards on the table of the player
@@ -427,10 +431,8 @@ public final class GameViewImpl extends JFrame implements View {
         this.deckLabel.setVisible(deckSize > 0);
 
         if (deckSize > 0) {
-            
-            final String imagePath;
-            
-            if (deckSize > 30) {
+            final String imagePath = "/cards/deck.png";
+            /*if (deckSize > 30) {
                 imagePath = "/cards/deck.png";
             } else if (deckSize > 20) {
                 imagePath = "/cards/half-deck.png";
@@ -440,10 +442,10 @@ public final class GameViewImpl extends JFrame implements View {
                 imagePath = "/cards/smaller-deck.png";
             } else {
                 imagePath = "/cards/backside.png";
-            }
+            }*/
 
             final URL deckUrl = getClass().getResource(imagePath);
-            if(deckUrl == null) {
+            if (deckUrl == null) {
                 return;
             }
             final ImageIcon deckIcon = new ImageIcon(deckUrl);
