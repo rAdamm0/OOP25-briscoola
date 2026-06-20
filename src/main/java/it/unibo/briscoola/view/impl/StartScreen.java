@@ -72,4 +72,11 @@ public final class StartScreen extends JPanel {
         this.add(nameSelection, NAME_SELECTION);
         this.add(difficultySelection, DIFFICULTY_SELECTION);
     }
+
+    /**
+     * Resets the internal sub-panels back to the very first step (Main Menu).
+     */
+    public void resetToMainMenu() {
+        this.cardLayout.show(this, MAIN_MENU);
+    }
 }

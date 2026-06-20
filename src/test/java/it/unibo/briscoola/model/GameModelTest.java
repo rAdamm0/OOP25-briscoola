@@ -1,5 +1,12 @@
 package it.unibo.briscoola.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.game.GameModel;
@@ -7,11 +14,6 @@ import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
 import it.unibo.briscoola.model.impl.game.GameModelImpl;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class made to verify the correct functioning of the {@link GameModelImpl} class.
@@ -192,7 +194,7 @@ class GameModelTest {
     void testEndRoundUpdatesTurnOrder() {
         playFullRound();
         final RoundWinner winner = model.endRound();
-        
+
         assertEquals(winner.player().getId(), model.getCurrentPlayer().getId(),
         "The winner of the previous round must be the first to play in the new round");
     }

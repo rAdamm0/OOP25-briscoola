@@ -1,5 +1,10 @@
 package it.unibo.briscoola.controller.impl;
 
+import it.unibo.briscoola.controller.impl.utils.Pair;
+import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
+import it.unibo.briscoola.model.api.leaderboard.ScoreFileManager;
+import it.unibo.briscoola.model.impl.leaderboard.LeaderboardImpl;
+import it.unibo.briscoola.model.impl.leaderboard.ScoreFileManagerImpl;
 import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 import it.unibo.briscoola.controller.api.GameController;
@@ -8,6 +13,8 @@ import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.player.Player;
 import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
+
+import java.util.List;
 
 /**
  * implementation of {@link MenuController}
@@ -69,5 +76,16 @@ public final class MenuControllerImpl implements MenuController {
         final GameController gameController = new GameControllerImpl(model, view);
         view.setGameController(gameController);
         gameController.startGame();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Pair<String, String>> getLeaderboardDate() {
+        final String leaderboardFile = "leaderboard.json";
+        final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
+        final Leaderboard leaderboard = new LeaderboardImpl(manager);
+        return leaderboard.getEntries().stream().map(a -> new Pair<>(a.getName(), String.valueOf(a.getScore()))).toList();
     }
 }

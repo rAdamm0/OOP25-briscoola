@@ -12,8 +12,8 @@ import it.unibo.briscoola.model.api.deck.Deck;
  * Provides the basic logic for drawing, shuffling,
  * and querying the deck of cards.
  *
- * @author Andrea 
- * 
+ * @author Andrea
+ *
  * @param <T> the type of {@link Card} handled by the deck
  */
 public abstract class AbstractDeckImpl<T extends Card> implements Deck<T> {

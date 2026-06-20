@@ -7,15 +7,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Popup;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import it.unibo.briscoola.controller.api.GameController;
@@ -32,7 +37,7 @@ import it.unibo.briscoola.view.api.popup.PopupFactory;
  * This class extends {@link JFrame} and implements {@link View}, giving 
  * the visual container for the game board, the startup screen,
  * the player cards and the center match arena.
- * 
+ *
  * @author Andrea Reggiani
  */
 public final class GameViewImpl extends JFrame implements View {
@@ -68,6 +73,8 @@ public final class GameViewImpl extends JFrame implements View {
 
     private final PileView playerPile = new PileView("Player");
     private final PileView cpuPile = new PileView("CPU");
+    private final PopupFactory popup = new PopupFactoryImpl(GameViewImpl.this.getRootPane(),
+            () -> this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
 
     private CardViewImpl briscolaCardView;
     private CardViewImpl playerPlayedCardView;
@@ -78,6 +85,7 @@ public final class GameViewImpl extends JFrame implements View {
 
     private transient MenuController menuController;
     private transient GameController gameController;
+    private StartScreen startScreen;
 
     /**
      * Constructs a new {@code GameViewImpl} with the specified Menu Controller.
@@ -98,10 +106,10 @@ public final class GameViewImpl extends JFrame implements View {
         this.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
 
         /*
-         * initialization of StartScreen 
+         * initialization of StartScreen
          * with Play, Quit, Rules, Scores.
          */
-        final StartScreen startScreen = new StartScreen(
+        this.startScreen = new StartScreen(
             (players, diff) -> {
                 if (this.menuController != null) {
                 this.menuController.startGame(players, diff, this);
@@ -260,6 +268,7 @@ public final class GameViewImpl extends JFrame implements View {
     @Override
     public void start() {
         this.setVisible(true);
+        this.setEscKeybind();
     }
 
     /**
@@ -268,6 +277,20 @@ public final class GameViewImpl extends JFrame implements View {
     @Override
     public void initGame() {
         cardLayout.show(container, GAME_ID);
+    }
+
+    private void setEscKeybind() {
+        final InputMap inputMap = this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        final ActionMap actionMap = this.getRootPane().getActionMap();
+        inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "escAction");
+        actionMap.put("escAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                if (!popup.isShowing()) {
+                    popup.create(Popups.PAUSE, "You Won!").show();
+                }
+            }
+        });
     }
 
     /**
@@ -317,6 +340,16 @@ public final class GameViewImpl extends JFrame implements View {
     }
 
     /**
+     * Changes the active layout state back to the Start/Menu screen.
+     */
+    public void showMainMenu() {
+        if (this.startScreen != null) {
+            this.startScreen.resetToMainMenu();
+        }
+        this.cardLayout.show(this.container, MENU_ID);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -332,8 +365,8 @@ public final class GameViewImpl extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void displayMessage(final String message) {
-        System.out.println(message);
+    public void displayMessage(final Popups type, final String message) {
+        popup.create(type, message).show();
     }
 
     /**
@@ -342,6 +375,7 @@ public final class GameViewImpl extends JFrame implements View {
     @Override
     public void quit() {
         this.dispose();
+        System.exit(0);
     }
 
     /**
@@ -394,12 +428,4 @@ public final class GameViewImpl extends JFrame implements View {
         this.getContentPane().repaint();
     }
 
-    @Override
-    public void triggerPopup(final Popups type, final String message) {
-        final PopupFactory factory = new PopupFactoryImpl();
-        final Popup popup = factory.create(this.getRootPane(), type, message);
-        if (popup != null) {
-            popup.show();
-        }
-    }
 }

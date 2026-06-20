@@ -1,7 +1,10 @@
 package it.unibo.briscoola.controller.api;
 
 /**
- * Interface, representing the game controller, that manages the game flow, turns and user interactions.
+ * Interface representing the game controller.
+ * It manages the game flow, turns and the user interactions.
+ * 
+ * @author Maisam Noumi
  */
 public interface GameController {
 

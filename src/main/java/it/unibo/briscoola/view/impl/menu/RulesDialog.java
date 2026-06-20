@@ -7,10 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Window;
 
 /**
  * Component that extends {@link JDialog}.
@@ -26,8 +27,8 @@ public class RulesDialog extends JDialog {
      *
      * @param parentFrame {@link JFrame} owner of the {@link JDialog}
      */
-    public RulesDialog(final JFrame parentFrame) {
-        super(parentFrame, "Rules of the Game", true);
+    public RulesDialog(final Window parentFrame) {
+        super(parentFrame, "Rules of the Game");
         final int width = 550;
         final int height = 600;
         final int bgR = 20;
@@ -74,6 +75,7 @@ public class RulesDialog extends JDialog {
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+        this.setVisible(true);
     }
 
     private String getRulesText() {

@@ -10,24 +10,31 @@ import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 import it.unibo.briscoola.model.impl.game.RoundWinner;
 
 /**
- * Interface, representing the model of the Briscola game, that manages the game state, the deck, the players and the rounds.
+ * Interface representing the model of the Briscola game.
+ * It manages the game state, the deck, the players and the rounds' progression.
+ * 
+ * @author Maisam Noumi
  */
 public interface GameModel {
 
     /**
-     * Starts the match, giving 3 cards to each player.
+     * Starts the match by giving the initial cards to each player
+     * and starting the match.
      */
     void startMatch();
 
     /**
-     * @return the Card defined as Briscola, used to determine the dominant seed.
+     * Provides the card currently designed as the Briscola.
+     * 
+     * @return an Optional containg the Briscola card if present,
+     * otherwise an empty Optional.
      */
     Optional<Card> getBriscolaSeed();
 
     /**
      * Checks if the game is over.
-     * The game ends when all players have used all their cards
-     * and their hands are empty.
+     * The game ends when all players have played all their cards,
+     * their hands are empty, and there are no cards left on the table.
      * 
      * @return true if the game is over, false otherwise.
      */
@@ -35,36 +42,36 @@ public interface GameModel {
 
     /**
      * Picks the first card from the deck as the Briscola,
-     * and puts it at the bottom of the deck.
+     * determining the dominant seed for the match.
      */
     void assignBriscola();
 
     /**
-     * Deals 3 cards to each player, alternating between them.
+     * Deals three initial cards to each player from the deck.
      */
     void dealInitialCards();
 
     /**
-     * After a trick, players draw cards following the given order.
-     * If the deck becomes empty, remaining players will not draw.
+     * Allows players to draw a card from the deck after a trick.
+     * If the deck is empty, the remaining players will not draw.
      * 
-     * @param orderedPlayers refers to the order of players
+     * @param orderedPlayers the list of players in the order they should draw.
      */
     void drawAfterTrick(List<Player> orderedPlayers);
 
     /**
-     * Plays the card at the given index from the given player's hand.
+     * Plays a card from the specified player's hand based on its index.
      * 
-     * @param player refers to the player who is playing the card
-     * @param index is the position of the card in hand
-     * @return the played card
+     * @param player the {@link Player} who is playing the card.
+     * @param index is the position of the card in hand.
+     * @return the played {@link Card}.
      */
     Card playCard(Player player, int index);
 
     /**
-     * Method to get the player in charge of the turn.
+     * Provides the player whose in charge of the turn.
      * 
-     * @return the {@link Player} in charge of the turn
+     * @return the {@link Player} currently in charge of the turn.
      */
     Player getCurrentPlayer();
 
@@ -76,45 +83,46 @@ public interface GameModel {
     List<Player> getPlayers();
 
     /**
-     * Boolean indicating if the round is completed or not.
+     * Checks whether the current round has concluded.
      *
      * @return true if the round is completed, false otherwise.
      */
     boolean isRoundOver();
 
     /**
-     * Rotates the {@link Player}s {@link List} so that the startingPlayer plays first.
-     *
-     * @param startingPlayer {@link Player} winner of last round
+     * Rotates the turn order so that the specified player plays first in the next round.
+     * 
+     * @param startingPlayer the {@link Player} who won the last round, and that will start the next.
      */
     void computeNextTurnOrder(Player startingPlayer);
 
     /**
-     * Handles the closure of a round and the decision of a winner.
+     * Concludes he current round, determines the winner, assigns the won cards,
+     * and updates the turn order for the next round.
      *
-     * @return the {@link RoundWinner} of the latest round
+     * @return the {@link RoundWinner} of the concluded round.
      */
     RoundWinner endRound();
 
     /**
-     * Plays the {@link Card} chosen by the {@link Player}.
+     * Executes a move by playing a specific card for the giving player.
      *
-     * @param player that chose the card
-     * @param card chosen by the player
+     * @param player the {@link Player} making the move.
+     * @param card the {@link Card} chosen by the player.
      */
     void makeMove(Player player, Card card);
 
     /**
-     * Returns the state of the table in an exact moment.
+     * Returns the exact state of the table at the current moment.
      *
-     * @return the current {@link RoundStateImpl}
+     * @return the current {@link RoundStateImpl}, including played cards.
      */
     RoundStateImpl getCurrentRoundState();
 
     /**
-     * Returns the {@link Difficulty} of the gamemodel.
+     * Provides the difficulty level set for the current game.
      *
-     * @return the {@link Difficulty} of the game
+     * @return the {@link Difficulty} of the game.
      */
     Difficulty getDifficulty();
 }

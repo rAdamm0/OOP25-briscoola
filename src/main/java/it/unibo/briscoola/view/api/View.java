@@ -55,10 +55,11 @@ public interface View {
 
     /**
      * Shows amessage for the end of the game or the turn.
-     * 
+     *
+     * @param type type of message
      * @param message error message
      */
-    void displayMessage(String message);
+    void displayMessage(Popups type, String message);
 
     /**
      * Returns an unmodifiable list of the player hand component views.
@@ -90,11 +91,4 @@ public interface View {
      */
     void updateTable(String playerSeed, String playerValue, String cpuSeed, String cpuValue);
 
-    /**
-     * Prepares and displays the popup on the screen.
-     * 
-     * @param type type of pop up
-     * @param message the message to send
-     */
-    void triggerPopup(Popups type, String message);
 }

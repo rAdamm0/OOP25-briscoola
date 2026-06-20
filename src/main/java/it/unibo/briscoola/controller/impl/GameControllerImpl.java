@@ -17,11 +17,14 @@ import it.unibo.briscoola.model.impl.leaderboard.ScoreEntryImpl;
 import it.unibo.briscoola.model.impl.leaderboard.ScoreFileManagerImpl;
 import it.unibo.briscoola.model.impl.player.cpu.CpuPlayer;
 import it.unibo.briscoola.view.api.View;
+import it.unibo.briscoola.view.api.popup.Popups;
 
 /**
  * Implementation of the {@link GameController}.
- * This class  manages the game flow, the turn switching, 
+ * This class manages the game flow, the turn switching, 
  * and the communication between the Model and the View.
+ * 
+ * @author Maisam Noumi
  */
 public class GameControllerImpl implements GameController {
 
@@ -35,7 +38,7 @@ public class GameControllerImpl implements GameController {
     private Player cpuPlayer;
 
     /**
-     * Creates a new GameControllerImpl associating it with the model and the view.
+     * Contructs a new GameControllerImpl associating it with the model and the view.
      *
      * @param model the logical model of the game
      * @param view  the graphical interface of the game
@@ -77,7 +80,7 @@ public class GameControllerImpl implements GameController {
                 final String leaderboardFile = "leaderboard.json";
                 final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
                 final Leaderboard leaderboard = new LeaderboardImpl(manager);
-                leaderboard.addEntry(new ScoreEntryImpl("Player", (int) (humanPoints * this.model.getDifficulty().value)));
+                leaderboard.addEntry(new ScoreEntryImpl("Player", (int) (humanPoints * this.model.getDifficulty().getValue())));
                 leaderboard.saveScores();
                 finalMsg += "You Won!";
             } else if (cpuPoints > humanPoints) {
@@ -89,7 +92,7 @@ public class GameControllerImpl implements GameController {
             final String message = finalMsg + " Score -> Player: " + humanPoints + " | CPU: " + cpuPoints;
 
             SwingUtilities.invokeLater(() -> {
-                view.displayMessage(message);
+                view.displayMessage(Popups.ENDGAME, message);
                 view.start();
             });
             return;
@@ -105,7 +108,7 @@ public class GameControllerImpl implements GameController {
 
                 SwingUtilities.invokeLater(() -> {
                     final RoundWinner winner = model.endRound();
-                    view.displayMessage("Round won by: " + (winner.player().getId() == 0 ? "Player" : "CPU"));
+                    view.displayMessage(Popups.WINNER, "Round won by: " + (winner.player().getId() == 0 ? "Player" : "CPU"));
 
                     if (this.humanPlayer != null) {
                         view.updatePile(this.humanPlayer.getPile().size(), true);

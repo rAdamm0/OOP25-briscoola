@@ -47,7 +47,7 @@ class MenuControllerTest {
             public void updatePile(final int cardsCountTest, final boolean playerTest) { }
 
             @Override
-            public void displayMessage(final String messageTest) { }
+            public void displayMessage(final Popups popups, final String messageTest) { }
 
             @Override
             public void updateBriscola(final String seedTest, final String valueTest) { }
@@ -58,9 +58,6 @@ class MenuControllerTest {
             @Override
             public void updateTable(final String playerSeedTest, final String playerValuetest, 
                                         final String cpuSeedTest, final String cpuValueTest) { }
-
-            @Override
-            public void triggerPopup(final Popups type, final String message) { }
 
             @Override
             public List<CardView> getPlayerHandCards() {
