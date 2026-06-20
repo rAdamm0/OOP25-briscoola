@@ -1,7 +1,6 @@
 package it.unibo.briscoola.view.api.popup;
 
 import javax.swing.Popup;
-import javax.swing.JRootPane;
 
 /**
  * Class to use to get a personalized {@link Popup} based on the passed

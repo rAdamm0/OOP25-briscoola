@@ -40,9 +40,9 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilderImpl setDifficulty(final Difficulty difficulty) {
-        this.difficulty = difficulty;
-        this.playStrategy = StrategyFactory.create(difficulty);
+    public GameBuilderImpl setDifficulty(final Difficulty diff) {
+        this.difficulty = diff;
+        this.playStrategy = StrategyFactory.create(diff);
         return this;
     }
 

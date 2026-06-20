@@ -11,7 +11,17 @@ import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
+import javax.swing.ActionMap;
+import javax.swing.AbstractAction;
 
 import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
@@ -60,7 +70,7 @@ public final class GameViewImpl extends JFrame implements View {
     private final PileView playerPile = new PileView("Player");
     private final PileView cpuPile = new PileView("CPU");
     private final PopupFactory popup = new PopupFactoryImpl(GameViewImpl.this.getRootPane(),
-            ()->this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
+            () -> this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
 
     private CardViewImpl briscolaCardView;
     private CardViewImpl playerPlayedCardView;
@@ -250,14 +260,14 @@ public final class GameViewImpl extends JFrame implements View {
         cardLayout.show(container, GAME_ID);
     }
 
-    private void setEscKeybind(){
-        InputMap inputMap = this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = this.getRootPane().getActionMap();
+    private void setEscKeybind() {
+        final InputMap inputMap = this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        final ActionMap actionMap = this.getRootPane().getActionMap();
         inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "escAction");
         actionMap.put("escAction", new AbstractAction() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!popup.isShowing()) {
+            public void actionPerformed(final ActionEvent e) {
+                if (!popup.isShowing()) {
                     popup.create(Popups.PAUSE, "You Won!").show();
                 }
             }

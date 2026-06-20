@@ -7,7 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Window;
 
 /**
  * Component that extends {@link JDialog}.

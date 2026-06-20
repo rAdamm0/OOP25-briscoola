@@ -75,10 +75,10 @@ public class GameControllerImpl implements GameController {
 
             String finalMsg = "GAME OVER! ";
             if (humanPoints > cpuPoints) {
-                String LEADERBOARD_FILE = "leaderboard.json";
-                final ScoreFileManager manager = new ScoreFileManagerImpl(LEADERBOARD_FILE);
+                final String leaderboardFile = "leaderboard.json";
+                final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
                 final Leaderboard leaderboard = new LeaderboardImpl(manager);
-                leaderboard.addEntry(new ScoreEntryImpl("Player", (int) (humanPoints * this.model.getDifficulty().value)));
+                leaderboard.addEntry(new ScoreEntryImpl("Player", (int) (humanPoints * this.model.getDifficulty().getValue())));
                 leaderboard.saveScores();
                 finalMsg += "You Won!";
             } else if (cpuPoints > humanPoints) {

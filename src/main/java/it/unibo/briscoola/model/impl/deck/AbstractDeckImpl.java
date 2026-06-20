@@ -17,7 +17,7 @@ import it.unibo.briscoola.model.api.deck.Deck;
 public abstract class AbstractDeckImpl<T extends Card> implements Deck<T> {
 
     private final List<T> deckOfCards;
-    private Card briscolaTemporanea = null ;
+    private Card briscolaTemporanea;
 
     /**
      * Constructs an empty abstract deck initialized with an ArrayList.
@@ -65,7 +65,6 @@ public abstract class AbstractDeckImpl<T extends Card> implements Deck<T> {
         if (deckOfCards.isEmpty()) {
             return Optional.ofNullable((T) briscolaTemporanea);
         } else {
-            
             if (briscolaTemporanea == null) {
                 this.briscolaTemporanea = this.deckOfCards.getLast();
             }

@@ -5,11 +5,26 @@ import it.unibo.briscoola.view.api.popup.PopupFactory;
 import it.unibo.briscoola.view.api.popup.Popups;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 import it.unibo.briscoola.view.impl.leaderboard.LeaderboardView;
+import it.unibo.briscoola.view.api.leaderboard.Leaderboard;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.Popup;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-import java.awt.*;
-import java.util.Collection;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dialog;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -26,17 +41,29 @@ public class PopupFactoryImpl implements PopupFactory {
     private final JRootPane root;
     private final Supplier<List<Pair<String, String>>> leaderboardSupplier;
     private final Toolkit toolkit = Toolkit.getDefaultToolkit();
-    private final int BG_R = 30;
-    private final int BG_G = 100;
-    private final int BG_B = 72;
+    private final int bgR = 30;
+    private final int bgG = 100;
+    private final int bgB = 72;
     private final int rows = 0;
     private final int cols = 1;
     private final int hGap = 0;
     private final int vGap = 15;
+    private final int width = 300;
+    private final int height = 200;
+    private final int medumFontSize = 24;
+    private final String font = "Serif";
     private int x;
     private int y;
-    private boolean isShowing = false;
+    private boolean isShowing;
 
+    /**
+     * Method that creates a factory to deploy {@link Popup} based on the {@link JRootPane}.
+     * It accepts a {@link Supplier} to retrieve a {@link List} of {@link Pair} of {@link String}
+     * to create a {@link Leaderboard} through a popup implementation.
+     *
+     * @param root {@link JRootPane} owner of the {@link Popup}
+     * @param leaderboardSupplier {@link Supplier} to get the leaderboard list
+     */
     public PopupFactoryImpl(final JRootPane root,
                             final Supplier<List<Pair<String, String>>> leaderboardSupplier) {
         this.root = root;
@@ -56,7 +83,7 @@ public class PopupFactoryImpl implements PopupFactory {
             case ENDGAME -> {
                 return this.endGamePopup(message);
             }
-            case PAUSE ->{
+            case PAUSE -> {
                 return this.pausePopup();
             }
         }
@@ -64,25 +91,25 @@ public class PopupFactoryImpl implements PopupFactory {
     }
 
     private Popup roundWinnerPopup(final String message) {
-        Popup localPopup[] = new Popup[1];
+        final Popup[] localPopup = new Popup[1];
         final int codePoint = 1096;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(this.rows, this.cols, this.hGap, this.vGap));
-        contentPane.setPreferredSize(new java.awt.Dimension(300, 200));
-        Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
-        Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
+        final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
+        final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
-        contentPane.setBackground(new Color(this.BG_R, this.BG_G, this.BG_B));
+        contentPane.setBackground(new Color(this.bgR, this.bgG, this.bgB));
         final JLabel trophyLabel = new JLabel(trophy, SwingConstants.CENTER);
         final JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
-        trophyLabel.setSize(contentPane.getSize().width/3, contentPane.getSize().height/3);
-        messageLabel.setSize(contentPane.getSize().width/3, contentPane.getSize().height/3);
+        trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
+        messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         trophyLabel.setForeground(Color.WHITE);
         messageLabel.setForeground(Color.WHITE);
-        trophyLabel.setFont(new Font("Serif", Font.BOLD, 32));
-        messageLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+        trophyLabel.setFont(new Font(font, Font.BOLD, 32));
+        messageLabel.setFont(new Font(font, Font.PLAIN, medumFontSize));
         final JButton hideButton = new JButton("Ok");
-        hideButton.addActionListener(e->{
+        hideButton.addActionListener(e -> {
             this.isShowing = false;
             localPopup[0].hide();
         });
@@ -90,16 +117,16 @@ public class PopupFactoryImpl implements PopupFactory {
         contentPane.add(messageLabel);
         contentPane.add(hideButton);
         if (root.isShowing()) {
-            java.awt.Point parentLocation = root.getLocationOnScreen();
+            final java.awt.Point parentLocation = root.getLocationOnScreen();
             x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / 2;
             y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / 2;
         } else {
-            java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+            final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - contentPane.getPreferredSize().width) / 2;
             y = (screenSize.height - contentPane.getPreferredSize().height) / 2;
         }
         this.isShowing = true;
-        localPopup[0] =  javax.swing.PopupFactory.getSharedInstance().getPopup(
+        localPopup[0] = javax.swing.PopupFactory.getSharedInstance().getPopup(
                 root,
                 contentPane,
                 x,
@@ -113,22 +140,22 @@ public class PopupFactoryImpl implements PopupFactory {
         final int codePoint = 1098;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(this.rows, this.cols, this.hGap, this.vGap));
-        contentPane.setPreferredSize(new java.awt.Dimension(300, 200));
-        Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
-        Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
+        final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
+        final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
-        contentPane.setBackground(new Color(this.BG_R, this.BG_G, this.BG_B));
+        contentPane.setBackground(new Color(this.bgR, this.bgG, this.bgB));
         contentPane.setSize(toolkit.getScreenSize().width, toolkit.getScreenSize().height);
         final JLabel trophyLabel = new JLabel(trophy, SwingConstants.CENTER);
         final JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
-        trophyLabel.setSize(contentPane.getSize().width/3, contentPane.getSize().height/3);
-        messageLabel.setSize(contentPane.getSize().width/3, contentPane.getSize().height/3);
+        trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
+        messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         trophyLabel.setForeground(Color.WHITE);
         messageLabel.setForeground(Color.WHITE);
-        trophyLabel.setFont(new Font("Serif", Font.BOLD, 32));
-        messageLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+        trophyLabel.setFont(new Font(font, Font.BOLD, 32));
+        messageLabel.setFont(new Font(font, Font.PLAIN, medumFontSize));
 
-        exit.setSize(contentPane.getSize().width/3, contentPane.getSize().height/3);
+        exit.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         exit.addActionListener(
                 e -> {
                     this.isShowing = false;
@@ -137,8 +164,8 @@ public class PopupFactoryImpl implements PopupFactory {
         );
         final JButton returnHome = new JButton("Home");
         returnHome.addActionListener(e -> {
-            Window frame = SwingUtilities.getWindowAncestor(root);
-            if (frame instanceof GameViewImpl gameView) {
+            final Window frame = SwingUtilities.getWindowAncestor(root);
+            if (frame instanceof final GameViewImpl gameView) {
                 gameView.showMainMenu();
             }
             if (localPopupReference[0] != null) {
@@ -146,20 +173,17 @@ public class PopupFactoryImpl implements PopupFactory {
             }
         });
         final JButton leaderboard = getLeaderboard();
-        final int width = toolkit.getScreenSize().width / 5;
-        final int height = toolkit.getScreenSize().height / 5;
-        contentPane.setSize(width, height);
         contentPane.add(trophyLabel);
         contentPane.add(messageLabel);
         contentPane.add(returnHome);
         contentPane.add(leaderboard);
         contentPane.add(exit);
         if (root.isShowing()) {
-            java.awt.Point parentLocation = root.getLocationOnScreen();
+            final java.awt.Point parentLocation = root.getLocationOnScreen();
             x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / 2;
             y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / 2;
         } else {
-            java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+            final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - contentPane.getPreferredSize().width) / 2;
             y = (screenSize.height - contentPane.getPreferredSize().height) / 2;
         }
@@ -177,20 +201,20 @@ public class PopupFactoryImpl implements PopupFactory {
         final Popup[] localPopupReference = new Popup[1];
 
         final JComponent contentPane = new JPanel(new GridLayout(rows, cols, hGap, vGap));
-        contentPane.setPreferredSize(new java.awt.Dimension(300, 200));
-        Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
-        Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
+        final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
+        final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
-        contentPane.setBackground(new Color(this.BG_R, this.BG_G, this.BG_B));
+        contentPane.setBackground(new Color(this.bgR, this.bgG, this.bgB));
         final JLabel pauseLabel = new JLabel("PAUSE", SwingConstants.CENTER);
-        pauseLabel.setSize(contentPane.getSize().width/3, contentPane.getSize().height/3);
-        pauseLabel.setFont(new Font("Serif", Font.BOLD, 32));
+        pauseLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
+        pauseLabel.setFont(new Font(font, Font.BOLD, 32));
         pauseLabel.setForeground(Color.WHITE);
         contentPane.add(pauseLabel);
         final JButton returnHome = new JButton("Home");
         returnHome.addActionListener(e -> {
-            Window frame = SwingUtilities.getWindowAncestor(root);
-            if (frame instanceof GameViewImpl gameView) {
+            final Window frame = SwingUtilities.getWindowAncestor(root);
+            if (frame instanceof final GameViewImpl gameView) {
                 gameView.showMainMenu();
             }
             if (localPopupReference[0] != null) {
@@ -199,21 +223,21 @@ public class PopupFactoryImpl implements PopupFactory {
         });
         contentPane.add(returnHome);
         exit.addActionListener(e -> {
-            this.isShowing = false;
-                    Window frame = SwingUtilities.getWindowAncestor(root);
+                    this.isShowing = false;
+                    final Window frame = SwingUtilities.getWindowAncestor(root);
                     frame.dispose();
                     System.exit(0);
                 }
         );
         contentPane.add(exit);
         contentPane.invalidate();
-        java.awt.Dimension actualSize = contentPane.getPreferredSize();
+        final java.awt.Dimension actualSize = contentPane.getPreferredSize();
         if (root.isShowing()) {
-            java.awt.Point parentLocation = root.getLocationOnScreen();
+            final java.awt.Point parentLocation = root.getLocationOnScreen();
             x = parentLocation.x + (root.getWidth() - actualSize.width) / 2;
             y = parentLocation.y + (root.getHeight() - actualSize.height) / 2;
         } else {
-            java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+            final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - actualSize.width) / 2;
             y = (screenSize.height - actualSize.height) / 2;
         }
@@ -230,10 +254,10 @@ public class PopupFactoryImpl implements PopupFactory {
     private JButton getLeaderboard() {
         final JButton leaderboard = new JButton("Leaderboard");
         leaderboard.addActionListener(e -> {
-                    Window parentFrame = SwingUtilities.getWindowAncestor(root);
-                    List<Pair<String, String>> scoreboard = this.leaderboardSupplier.get();
-                    LeaderboardView leaderboardView = new LeaderboardView(scoreboard);
-                    JDialog dialog = new JDialog(parentFrame, "Leaderboard", Dialog.ModalityType.APPLICATION_MODAL);
+                    final Window parentFrame = SwingUtilities.getWindowAncestor(root);
+                    final List<Pair<String, String>> scoreboard = this.leaderboardSupplier.get();
+                    final LeaderboardView leaderboardView = new LeaderboardView(scoreboard);
+                    final JDialog dialog = new JDialog(parentFrame, "Leaderboard", Dialog.ModalityType.APPLICATION_MODAL);
                     dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                     dialog.add(leaderboardView, BorderLayout.CENTER);
                     dialog.setSize(leaderboardView.getSize());
@@ -244,7 +268,11 @@ public class PopupFactoryImpl implements PopupFactory {
         return leaderboard;
     }
 
-    public boolean isShowing(){
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isShowing() {
         return this.isShowing;
     }
 }
