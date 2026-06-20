@@ -443,7 +443,9 @@ public final class GameViewImpl extends JFrame implements View {
             }
 
             final URL deckUrl = getClass().getResource(imagePath);
-
+            if(deckUrl == null) {
+                return;
+            }
             final ImageIcon deckIcon = new ImageIcon(deckUrl);
             final Image img = deckIcon.getImage().getScaledInstance(CARD_WIDTH, CARD_HEIGHT, Image.SCALE_SMOOTH);
             this.deckLabel.setIcon(new ImageIcon(img));

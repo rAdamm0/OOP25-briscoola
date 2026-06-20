@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test class made to verify the correct functioning of the {@link RoundManagerImpl} class.
  */
 public class RoundManagerTest {
-    private final int secondPlayerIndex = 1;
+    private static final int secondPlayerIndex = 1;
     private int ids = 1;
     private List<Player> playerList;
     private RoundManager manager;

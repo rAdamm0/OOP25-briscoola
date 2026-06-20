@@ -18,9 +18,9 @@ import java.util.Optional;
  */
 public class HardStrategy implements PlayStrategy {
 
-    private final int briscolaPower = 2000;
-    private final int leadPower = 1000;
-    private final int firstIndex = 0;
+    private static final int briscolaPower = 2000;
+    private static final int leadPower = 1000;
+    private static final int firstIndex = 0;
 
     /**
      * {@inheritDoc}
