@@ -82,11 +82,27 @@ public final class PlayerNamePanel extends JPanel {
         final JButton btnConfirm = new JButton("Confirm");
         btnConfirm.setPreferredSize(new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT));
         btnConfirm.addActionListener(e -> {
+
+            /*
+             * This method ask the JTextField graphics 
+             * component and takes the text 
+             * string currently inside it.
+             */
             final String enteredName = txtName.getText().trim();
-            if (enteredName.isEmpty()) {
+
+            /*
+             * trim functionality  
+             * Its job is to eliminate all white spaces that are located at the left and right of the string. 
+             * It does not affect the spaces in the middle of the text.
+             */
+            if(enteredName.length() >= MAX_CHARACTERS_LIMIT) {
+                nameSubmitted.accept("DefaultPal");
+            } else {
+                if(enteredName.isEmpty()) {
                 nameSubmitted.accept("Player");
             } else {
                 nameSubmitted.accept(enteredName);
+            }
             }
         });
         gbc.gridy = GRIDY2;
