@@ -21,8 +21,10 @@ import it.unibo.briscoola.view.api.popup.Popups;
 
 /**
  * Implementation of the {@link GameController}.
- * This class  manages the game flow, the turn switching, 
+ * This class manages the game flow, the turn switching, 
  * and the communication between the Model and the View.
+ * 
+ * @author Maisam Noumi
  */
 public class GameControllerImpl implements GameController {
 
@@ -36,7 +38,7 @@ public class GameControllerImpl implements GameController {
     private Player cpuPlayer;
 
     /**
-     * Creates a new GameControllerImpl associating it with the model and the view.
+     * Contructs a new GameControllerImpl associating it with the model and the view.
      *
      * @param model the logical model of the game
      * @param view  the graphical interface of the game
