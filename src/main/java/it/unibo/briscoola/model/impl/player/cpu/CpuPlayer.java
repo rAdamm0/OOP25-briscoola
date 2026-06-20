@@ -5,6 +5,8 @@ import it.unibo.briscoola.model.api.player.PlayStrategy;
 import it.unibo.briscoola.model.impl.game.RoundStateImpl;
 import it.unibo.briscoola.model.impl.player.PlayerImpl;
 
+import java.util.Objects;
+
 /**
  * Unextendable class that represent a singular CpuPlayer.
  * Extends {@link PlayerImpl}
@@ -22,7 +24,8 @@ public final class CpuPlayer extends PlayerImpl {
      * @param strategy Strategy to adapt based on the {@link StrategyFactory}
      */
     public CpuPlayer(final int id, final PlayStrategy strategy) {
-        super(id);
+        final String name = "Cpu";
+        super(id, name);
         this.strategy = strategy;
     }
 
@@ -52,6 +55,32 @@ public final class CpuPlayer extends PlayerImpl {
     public Card playCard(final RoundStateImpl state) {
         final int index = strategy.cardIndex(this.getHand(), state);
         return this.getHand().get(index);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj){
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof final CpuPlayer other)) {
+            return false;
+        }
+        if(!super.equals(obj)) {
+            return false;
+        }
+
+        return Objects.equals(this.strategy,  other.strategy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), this.strategy);
     }
 
 }
