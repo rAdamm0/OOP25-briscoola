@@ -6,8 +6,6 @@ import it.unibo.briscoola.view.api.popup.Popups;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 import it.unibo.briscoola.view.impl.leaderboard.LeaderboardView;
 import it.unibo.briscoola.view.api.leaderboard.Leaderboard;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -56,7 +54,7 @@ public class PopupFactoryImpl implements PopupFactory {
     private final int width = toolkit.getScreenSize().width / 7;
     private final int height = toolkit.getScreenSize().height / 3;
     private boolean isShowing;
-    private final Logger logger = LoggerFactory.getLogger(PopupFactoryImpl.class);
+    private Popup globalPopup;
 
     /**
      * Method that creates a factory to deploy {@link Popup} based on the {@link JRootPane}.
@@ -93,7 +91,7 @@ public class PopupFactoryImpl implements PopupFactory {
     }
 
     private Popup roundWinnerPopup(final String message) {
-        final Popup[] localPopup = new Popup[1];
+        final Popup[] localPopupReference = new Popup[1];
         final int codePoint = 127_941;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(ROWS, COLS, H_GAP, V_GAP));
@@ -113,7 +111,7 @@ public class PopupFactoryImpl implements PopupFactory {
         final JButton hideButton = new JButton("Ok");
         hideButton.addActionListener(e -> {
             this.isShowing = false;
-            localPopup[0].hide();
+            localPopupReference[0].hide();
         });
         contentPane.add(trophyLabel);
         contentPane.add(messageLabel);
@@ -130,13 +128,14 @@ public class PopupFactoryImpl implements PopupFactory {
             y = (screenSize.height - dynamicSize.height) / 2;
         }
         this.isShowing = true;
-        localPopup[0] = javax.swing.PopupFactory.getSharedInstance().getPopup(
+        localPopupReference[0] = javax.swing.PopupFactory.getSharedInstance().getPopup(
                 root,
                 contentPane,
                 x,
                 y
         );
-        return localPopup[0];
+        globalPopup = localPopupReference[0];
+        return localPopupReference[0];
     }
 
     private Popup endGamePopup(final String message) {
@@ -202,6 +201,7 @@ public class PopupFactoryImpl implements PopupFactory {
                 y
         );
         this.isShowing = true;
+        globalPopup = localPopupReference[0];
         return localPopupReference[0];
     }
 
@@ -290,5 +290,15 @@ public class PopupFactoryImpl implements PopupFactory {
     @Override
     public boolean isShowing() {
         return this.isShowing;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void closeLatest() {
+        if (globalPopup != null) {
+            globalPopup.hide();
+        }
     }
 }

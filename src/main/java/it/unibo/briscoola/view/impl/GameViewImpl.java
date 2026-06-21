@@ -366,6 +366,7 @@ public final class GameViewImpl extends JFrame implements View {
      */
     @Override
     public void displayMessage(final Popups type, final String message) {
+        popup.closeLatest();
         popup.create(type, message).show();
     }
 

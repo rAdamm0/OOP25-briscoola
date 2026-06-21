@@ -23,4 +23,9 @@ public interface PopupFactory {
      * @return true if there is a popup showed on screen, false otherwise
      */
     boolean isShowing();
+
+    /**
+     * Closes the latest popup that is on screen.
+     */
+    void closeLatest();
 }
