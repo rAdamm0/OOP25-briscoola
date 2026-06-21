@@ -35,14 +35,15 @@ public class GameBuilderImpl implements GameBuilder {
      * @param name {@link String} of the player nickname
      */
     public GameBuilderImpl(final String name) {
-        players.add(new PlayerImpl(id++, name));
+        players.add(new PlayerImpl(id, name));
+        id++;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public GameBuilderImpl setDifficulty(final Difficulty diff) {
+    public GameBuilderImpl changeDifficulty(final Difficulty diff) {
         this.difficulty = diff;
         this.playStrategy = StrategyFactory.create(diff);
         return this;
@@ -53,7 +54,8 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilderImpl addPlayer() {
-        this.players.add(new CpuPlayer(id++, playStrategy));
+        this.players.add(new CpuPlayer(id, playStrategy));
+        id++;
         return this;
     }
 

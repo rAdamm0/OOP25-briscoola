@@ -17,7 +17,7 @@ public interface GameBuilder {
      * @param difficulty of {@link Difficulty} type
      * @return a reference to this object
      */
-    GameBuilderImpl setDifficulty(Difficulty difficulty);
+    GameBuilderImpl changeDifficulty(Difficulty difficulty);
 
     /**
      * Method to add a player to the table.

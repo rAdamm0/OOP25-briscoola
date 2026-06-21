@@ -75,7 +75,7 @@ public class GameControllerImpl implements GameController {
             final int humanPoints = this.humanPlayer != null ? this.humanPlayer.getPoints() : 0;
             final int cpuPoints = this.cpuPlayer != null ? this.cpuPlayer.getPoints() : 0;
 
-            String finalMsg = "GAME OVER! ";
+            final StringBuilder finalMsg = new StringBuilder("GAME OVER! ") ;
             if (humanPoints > cpuPoints) {
                 final String leaderboardFile = "leaderboard.json";
                 final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
@@ -83,11 +83,11 @@ public class GameControllerImpl implements GameController {
                 leaderboard.addEntry(new ScoreEntryImpl(humanPlayer.getName(),
                         (int) (humanPoints * this.model.getDifficulty().getValue())));
                 leaderboard.saveScores();
-                finalMsg += "You Won!";
+                finalMsg.append("You Won!");
             } else if (cpuPoints > humanPoints) {
-                finalMsg += "CPU Won!";
+                finalMsg.append("CPU Won!");
             } else {
-                finalMsg += "It's a Tie";
+                finalMsg.append("It's a Tie");
             }
 
             final String message = finalMsg + " Score -> Player: " + humanPoints + " | CPU: " + cpuPoints;

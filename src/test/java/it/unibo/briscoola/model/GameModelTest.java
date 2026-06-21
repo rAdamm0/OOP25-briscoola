@@ -30,7 +30,7 @@ class GameModelTest {
     @BeforeEach
     void setUp() {
         final GameBuilderImpl builder = new GameBuilderImpl("Player");
-        builder.setDifficulty(Difficulty.EASY);
+        builder.changeDifficulty(Difficulty.EASY);
         builder.addPlayer();
         model = builder.build();
         model.startMatch();

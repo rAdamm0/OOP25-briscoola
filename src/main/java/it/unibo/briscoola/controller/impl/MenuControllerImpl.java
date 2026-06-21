@@ -51,7 +51,7 @@ public final class MenuControllerImpl implements MenuController {
         }
 
         final GameBuilderImpl builder = new GameBuilderImpl(namePlayer);
-        builder.setDifficulty(difficulty);
+        builder.changeDifficulty(difficulty);
 
         for (int i = 1; i < MAX_PLAYERS; i++) {
             builder.addPlayer();

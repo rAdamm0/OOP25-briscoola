@@ -20,12 +20,12 @@ public class MediumStrategy implements PlayStrategy {
      */
     @Override
     public int cardIndex(final List<Card> hand, final RoundStateImpl state) {
-        final Optional<Card> canBeat = hand.stream()
+        final Optional<Card> optionalCard = hand.stream()
                 .filter(card -> state.playedCards().stream()
                         .allMatch(it -> card.getCardPower() > it.card().getCardPower()))
                 .findFirst();
-        if (canBeat.isPresent()) {
-            return hand.indexOf(canBeat.get());
+        if (optionalCard.isPresent()) {
+            return hand.indexOf(optionalCard.get());
         }
         final Card worstCard = hand.stream()
                 .min(Comparator.comparingInt(Card::getCardPower))

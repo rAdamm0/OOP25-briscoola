@@ -67,11 +67,7 @@ public final class CpuPlayer extends PlayerImpl {
         if (!(obj instanceof final CpuPlayer other)) {
             return false;
         }
-        if (!super.equals(obj)) {
-            return false;
-        }
-
-        return Objects.equals(this.strategy, other.strategy);
+        return super.equals(obj) && Objects.equals(this.strategy.getClass(), other.strategy.getClass());
     }
 
     /**

@@ -5,6 +5,7 @@ package it.unibo.briscoola.view.api.leaderboard;
  *
  * @author Adam Paolo Razzino
  */
+@FunctionalInterface
 public interface Leaderboard {
 
     /**

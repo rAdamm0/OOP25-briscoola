@@ -53,7 +53,7 @@ public class PopupFactoryImpl implements PopupFactory {
     private final Supplier<List<Pair<String, String>>> leaderboardSupplier;
     private final Toolkit toolkit = Toolkit.getDefaultToolkit();
     private final int width = toolkit.getScreenSize().width / 7;
-    private final int height = toolkit.getScreenSize().height / 4;
+    private final int height = toolkit.getScreenSize().height / 3;
     private int x;
     private int y;
     private boolean isShowing;
@@ -96,7 +96,7 @@ public class PopupFactoryImpl implements PopupFactory {
 
     private Popup roundWinnerPopup(final String message) {
         final Popup[] localPopup = new Popup[1];
-        final int codePoint = 127941;
+        final int codePoint = 127_941;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(ROWS, COLS, H_GAP, V_GAP));
         contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
@@ -105,7 +105,7 @@ public class PopupFactoryImpl implements PopupFactory {
         contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
         contentPane.setBackground(new Color(BG_R, BG_G, BG_B));
         final JLabel trophyLabel = new JLabel(trophy, SwingConstants.CENTER);
-        final JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
+        final JLabel messageLabel = new JLabel("<html><div style='text-align: center;'>" + message + "</div></html>", SwingConstants.CENTER);
         trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         trophyLabel.setForeground(Color.WHITE);
@@ -125,7 +125,7 @@ public class PopupFactoryImpl implements PopupFactory {
             x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / POSITION_RATIO;
             y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / POSITION_RATIO;
         } else {
-            final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+            final java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - contentPane.getPreferredSize().width) / 2;
             y = (screenSize.height - contentPane.getPreferredSize().height) / 2;
         }
@@ -141,7 +141,7 @@ public class PopupFactoryImpl implements PopupFactory {
 
     private Popup endGamePopup(final String message) {
         final Popup[] localPopupReference = new Popup[1];
-        final int codePoint = 127942;
+        final int codePoint = 127_942;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(ROWS, COLS, H_GAP, V_GAP));
         contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
@@ -151,7 +151,7 @@ public class PopupFactoryImpl implements PopupFactory {
         contentPane.setBackground(new Color(BG_R, BG_G, BG_B));
         contentPane.setSize(toolkit.getScreenSize().width, toolkit.getScreenSize().height);
         final JLabel trophyLabel = new JLabel(trophy, SwingConstants.CENTER);
-        final JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
+        final JLabel messageLabel = new JLabel("<html><div style='text-align: center;'>" + message + "</div></html>", SwingConstants.CENTER);
         trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         trophyLabel.setForeground(Color.WHITE);
@@ -187,7 +187,7 @@ public class PopupFactoryImpl implements PopupFactory {
             x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / 2;
             y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / 2;
         } else {
-            final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+            final java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - contentPane.getPreferredSize().width) / 2;
             y = (screenSize.height - contentPane.getPreferredSize().height) / 2;
         }
@@ -247,7 +247,7 @@ public class PopupFactoryImpl implements PopupFactory {
             x = parentLocation.x + (root.getWidth() - actualSize.width) / 2;
             y = parentLocation.y + (root.getHeight() - actualSize.height) / 2;
         } else {
-            final java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+            final java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             x = (screenSize.width - actualSize.width) / 2;
             y = (screenSize.height - actualSize.height) / 2;
         }

@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import it.unibo.briscoola.view.api.CardView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the {@link CardView} representing a single card in the user interface.
@@ -34,6 +36,7 @@ public final class CardViewImpl extends JPanel implements CardView {
     private static final int BG_B = 237;
 
     private final JButton cardButton;
+    private final Logger logger = LoggerFactory.getLogger(CardViewImpl.class);
 
     /**
      * Constructs a new CardViewImpl, initializing its layout, dimensions and borders.
@@ -94,7 +97,7 @@ public final class CardViewImpl extends JPanel implements CardView {
             cardButton.setIcon(null);
             cardButton.setText(value + " of " + seed);
             setBackground(Color.LIGHT_GRAY);
-            System.err.println("(CardView): Immagine non trovata -> /cards/" + filename);
+            logger.error("(CardView): Immagine non trovata -> /cards/{}", filename);
         }
 
         revalidate();

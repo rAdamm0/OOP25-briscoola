@@ -29,7 +29,6 @@ public class RoundManagerImpl implements RoundManager {
     private List<Player> playersList;
     private CardSeed leadSeed;
     private int currentPlayerIndex;
-    private final Logger logger = LoggerFactory.getLogger(RoundManagerImpl.class);
 
     /**
      * Constructor of the RoundManager that creates a table with the
@@ -59,7 +58,7 @@ public class RoundManagerImpl implements RoundManager {
      */
     @Override
     public void playTurn(final Player player, final Card card) {
-        if (this.getCurrentPlayer() != player) {
+        if (!this.getCurrentPlayer().equals(player)) {
             throw new IllegalArgumentException("It's not this player's turn");
         }
         if (!player.getHand().contains(card)) {
@@ -108,14 +107,14 @@ public class RoundManagerImpl implements RoundManager {
         }
         final RoundPlay winningEntry;
 
-        if (this.table.stream().anyMatch(a -> a.card().getCardSeed().equals(this.briscola))) {
+        if (this.table.stream().anyMatch(a -> a.card().getCardSeed() == this.briscola)) {
             winningEntry = this.table.stream()
-                    .filter(a -> a.card().getCardSeed().equals(this.briscola))
+                    .filter(a -> a.card().getCardSeed() == this.briscola)
                     .max(Comparator.comparingInt(e -> e.card().getCardPower()))
                     .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
         } else {
             winningEntry = this.table.stream()
-                    .filter(a -> a.card().getCardSeed().equals(this.leadSeed))
+                    .filter(a -> a.card().getCardSeed() == this.leadSeed)
                     .max(Comparator.comparingInt(e -> e.card().getCardPower()))
                     .orElseThrow(() -> new IllegalStateException("No winner could be determined"));
         }

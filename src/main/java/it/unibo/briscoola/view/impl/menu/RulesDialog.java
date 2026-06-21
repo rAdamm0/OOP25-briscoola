@@ -21,6 +21,8 @@ import java.awt.Window;
  */
 public final class RulesDialog extends JDialog {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Builds an element of {@link JDialog} over the parent Frame.
      * It contains the rules of the game.
@@ -43,7 +45,6 @@ public final class RulesDialog extends JDialog {
         final int hgap = 0;
         final int vgap = 15;
 
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(width, height);
         setLocationRelativeTo(parentFrame);
         final Color greenBg = new Color(bgR, bgG, bgB);
