@@ -103,7 +103,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public List<Card> getPile() {
-        return this.pile;
+        return List.copyOf(this.pile);
     }
 
     /**

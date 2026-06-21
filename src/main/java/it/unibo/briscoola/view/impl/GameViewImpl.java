@@ -375,7 +375,6 @@ public final class GameViewImpl extends JFrame implements View {
     @Override
     public void quit() {
         this.dispose();
-        System.exit(0);
     }
 
     /**

@@ -35,6 +35,7 @@ public class GameBuilderImpl implements GameBuilder {
      * @param name {@link String} of the player nickname
      */
     public GameBuilderImpl(final String name) {
+        this.id = 0;
         players.add(new PlayerImpl(id, name));
         id++;
     }

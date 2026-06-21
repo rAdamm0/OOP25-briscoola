@@ -36,6 +36,7 @@ public class RoundManagerImpl implements RoundManager {
     public RoundManagerImpl(final CardSeed briscola) {
         this.table = new ArrayList<>();
         this.briscola = briscola;
+        this.playersList = new ArrayList<>();
     }
 
     /**

@@ -36,7 +36,7 @@ public final class CardViewImpl extends JPanel implements CardView {
     private static final int BG_B = 237;
 
     private final JButton cardButton;
-    private final Logger logger = LoggerFactory.getLogger(CardViewImpl.class);
+    private final transient Logger logger = LoggerFactory.getLogger(CardViewImpl.class);
 
     /**
      * Constructs a new CardViewImpl, initializing its layout, dimensions and borders.
