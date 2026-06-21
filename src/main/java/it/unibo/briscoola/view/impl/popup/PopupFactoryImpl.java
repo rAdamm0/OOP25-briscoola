@@ -4,8 +4,7 @@ import it.unibo.briscoola.controller.impl.utils.Pair;
 import it.unibo.briscoola.view.api.popup.PopupFactory;
 import it.unibo.briscoola.view.api.popup.Popups;
 import it.unibo.briscoola.view.impl.GameViewImpl;
-import it.unibo.briscoola.view.impl.leaderboard.LeaderboardView;
-import it.unibo.briscoola.view.api.leaderboard.Leaderboard;
+import it.unibo.briscoola.view.impl.leaderboard.Leaderboard;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -273,7 +272,7 @@ public class PopupFactoryImpl implements PopupFactory {
         leaderboard.addActionListener(e -> {
                     final Window parentFrame = SwingUtilities.getWindowAncestor(root);
                     final List<Pair<String, String>> scoreboard = this.leaderboardSupplier.get();
-                    final LeaderboardView leaderboardView = new LeaderboardView(scoreboard);
+                    final Leaderboard leaderboardView = new Leaderboard(scoreboard);
                     final JDialog dialog = new JDialog(parentFrame, "Leaderboard", Dialog.ModalityType.APPLICATION_MODAL);
                     dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                     dialog.add(leaderboardView, BorderLayout.CENTER);

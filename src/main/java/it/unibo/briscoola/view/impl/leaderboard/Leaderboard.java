@@ -1,7 +1,6 @@
 package it.unibo.briscoola.view.impl.leaderboard;
 
 import it.unibo.briscoola.controller.impl.utils.Pair;
-import it.unibo.briscoola.view.api.leaderboard.Leaderboard;
 import it.unibo.briscoola.model.api.player.Player;
 
 import javax.swing.BorderFactory;
@@ -26,7 +25,7 @@ import java.util.List;
  *
  * @author Adam Paolo Razzino
  */
-public final class LeaderboardView extends JPanel implements Leaderboard {
+public final class Leaderboard extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +52,7 @@ public final class LeaderboardView extends JPanel implements Leaderboard {
      *
      * @param scoreboard the list of {@link Pair}s associating the {@link Player} name with his score
      */
-    public LeaderboardView(final List<Pair<String, String>> scoreboard) {
+    public Leaderboard(final List<Pair<String, String>> scoreboard) {
         init();
 
         final JLabel titleLabel = new JLabel("LEADERBOARD", SwingConstants.CENTER);
@@ -117,11 +116,4 @@ public final class LeaderboardView extends JPanel implements Leaderboard {
                 toolkit.getScreenSize().height / screenRatio));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void showLeaderboard() {
-        this.setVisible(true);
-    }
 }
