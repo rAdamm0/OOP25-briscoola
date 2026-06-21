@@ -49,7 +49,7 @@ public class GameModelImpl implements GameModel {
         this.briscolaCard = this.deck.getBriscolaSeed().orElseThrow();
     }
 
-     /**
+    /**
      * Deals three initial cards to each player from the deck.
      */
     private void dealInitialCards() {
