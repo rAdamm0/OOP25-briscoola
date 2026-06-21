@@ -79,8 +79,7 @@ public class GameControllerImpl implements GameController {
             final StringBuilder finalMsg = new StringBuilder("GAME OVER! ");
             if (humanPoints > cpuPoints) {
                 final String leaderboardFile = "leaderboard.json";
-                final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
-                final Leaderboard leaderboard = new LeaderboardImpl(manager);
+                final Leaderboard leaderboard = new LeaderboardImpl(leaderboardFile);
                 leaderboard.addEntry(new ScoreEntryImpl(humanPlayer.getName(),
                         (int) (humanPoints * this.model.getDifficulty().getValue())));
                 leaderboard.saveScores();
@@ -176,7 +175,7 @@ public class GameControllerImpl implements GameController {
 
         updateTableGraphics(human, card);
         model.makeMove(human, card);
-        view.updateHand(0, human.getHand()); 
+        view.updateHand(0, human.getHand());
 
         manageTurn();
     }

@@ -33,11 +33,11 @@ public class LeaderboardImpl implements Leaderboard {
      * previously saved scores. If no saved data is found, an empty
      * leaderboard is initialized.
      *
-     * @param manager the manager used to retrieve stored leaderboard data
+     * @param manager the name of the file where the leaderboard data is stored
      */
-    public LeaderboardImpl(final ScoreFileManager manager) {
-        this.list = new ArrayList<>(manager.load());
-        this.manager = Objects.requireNonNull(manager, "manager");
+    public LeaderboardImpl(final String manager) {
+        this.manager = new ScoreFileManagerImpl(manager);
+        this.list = new ArrayList<>(this.manager.load());
     }
 
     /**

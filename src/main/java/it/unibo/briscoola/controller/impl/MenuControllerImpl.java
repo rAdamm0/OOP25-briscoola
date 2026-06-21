@@ -84,8 +84,7 @@ public final class MenuControllerImpl implements MenuController {
     @Override
     public List<Pair<String, String>> getLeaderboardDate() {
         final String leaderboardFile = "leaderboard.json";
-        final ScoreFileManager manager = new ScoreFileManagerImpl(leaderboardFile);
-        final Leaderboard leaderboard = new LeaderboardImpl(manager);
+        final Leaderboard leaderboard = new LeaderboardImpl(leaderboardFile);
         return leaderboard.getEntries().stream().map(a -> new Pair<>(a.getName(), String.valueOf(a.getScore()))).toList();
     }
 }

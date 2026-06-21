@@ -39,7 +39,7 @@ class LeaderboardTest {
      */
     @BeforeEach
     void init() {
-        this.board = new LeaderboardImpl(new ScoreFileManagerImpl("testing.json"));
+        this.board = new LeaderboardImpl("testing.json");
     }
 
     /**

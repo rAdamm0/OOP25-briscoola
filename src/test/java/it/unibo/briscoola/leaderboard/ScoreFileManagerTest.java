@@ -32,8 +32,7 @@ class ScoreFileManagerTest {
             new ScoreEntryImpl("Giacomo", MEDIUM_SCORE),
             new ScoreEntryImpl("Francesca", HIGH_SCORE),
             new ScoreEntryImpl("Marta", AVERAGE_SCORE)
-    ));
-    private final ScoreFileManager manager = new ScoreFileManagerImpl(TESTING_FILE);
+    ));private final ScoreFileManager manager = new ScoreFileManagerImpl(TESTING_FILE);
     private Leaderboard board;
 
     /**
@@ -41,7 +40,7 @@ class ScoreFileManagerTest {
      */
     @BeforeEach
     void init() {
-        this.board = new LeaderboardImpl(manager);
+        this.board = new LeaderboardImpl(TESTING_FILE);
     }
 
     @AfterEach
