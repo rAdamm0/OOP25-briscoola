@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -40,6 +41,9 @@ public final class LeaderboardView extends JPanel implements Leaderboard {
     private static final int VERTICAL_BORDER = 15;
     private static final int HORIZONTAL_BORDER = 20;
 
+    private static final int WIDTH = 550;
+    private static final int HEIGHT = 600;
+
     /**
      * Constructor of the LeaderboardView and displays the input in a
      * {@link JPanel} with a {@link GridLayout}.
@@ -55,17 +59,20 @@ public final class LeaderboardView extends JPanel implements Leaderboard {
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(VERTICAL_BORDER, 0, VERTICAL_BORDER, 0));
         this.add(titleLabel);
+        final List<Pair<String, String>> scoreboardList = scoreboard
+                .stream()
+                .sorted(Comparator.<Pair<String, String>, Integer>comparing(a -> Integer.valueOf(a.y())).reversed())
+                .toList();
 
-        for (int i = 0; i < scoreboard.size(); i++) {
-            final JLabel playerLabel = getJLabel(scoreboard, i);
-
+        for (int i = 0; i < scoreboardList.size(); i++) {
+            final JLabel playerLabel = getJLabel(scoreboardList, i);
             final JPanel rowPanel = new JPanel();
             rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.Y_AXIS));
             rowPanel.setBackground(Color.GRAY);
             rowPanel.add(playerLabel);
             rowPanel.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
-
             this.add(rowPanel);
+            this.setSize(WIDTH, HEIGHT);
         }
     }
 

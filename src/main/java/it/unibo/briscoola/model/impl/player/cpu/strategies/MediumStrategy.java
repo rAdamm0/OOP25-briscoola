@@ -32,13 +32,13 @@ public class MediumStrategy implements PlayStrategy {
                 .filter(card -> card.getCardSeed() != state.briscola())
                 .min(Comparator.comparingInt(Card::getCardPower));
 
-        if(worstCard.isEmpty()){
+        if (worstCard.isEmpty()) {
             worstCard = hand.stream()
                     .min(Comparator.comparingInt(Card::getCardPower));
         }
 
         return hand.indexOf(worstCard.orElseThrow(
-                ()->new IllegalStateException("Card requested when hand is empty")));
+                () -> new IllegalStateException("Card requested when hand is empty")));
     }
 
     private boolean beatsAllPlayedCards(final Card card, final RoundStateImpl state) {

@@ -97,14 +97,14 @@ public class PopupFactoryImpl implements PopupFactory {
         final int codePoint = 127_941;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(ROWS, COLS, H_GAP, V_GAP));
-        contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
+        contentPane.setPreferredSize(new java.awt.Dimension(this.width / 2, this.height / 2));
         final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
         final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
         contentPane.setBackground(new Color(BG_R, BG_G, BG_B));
         final JLabel trophyLabel = new JLabel(trophy, SwingConstants.CENTER);
         final JLabel messageLabel = new JLabel(
-                "<html><div style='text-align: center;'>" + message + "</div></html>",
+                "<html><body style=\"text-align: justify;  text-justify: inter-word;\">" + message + "</body></html>",
                 SwingConstants.CENTER);
         trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);

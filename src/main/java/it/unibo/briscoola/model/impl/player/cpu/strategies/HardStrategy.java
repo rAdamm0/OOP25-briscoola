@@ -28,7 +28,7 @@ public class HardStrategy implements PlayStrategy {
     @Override
     public int cardIndex(final List<Card> hand, final RoundStateImpl state) {
         if (hand == null || hand.isEmpty()) {
-            throw new IllegalArgumentException("hand must not be empty");
+            throw new IllegalStateException("Card requested when hand is empty");
         }
 
         //Simplifies the handling of the state attributes
