@@ -7,6 +7,8 @@ import it.unibo.briscoola.view.api.popup.Popups;
 import it.unibo.briscoola.view.impl.GameViewImpl;
 import it.unibo.briscoola.view.impl.leaderboard.LeaderboardView;
 import it.unibo.briscoola.view.api.leaderboard.Leaderboard;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,6 +28,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -55,6 +58,7 @@ public class PopupFactoryImpl implements PopupFactory {
     private final int width = toolkit.getScreenSize().width / 7;
     private final int height = toolkit.getScreenSize().height / 3;
     private boolean isShowing;
+    private final Logger logger = LoggerFactory.getLogger(PopupFactoryImpl.class);
 
     /**
      * Method that creates a factory to deploy {@link Popup} based on the {@link JRootPane}.
@@ -97,17 +101,15 @@ public class PopupFactoryImpl implements PopupFactory {
         final int codePoint = 127_941;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(ROWS, COLS, H_GAP, V_GAP));
-        contentPane.setPreferredSize(new java.awt.Dimension(this.width / 2, this.height / 2));
-        final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
-        final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
-        contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
-        contentPane.setBackground(new Color(BG_R, BG_G, BG_B));
         final JLabel trophyLabel = new JLabel(trophy, SwingConstants.CENTER);
         final JLabel messageLabel = new JLabel(
                 "<html><body style=\"text-align: justify;  text-justify: inter-word;\">" + message + "</body></html>",
                 SwingConstants.CENTER);
-        trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
-        messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
+        final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
+        final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        final java.awt.Dimension dynamicSize = contentPane.getPreferredSize();
+        contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
+        contentPane.setBackground(new Color(BG_R, BG_G, BG_B));
         trophyLabel.setForeground(Color.WHITE);
         messageLabel.setForeground(Color.WHITE);
         trophyLabel.setFont(new Font(FONT, Font.BOLD, 32));
@@ -124,12 +126,12 @@ public class PopupFactoryImpl implements PopupFactory {
         final int y;
         if (root.isShowing()) {
             final java.awt.Point parentLocation = root.getLocationOnScreen();
-            x = parentLocation.x + (root.getWidth() - contentPane.getPreferredSize().width) / POSITION_RATIO;
-            y = parentLocation.y + (root.getHeight() - contentPane.getPreferredSize().height) / POSITION_RATIO;
+            x = parentLocation.x + (root.getWidth() - dynamicSize.width) / POSITION_RATIO;
+            y = parentLocation.y + (root.getHeight() - dynamicSize.height) / POSITION_RATIO;
         } else {
             final java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            x = (screenSize.width - contentPane.getPreferredSize().width) / 2;
-            y = (screenSize.height - contentPane.getPreferredSize().height) / 2;
+            x = (screenSize.width - dynamicSize.width) / 2;
+            y = (screenSize.height - dynamicSize.height) / 2;
         }
         this.isShowing = true;
         localPopup[0] = javax.swing.PopupFactory.getSharedInstance().getPopup(
@@ -146,7 +148,6 @@ public class PopupFactoryImpl implements PopupFactory {
         final int codePoint = 127_942;
         final String trophy = new String(Character.toChars(codePoint));
         final JComponent contentPane = new JPanel(new GridLayout(ROWS, COLS, H_GAP, V_GAP));
-        contentPane.setPreferredSize(new java.awt.Dimension(this.width, this.height));
         final Border line = BorderFactory.createLineBorder(Color.getHSBColor(30, 100, 72), 2);
         final Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         contentPane.setBorder(BorderFactory.createCompoundBorder(line, padding));
@@ -156,8 +157,6 @@ public class PopupFactoryImpl implements PopupFactory {
         final JLabel messageLabel = new JLabel(
                 "<html><div style='text-align: center;'>" + message + "</div></html>",
                 SwingConstants.CENTER);
-        trophyLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
-        messageLabel.setSize(contentPane.getSize().width / 3, contentPane.getSize().height / 3);
         trophyLabel.setForeground(Color.WHITE);
         messageLabel.setForeground(Color.WHITE);
         trophyLabel.setFont(new Font(FONT, Font.BOLD, 32));
@@ -167,7 +166,10 @@ public class PopupFactoryImpl implements PopupFactory {
         exit.addActionListener(
                 e -> {
                     this.isShowing = false;
-                    localPopupReference[0].hide();
+                    final Window frame = SwingUtilities.getWindowAncestor(root);
+                    if (frame != null) {
+                        frame.dispose();
+                    }
                 }
         );
         final JButton returnHome = new JButton("Home");
