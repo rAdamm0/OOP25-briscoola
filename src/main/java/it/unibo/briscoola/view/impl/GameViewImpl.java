@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -23,9 +25,9 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
-import it.unibo.briscoola.controller.api.GameController;
 import it.unibo.briscoola.controller.api.MenuController;
-import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.controller.impl.utils.Pair;
+import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.view.api.CardView;
 import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.api.popup.PopupFactory;
@@ -39,6 +41,7 @@ import it.unibo.briscoola.view.impl.popup.PopupFactoryImpl;
  * the player cards and the center match arena.
  *
  * @author Andrea Reggiani
+ * @author Riem Boukhama
  */
 public final class GameViewImpl extends JFrame implements View {
 
@@ -74,8 +77,7 @@ public final class GameViewImpl extends JFrame implements View {
 
     private final PileView playerPile = new PileView("Player");
     private final PileView cpuPile = new PileView("CPU");
-    private final transient PopupFactory popup = new PopupFactoryImpl(this.getRootPane(),
-            () -> this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
+    private final transient PopupFactory popup;
 
     private CardViewImpl briscolaCardView;
     private CardViewImpl playerPlayedCardView;
@@ -84,8 +86,10 @@ public final class GameViewImpl extends JFrame implements View {
     private final CardViewImpl[] playerHandCards = new CardViewImpl[NUMBER_OF_CARDS];
     private final CardViewImpl[] cpuHandCards = new CardViewImpl[NUMBER_OF_CARDS];
 
-    private transient MenuController menuController;
-    private transient GameController gameController;
+    private transient BiConsumer<String, Difficulty> onGameStartListener;
+    private transient Consumer<Integer> onCardPlayedListener;
+
+    private final transient MenuController menuController;
     private StartScreen startScreen;
 
     /**
@@ -96,6 +100,8 @@ public final class GameViewImpl extends JFrame implements View {
     public GameViewImpl(final MenuController menuController) {
         super("BriscOOla");
         this.menuController = menuController;
+        this.popup = new PopupFactoryImpl(this.getRootPane(),
+            () -> this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
         this.initLayoutConfiguration();
     }
 
@@ -112,12 +118,12 @@ public final class GameViewImpl extends JFrame implements View {
          */
         this.startScreen = new StartScreen(
             (players, diff) -> {
-                if (this.menuController != null) {
-                this.menuController.startGame(players, diff, this);
+                if (this.onGameStartListener != null) {
+                this.onGameStartListener.accept(players, diff);
                 }
-            }, 
+            },
             e -> quit()
-        ); 
+        );
 
         final JPanel gamePanel = createGamePanel();
 
@@ -133,16 +139,16 @@ public final class GameViewImpl extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void setMenuController(final MenuController menuController) {
-        this.menuController = menuController;
+    public void setOnGameStartListener(final BiConsumer<String, Difficulty> onStartGame) {
+        this.onGameStartListener = onStartGame;
     }
-
+ 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setGameController(final GameController gameController) {
-        this.gameController = gameController;
+    public void setOnCardPlayedListener(final Consumer<Integer> onCardPlayed) {
+        this.onCardPlayedListener = onCardPlayed;
     }
 
     /** 
@@ -192,8 +198,8 @@ public final class GameViewImpl extends JFrame implements View {
              */
             final int cardIndex = i;
             playerHandCards[i].addCardClickListener(e -> {
-                if (this.gameController != null) {
-                    this.gameController.handlesHumanCardSelection(cardIndex);
+                if (this.onCardPlayedListener != null) {
+                    this.onCardPlayedListener.accept(cardIndex);
                 }
             });
             playerHandPanel.add(playerHandCards[i]);
@@ -297,7 +303,7 @@ public final class GameViewImpl extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void updateHand(final int playerID, final List<Card> handCards) {
+    public void updateHand(final int playerID, final List<Pair<String, String>> handCards) {
         if (playerID == 0) {
 
             /*
@@ -305,12 +311,13 @@ public final class GameViewImpl extends JFrame implements View {
              */
             for (int i = 0; i < NUMBER_OF_CARDS; i++) {
                 if (i < handCards.size()) {
-                    final Card card = handCards.get(i);
+                    final Pair<String, String> cardData = handCards.get(i);
                     final CardView cardComponent = this.playerHandCards[i];
-                    final String seedStr = card.getCardSeed().name();
-                    final String valueStr = card.getCardValue().name();
-                    cardComponent.renderCard(seedStr, valueStr);
 
+                    final String seedStr = cardData.x();
+                    final String valueStr = cardData.y();
+
+                    cardComponent.renderCard(seedStr, valueStr);
                     this.playerHandCards[i].setVisible(true);
                 } else {
                     this.playerHandCards[i].setVisible(false);

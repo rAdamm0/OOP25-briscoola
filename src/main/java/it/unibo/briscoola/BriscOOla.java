@@ -28,10 +28,12 @@ public final class BriscOOla {
              * final GameModel initialMode = null;
              */
             final GameViewImpl gameView = new GameViewImpl(null);
-
-            gameView.setMenuController(menuController);
-
-            gameView.start(); 
+ 
+            gameView.setOnGameStartListener((playerName, difficulty) -> {
+            menuController.startGame(playerName, difficulty, gameView);
+            });
+ 
+            gameView.start();
 
     }
 }

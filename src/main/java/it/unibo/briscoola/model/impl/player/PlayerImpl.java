@@ -61,14 +61,6 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public Card playCard(final int index) {
-        return this.hand.remove(index);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void receiveCard(final Card card) {
         this.hand.add(card);
     }
