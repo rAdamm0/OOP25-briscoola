@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.swing.SwingUtilities;
 
 import it.unibo.briscoola.controller.api.GameController;
+import it.unibo.briscoola.controller.impl.utils.Pair;
 import it.unibo.briscoola.model.api.card.Card;
 import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
@@ -45,7 +46,6 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl(final GameModel model, final View view) {
         this.model = Objects.requireNonNull(model, "Gamemodel for GameController is null");
         this.view = Objects.requireNonNull(view, "View for GameController is null");
-        this.view.setGameController(this);
     }
 
     /**
@@ -144,12 +144,12 @@ public class GameControllerImpl implements GameController {
                     final Card chosenCard = cpu.playCard(model.getCurrentRoundState());
                     updateTableGraphics(currentPlayer, chosenCard);
                     model.makeMove(cpu, chosenCard);
-                    view.updateHand(cpu.getId(), cpu.getHand());
+                    view.updateHand(cpu.getId(), convertCards(cpu.getHand()));
                     manageTurn();
                 });
             }).start();
         } else {
-            view.updateHand(0, currentPlayer.getHand());
+            view.updateHand(0, convertCards(currentPlayer.getHand()));
         }
     }
 
@@ -173,7 +173,7 @@ public class GameControllerImpl implements GameController {
 
         updateTableGraphics(human, card);
         model.makeMove(human, card);
-        view.updateHand(0, human.getHand());
+        view.updateHand(0, convertCards(human.getHand()));
 
         manageTurn();
     }
@@ -208,7 +208,19 @@ public class GameControllerImpl implements GameController {
 
     private void updateAllHands() {
         for (final Player p : model.getPlayers()) {
-            view.updateHand(p.getId(), p.getHand());
+            view.updateHand(
+                p.getId(),
+                convertCards(p.getHand())
+            );
         }
+    }
+
+    private List<Pair<String, String>> convertCards(final List<Card> cards) {
+    return cards.stream()
+        .map(card -> new Pair<>(
+            card.getCardSeed().name(),
+            card.getCardValue().name()
+        ))
+        .toList();  
     }
 }

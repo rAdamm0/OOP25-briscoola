@@ -1,10 +1,11 @@
 package it.unibo.briscoola.view.api;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
-import it.unibo.briscoola.controller.api.GameController;
-import it.unibo.briscoola.controller.api.MenuController;
-import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.controller.impl.utils.Pair;
+import it.unibo.briscoola.model.api.attributes.Difficulty;
 import it.unibo.briscoola.view.api.popup.Popups;
 
 /**
@@ -15,18 +16,16 @@ import it.unibo.briscoola.view.api.popup.Popups;
 public interface View {
 
     /**
-     * Set the menuController fopr handling initial configuration.
-     * 
-     * @param menuController istance 
+     * Register the action to be performed when the user starts the game from the menu.
+     * @param onStartGame receives the name and difficulty
      */
-    void setMenuController(MenuController menuController);
-
+    void setOnGameStartListener(BiConsumer<String, Difficulty> onStartGame);
+ 
     /**
-     * Set the gameController for handling the round mechanics and turns.
-     * 
-     * @param gameController istance 
+     * Register the action to be performed when the user clicks a card in his hand.
+     * @param onCardPlayed receives the index of the played card
      */
-    void setGameController(GameController gameController);
+    void setOnCardPlayedListener(Consumer<Integer> onCardPlayed);
 
     /**
      * Shows the inital screen.
@@ -44,7 +43,7 @@ public interface View {
      * @param playerID the ID of the player
      * @param handCards the list of the cards in the player hand
      */
-    void updateHand(int playerID, List<Card> handCards);
+    void updateHand(int playerID, final List<Pair<String, String>> handCards);
 
     /**
      * Updates the card count in a player's deck.

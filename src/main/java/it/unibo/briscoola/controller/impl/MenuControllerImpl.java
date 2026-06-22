@@ -1,18 +1,19 @@
 package it.unibo.briscoola.controller.impl;
 
+import java.util.List;
+
+import it.unibo.briscoola.controller.api.GameController;
+import it.unibo.briscoola.controller.api.MenuController;
 import it.unibo.briscoola.controller.impl.utils.Pair;
+import it.unibo.briscoola.model.api.attributes.Difficulty;
+import it.unibo.briscoola.model.api.card.Card;
+import it.unibo.briscoola.model.api.game.GameModel;
 import it.unibo.briscoola.model.api.leaderboard.Leaderboard;
+import it.unibo.briscoola.model.api.player.Player;
+import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
 import it.unibo.briscoola.model.impl.leaderboard.LeaderboardImpl;
 import it.unibo.briscoola.view.api.View;
 import it.unibo.briscoola.view.impl.GameViewImpl;
-import it.unibo.briscoola.controller.api.GameController;
-import it.unibo.briscoola.controller.api.MenuController;
-import it.unibo.briscoola.model.api.attributes.Difficulty;
-import it.unibo.briscoola.model.api.game.GameModel;
-import it.unibo.briscoola.model.api.player.Player;
-import it.unibo.briscoola.model.impl.game.GameBuilderImpl;
-
-import java.util.List;
 
 /**
  * implementation of {@link MenuController}
@@ -60,7 +61,7 @@ public final class MenuControllerImpl implements MenuController {
         view.initGame(); 
 
         final Player human = model.getCurrentPlayer(); 
-        view.updateHand(0, human.getHand());
+        view.updateHand(0, convertCards(human.getHand()));
 
         if (model.getBriscolaSeed().isPresent()) { 
             final String briscolaSeedStr = model.getBriscolaSeed().get().getCardSeed().name();
@@ -72,8 +73,17 @@ public final class MenuControllerImpl implements MenuController {
         }
 
         final GameController gameController = new GameControllerImpl(model, view);
-        view.setGameController(gameController);
+        view.setOnCardPlayedListener(gameController::handlesHumanCardSelection);
         gameController.startGame();
+    }
+
+    private List<Pair<String, String>> convertCards(final List<Card> cards) {
+    return cards.stream()
+        .map(card -> new Pair<>(
+            card.getCardSeed().name(),
+            card.getCardValue().name()
+        ))
+        .toList();  
     }
 
     /**
