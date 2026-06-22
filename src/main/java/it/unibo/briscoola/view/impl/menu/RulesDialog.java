@@ -33,9 +33,9 @@ public final class RulesDialog extends JDialog {
         super(parentFrame, "Rules of the Game");
         final int width = 550;
         final int height = 600;
-        final int bgR = 20;
-        final int bgG = 80;
-        final int bgB = 25;
+        final int bgR = 30;
+        final int bgG = 100;
+        final int bgB = 72;
         final int borderRadius = 20;
         final int textFontSize = 14;
         final int buttonTextSize = 16;
@@ -54,13 +54,13 @@ public final class RulesDialog extends JDialog {
         textArea.setWrapStyleWord(true);
         textArea.setFont(new Font("Arial", Font.BOLD, textFontSize));
         textArea.setBackground(greenBg);
-        textArea.setForeground(Color.BLACK);
+        textArea.setForeground(Color.WHITE);
         textArea.setBorder(BorderFactory.createEmptyBorder(borderRadius, borderRadius, borderRadius, borderRadius));
         final JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(null);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         final JButton closeButton = new JButton("CLOSE");
-        closeButton.setFont(new Font("Arial", Font.BOLD, buttonTextSize));
+        closeButton.setFont(new Font("Serif", Font.BOLD, buttonTextSize));
         closeButton.setFocusPainted(false);
         closeButton.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, buttonBorderThickness),
@@ -88,7 +88,6 @@ public final class RulesDialog extends JDialog {
                 • The player is required to choose the game Difficulty.
                 • Each player is given 3 cards.
                 • The Briscola card gets chosen and put on the table face up.
-
                 2. CARD EXPLANATION:
                 The Cards follow a power logic following the order of the sequent list
                 In which there will be listed the points of each card as well
@@ -104,14 +103,12 @@ public final class RulesDialog extends JDialog {
                 ONE/ACE -> 11
                 3. YOUR TURN
                 Select the card to be played based on:
-
                  - Cards on the table:
                        Remember that the briscola seed rules over every other
                        If there is no briscola on the table the leadSeed rules
-
                 4. CPU TURN
                 The CPU elaborates what is on the table and makes its move
-                based on the chosen difficulty\
+                based on the chosen difficulty
                 5. DETERMINE WINNER
                 The game decides the winner of the round and starts a new round
                 The next round is started by the winner of the latest

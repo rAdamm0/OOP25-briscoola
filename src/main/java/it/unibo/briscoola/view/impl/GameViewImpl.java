@@ -101,7 +101,7 @@ public final class GameViewImpl extends JFrame implements View {
         super("BriscOOla");
         this.menuController = menuController;
         this.popup = new PopupFactoryImpl(this.getRootPane(),
-            () -> this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
+            () -> this.menuController != null ? this.menuController.getLeaderboardData() : List.of());
         this.initLayoutConfiguration();
     }
 
@@ -282,6 +282,16 @@ public final class GameViewImpl extends JFrame implements View {
      */
     @Override
     public void initGame() {
+        /*
+         * including this calls to update table.
+         * without this the table, if the game will be stopped, 
+         * and restarted with "Esc" -> "Menu" -> "Play" 
+         * it would be graphicaly frozen on the previous match.
+         * Now instead it will be all restarted.
+         */
+        updateTable(null, null, null, null, NUMBER_OF_CARDS);
+        updatePile(0, true);
+        updatePile(0, false);
         cardLayout.show(container, GAME_ID);
     }
 
@@ -293,7 +303,7 @@ public final class GameViewImpl extends JFrame implements View {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (!popup.isShowing()) {
-                    popup.create(Popups.PAUSE, "You Won!").show();
+                    popup.create(Popups.PAUSE, "Pause").show();
                 }
             }
         });

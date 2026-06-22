@@ -27,7 +27,7 @@ public final class BriscOOla {
             /*
              * final GameModel initialMode = null;
              */
-            final GameViewImpl gameView = new GameViewImpl(null);
+            final GameViewImpl gameView = new GameViewImpl(menuController);
  
             gameView.setOnGameStartListener((playerName, difficulty) -> {
             menuController.startGame(playerName, difficulty, gameView);
