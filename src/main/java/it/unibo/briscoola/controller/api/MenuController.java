@@ -30,5 +30,5 @@ public interface MenuController {
      *
      * @return a {@link List} of pairs of strings matching each player with the highscore
      */
-    List<Pair<String, String>> getLeaderboardDate();
+    List<Pair<String, String>> getLeaderboardData();
 }

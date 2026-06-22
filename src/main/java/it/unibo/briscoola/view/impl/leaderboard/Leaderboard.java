@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.util.Comparator;
 import java.util.List;
 
@@ -74,7 +73,6 @@ public final class Leaderboard extends JPanel {
             rowPanel.add(playerLabel);
             rowPanel.setBorder(BorderFactory.createEmptyBorder(4, 10, 4, 10));
             this.add(rowPanel);
-            this.setSize(WIDTH, HEIGHT);
         }
     }
 
@@ -106,14 +104,10 @@ public final class Leaderboard extends JPanel {
     private void init() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(new Color(BG_R, BG_G, BG_B));
-        final Toolkit toolkit = Toolkit.getDefaultToolkit();
-        final int screenRatio = 4;
-        this.setMinimumSize(new Dimension(
-                toolkit.getScreenSize().width / screenRatio,
-                toolkit.getScreenSize().height / screenRatio));
-        this.setPreferredSize(new Dimension(
-                toolkit.getScreenSize().width / screenRatio,
-                toolkit.getScreenSize().height / screenRatio));
+        final Dimension d = new Dimension(WIDTH, HEIGHT);
+        this.setPreferredSize(d);
+        this.setMinimumSize(d);
+        this.setMaximumSize(d);
     }
 
 }

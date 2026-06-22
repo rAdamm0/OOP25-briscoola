@@ -88,7 +88,6 @@ public final class RulesDialog extends JDialog {
                 • The player is required to choose the game Difficulty.
                 • Each player is given 3 cards.
                 • The Briscola card gets chosen and put on the table face up.
-
                 2. CARD EXPLANATION:
                 The Cards follow a power logic following the order of the sequent list
                 In which there will be listed the points of each card as well
@@ -102,22 +101,18 @@ public final class RulesDialog extends JDialog {
                 TEN/KING -> 4
                 THREE -> 10
                 ONE/ACE -> 11
-                
                 3. YOUR TURN
                 Select the card to be played based on:
                  - Cards on the table:
                        Remember that the briscola seed rules over every other
                        If there is no briscola on the table the leadSeed rules
-
                 4. CPU TURN
                 The CPU elaborates what is on the table and makes its move
                 based on the chosen difficulty
-                
                 5. DETERMINE WINNER
                 The game decides the winner of the round and starts a new round
                 The next round is started by the winner of the latest
                 This process repeats until the deck and every player's hand is empty
-                
                 6. LEADERBOARD SCORING
                 The player will see his points on the leaderboard
                 If high enough

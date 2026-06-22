@@ -101,7 +101,7 @@ public final class GameViewImpl extends JFrame implements View {
         super("BriscOOla");
         this.menuController = menuController;
         this.popup = new PopupFactoryImpl(this.getRootPane(),
-            () -> this.menuController != null ? this.menuController.getLeaderboardDate() : List.of());
+            () -> this.menuController != null ? this.menuController.getLeaderboardData() : List.of());
         this.initLayoutConfiguration();
     }
 
@@ -293,7 +293,7 @@ public final class GameViewImpl extends JFrame implements View {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (!popup.isShowing()) {
-                    popup.create(Popups.PAUSE, "You Won!").show();
+                    popup.create(Popups.PAUSE, "Pause").show();
                 }
             }
         });
