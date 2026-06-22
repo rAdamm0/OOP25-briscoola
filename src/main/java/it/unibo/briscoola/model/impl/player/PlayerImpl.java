@@ -56,7 +56,7 @@ public class PlayerImpl implements Player {
     public Card playCard(final RoundStateImpl state) {
         return this.hand.removeFirst();
     }
-    
+
     /**
      * {@inheritDoc}
      */

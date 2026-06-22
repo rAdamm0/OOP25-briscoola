@@ -41,6 +41,7 @@ import it.unibo.briscoola.view.impl.popup.PopupFactoryImpl;
  * the player cards and the center match arena.
  *
  * @author Andrea Reggiani
+ * @author Riem Boukhama
  */
 public final class GameViewImpl extends JFrame implements View {
 
@@ -311,10 +312,10 @@ public final class GameViewImpl extends JFrame implements View {
                 if (i < handCards.size()) {
                     final Pair<String, String> cardData = handCards.get(i);
                     final CardView cardComponent = this.playerHandCards[i];
-                    
+
                     final String seedStr = cardData.x();
                     final String valueStr = cardData.y();
-                    
+
                     cardComponent.renderCard(seedStr, valueStr);
                     this.playerHandCards[i].setVisible(true);
                 } else {

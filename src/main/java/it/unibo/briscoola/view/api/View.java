@@ -17,12 +17,14 @@ public interface View {
 
     /**
      * Register the action to be performed when the user starts the game from the menu.
+     * 
      * @param onStartGame receives the name and difficulty
      */
     void setOnGameStartListener(BiConsumer<String, Difficulty> onStartGame);
  
     /**
      * Register the action to be performed when the user clicks a card in his hand.
+     * 
      * @param onCardPlayed receives the index of the played card
      */
     void setOnCardPlayedListener(Consumer<Integer> onCardPlayed);
@@ -43,7 +45,7 @@ public interface View {
      * @param playerID the ID of the player
      * @param handCards the list of the cards in the player hand
      */
-    void updateHand(int playerID, final List<Pair<String, String>> handCards);
+    void updateHand(int playerID, List<Pair<String, String>> handCards);
 
     /**
      * Updates the card count in a player's deck.
