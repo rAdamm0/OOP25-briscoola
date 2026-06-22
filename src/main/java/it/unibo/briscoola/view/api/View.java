@@ -12,6 +12,7 @@ import it.unibo.briscoola.view.api.popup.Popups;
  * Interface View for the graphic setting.
  * 
  * @author Andrea Reggiani
+ * @author Riem Boukhama
  */
 public interface View {
 
