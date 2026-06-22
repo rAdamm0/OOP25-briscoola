@@ -275,8 +275,9 @@ public class PopupFactoryImpl implements PopupFactory {
                     final Leaderboard leaderboardView = new Leaderboard(scoreboard);
                     final JDialog dialog = new JDialog(parentFrame, "Leaderboard", Dialog.ModalityType.APPLICATION_MODAL);
                     dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    dialog.setLayout(new BorderLayout());
                     dialog.add(leaderboardView, BorderLayout.CENTER);
-                    dialog.setSize(leaderboardView.getSize());
+                    dialog.pack();
                     dialog.setLocationRelativeTo(parentFrame);
                     dialog.setVisible(true);
                 }
