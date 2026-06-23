@@ -68,7 +68,7 @@ public class PopupFactoryImpl implements PopupFactory {
                             final Supplier<List<Pair<String, String>>> leaderboardSupplier) {
         this.root = Objects.requireNonNull(root, "JPaneRoot for Popup");
         this.leaderboardSupplier = leaderboardSupplier;
-        this.exit = new JButton("Exit");
+        this.exit = new JButton("Exit Game");
     }
 
     /**

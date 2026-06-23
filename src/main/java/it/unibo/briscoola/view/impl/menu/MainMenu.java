@@ -71,7 +71,7 @@ public final class MainMenu extends JPanel {
         gbc.gridy = GRIDY2; 
         add(btnRules, gbc);
 
-        final JButton btnQuit = new JButton("Exit");
+        final JButton btnQuit = new JButton("Exit Game");
         btnQuit.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         btnQuit.addActionListener(chooseExit);
 
