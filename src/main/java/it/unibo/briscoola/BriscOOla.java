@@ -19,7 +19,6 @@ public final class BriscOOla {
      */
     public static void main(final String[] args) {
 
-
             final MenuController menuController = new MenuControllerImpl();
 
             final GameViewImpl gameView = new GameViewImpl(menuController);
