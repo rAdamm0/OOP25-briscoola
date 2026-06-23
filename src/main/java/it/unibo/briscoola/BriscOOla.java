@@ -19,14 +19,9 @@ public final class BriscOOla {
      */
     public static void main(final String[] args) {
 
-            /*
-             * final MenuController menuController = new MenuControllerImpl(initialMode, gameView);
-             */
+
             final MenuController menuController = new MenuControllerImpl();
 
-            /*
-             * final GameModel initialMode = null;
-             */
             final GameViewImpl gameView = new GameViewImpl(menuController);
  
             gameView.setOnGameStartListener((playerName, difficulty) -> {
